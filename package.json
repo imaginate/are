@@ -1,0 +1,41 @@
+{
+  "name": "node-are",
+  "version": "0.0.1",
+  "description": "Simple & Powerful JavaScript Type Checking",
+  "main": "src/node-are.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imaginate/are.git"
+  },
+  "author": "Adam Smith <adam@imaginate.life> (https://github.com/imaginate)",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/imaginate/are/issues"
+  },
+  "homepage": "https://github.com/imaginate/are",
+  "devDependencies": {
+    "lodash": "^3.10.1",
+    "colors": "^1.1.2",
+    "shelljs": "^0.5.1"
+  },
+  "keywords": [
+    "are",
+    "arejs",
+    "are-js",
+    "are js",
+    "is",
+    "isjs",
+    "is-js",
+    "is js",
+    "are javascript",
+    "is javascript",
+    "javascript type",
+    "js type",
+    "javascript type check",
+    "js type check",
+    "javascript type checking",
+    "js type checking",
+    "javascript",
+    "imaginate"
+  ]
+}
