@@ -1,0 +1,67 @@
+### Simple & Powerful JavaScript Type Checking
+You get two powerful libraries: **_is_**  and  **_are_**. Plus the choice of using the main or sub functions and complete or shorthand type names. Take a look at some examples below.
+- **_is_**
+```javascript
+// example string checks
+is('string', exVar);
+is('str', exVar);
+is.string(exVar);
+is.str(exVar);
+
+// some other cool examples
+is('string|number', exVar);
+is('!arrays|regexps', exVar);
+is.document(exVar);
+is.directory(exVar); // node-are specific
+```
+- **_are_**
+```javascript
+// example string checks
+are('string', exVar1, exVar2, exVar3);
+are('str', [ exVar1, exVar2, exVar3 ]);
+are.string([ exVar1, exVar2, exVar3 ]);
+are.str(exVar1, exVar2, exVar3);
+
+// some other cool examples
+are('num=', [ exVar1, exVar2, exVar3 ]);
+are('!doc|elem', exVar1, exVar2, exVar3);
+are.element(exVar1, exVar2, exVar3);
+are.file([ exVar1, exVar2, exVar3 ]); // node-are specific
+```
+
+## Getting Started
+For a stand-alone browser environment:
+- Download [are.min.js](https://github.com/imaginate/are/blob/master/src/are.min.js)
+- Save it to your app's main folder
+- Add ``` <script src="are.min.js"></script> ``` to your ``` <head> ``` or ``` <body> ``` before any scripts that use it
+- The libraries, **_is_** and **_are_**, are now both globally available (i.e. attached to the ``` window ``` object)
+
+For an AMD browser environment:
+- Download [are.min.js](https://github.com/imaginate/are/blob/master/src/are.min.js)
+- Add it to your app's library folder
+- Use ``` require(['are'], function(null) { ... }); ```
+- The libraries, **_is_** and **_are_**, are now both globally available (i.e. attached to the ``` window ``` object)
+
+For a Node.js environment:
+- Run ``` $ npm install node-are ```
+- Use ``` require('node-are') ```
+- The libraries, **_is_** and **_are_**, are now both globally available (i.e. attached to the ``` global ``` object)
+
+
+## API Documentation
+- [**_is_** main function](https://github.com/imaginate/are/blob/master/docs/is-main-func.md)
+- [**_is_** methods](https://github.com/imaginate/are/blob/master/docs/is-methods.md)
+- [**_are_** main function](https://github.com/imaginate/are/blob/master/docs/are-main-func.md)
+- [**_are_** methods](https://github.com/imaginate/are/blob/master/docs/are-methods.md)
+- [node.js specific functionality](https://github.com/imaginate/are/blob/master/docs/node-are.md)
+
+
+## Contact Us
+- [Open an issue](https://github.com/imaginate/are/issues) on this GitHub repository
+- Send an email to [learn@algorithmiv.com](mailto:learn@algorithmiv.com)
+
+<br />
+--
+**Happy Developing,**
+
+<a href="http://www.algorithmiv.com/are"><img src="http://www.algorithmiv.com/images/aIV-logo.png" alt="Algorithm IV Logo" /></a>
