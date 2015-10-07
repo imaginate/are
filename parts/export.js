@@ -68,6 +68,8 @@
 
   /** @type {function} */
   var _toStr = Object.prototype.toString;
+  /** @type {function} */
+  var _sliceArr = Array.prototype.slice;
 
   // INSERT is-main-func.js
 
