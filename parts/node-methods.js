@@ -10,6 +10,9 @@
  * @see [Closure Compiler specific JSDoc]{@link https://developers.google.com/closure/compiler/docs/js-for-compiler}
  */
 
+/** @type {!Object} */
+var fs = require('fs');
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // DEFINE PUBLIC METHODS - OTHERS
@@ -25,24 +28,20 @@ is.buffer = function(val) {
 is.buff = is.buffer;
 
 /**
- * @param {string} path
+ * @param {string} dirpath
  * @return {boolean}
  */
-is.directory = function(path) {
+is.directory = function(dirpath) {
 
   /** @type {boolean} */
   var result;
 
-  if ( !is.str(path) ) {
-    Log.error('Ivalid `is.directory` Call', 'invalid `path` param', {
-      argMap: true,
-      path:   path
-    });
+  if ( !is.str(dirpath) ) {
     return false;
   }
 
   try {
-    result = Fs.statSync(path).isDirectory();
+    result = fs.statSync(dirpath).isDirectory();
   }
   catch (e) {
     result = false;
@@ -52,20 +51,34 @@ is.directory = function(path) {
 is.dir = is.directory;
 
 /**
- * @param {string} path
+ * @param {!Array<string>} dirpaths
+ * @param {string=} rootdir [default= '']
  * @return {boolean}
  */
-is.file = function(path) {
+is.directories = function(dirpaths, rootdir) {
+  rootdir = is.str(rootdir) ? rootdir.replace(/([^\/]$)/, '$1/') : '';
+  return dirpaths.every(function(/** string */ dirpath) {
+    return is.dir(rootdir + dirpath);
+  });
+};
+is.directorys = is.directories;
+is.dirs = is.directories;
+
+/**
+ * @param {string} filepath
+ * @return {boolean}
+ */
+is.file = function(filepath) {
 
   /** @type {boolean} */
   var result;
 
-  if ( !is.str(path) ) {
+  if ( !is.str(filepath) ) {
     return false;
   }
 
   try {
-    result = Fs.statSync(path).isFile();
+    result = fs.statSync(filepath).isFile();
   }
   catch (e) {
     result = false;
@@ -74,26 +87,13 @@ is.file = function(path) {
 };
 
 /**
- * @param {!Array<string>} files
- * @param {string=} root [default= '']
+ * @param {!Array<string>} filepaths
+ * @param {string=} rootdir [default= '']
  * @return {boolean}
  */
-is.files = function(files, root) {
-
-  /** @type {boolean} */
-  var result;
-
-  root = is.str(root) ? root.replace(/([^\/]$)/, '$1/') : '';
-  return files.every(function(/** string */ file) {
-    if ( !is.str(file) ) {
-      return false;
-    }
-    try {
-      result = Fs.statSync(root + file).isFile();
-    }
-    catch (e) {
-      result = false;
-    }
-    return result;
+is.files = function(filepaths, rootdir) {
+  rootdir = is.str(rootdir) ? rootdir.replace(/([^\/]$)/, '$1/') : '';
+  return filepaths.every(function(/** string */ filepath) {
+    return is.file(rootdir + filepath);
   });
 };
