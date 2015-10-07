@@ -16,7 +16,7 @@
  * MAKE SHORTCUTS
  * -----------------------------------------------------------------------------
  * `$ node make` => `$node make dev`
- * `$ node make dev` => `$ node make <insert_dev_tasks_here>`
+ * `$ node make dev` => `$ node make compile`
  * `$ node make live` => `$ node make dev minify`
  * `$ node make production` => `$ node make live`
  */
@@ -27,6 +27,7 @@
  * -----------------------------------------------------------------------------
  * | Task    | Opts/Args  | Default Args |
  * | :------ | :--------- | :----------- |
+ * | compile | are        | are          |
  * | minify  | js         | js           |
  * ---------------------------------------
  */
@@ -54,7 +55,7 @@ var shortcuts;
 var tasks;
 
 shortcuts = {
-  dev: 'aTask',
+  dev: 'compile',
   live: 'dev minify'
 };
 shortcuts.production = shortcuts.live;
