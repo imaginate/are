@@ -76,7 +76,7 @@ var is = (function() {
     str:  function(val) { return typeof val === 'string'; },
     num:  function(val) { return typeof val === 'number'; },
     obj:  function(val) { return !!val && typeof val === 'object'; },
-    func: function(val) { return !!val && typeof val === 'function'; },
+    func: function(val) { return !!val && typeof val === 'function'; }
   };
   _is.arr = function(val) {
     return _is.obj(val) && _toStr.call(val) === '[object Array]';
