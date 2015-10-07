@@ -15,6 +15,8 @@
 
 'use strict';
 
+/** @type {!Object} */
+var fs = require('fs');
 /** @type {!Object<string, function>} */
 var is = require('./is');
 /** @type {!Function<string, function>} */
@@ -175,6 +177,25 @@ Vitals.copy = function(source, dest, force) {
   else {
     shell.cp('-f', source, dest);
   }
+};
+
+/**
+ * @param {string} filepath
+ * @param {?string=} encoding [default= 'utf8']
+ * @return {(string|Buffer)}
+ */
+Vitals.retrieve = function(filepath, encoding) {
+
+  is.file(filepath) || log.error(
+    'Invalid `Vitals.retrieve` Call',
+    'invalid `filepath` param (i.e. must be a valid filepath string)',
+    { argMap: true, filepath: filepath }
+  );
+
+  encoding = is.str(encoding) || is.null(encoding) ? encoding : 'utf8';
+  return ( encoding ?
+    fs.readFileSync(filepath, encoding) : fs.readFileSync(filepath)
+  );
 };
 
 
