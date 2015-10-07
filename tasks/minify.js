@@ -60,7 +60,7 @@ methods.js = function() {
   cmd = 'java -jar ' + compiler + ' --js ' + dest + ' -W QUIET';
   exec(cmd, { silent: true }).output
     .replace(/\r\n?/g, '\n')
-    .replace(/^(.)/, copyright + '\n$1')
+    .replace(/^\/\*[\s\S]*?\*\//, copyright)
     .to(dest);
 
   log.pass('Completed `minify.js` Task');
