@@ -14,9 +14,13 @@
   },
   "homepage": "https://github.com/imaginate/are",
   "devDependencies": {
+    "mocha": "^2.3.3",
     "lodash": "^3.10.1",
     "colors": "^1.1.2",
     "shelljs": "^0.5.1"
+  },
+  "scripts": {
+    "test": "node ./node_modules/mocha/bin/mocha ./tests/*.js -r assert -r src/are.min"
   },
   "keywords": [
     "are",
