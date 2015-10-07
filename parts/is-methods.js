@@ -42,21 +42,21 @@ is.bool = is.boolean;
 
 /**
  * @param {*} val
- * @param {boolean=} empty - the return value for empty strings [default= false]
+ * @param {boolean=} empty - the return value for empty strings [default= true]
  * @return {boolean}
  */
 is.string = function(val, empty) {
-  return (empty === true || !!val) && typeof val === 'string';
+  return (empty !== false || !!val) && typeof val === 'string';
 };
 is.str = is.string;
 
 /**
  * @param {*} val
- * @param {boolean=} zero - the return value for 0 [default= false]
+ * @param {boolean=} zero - the return value for 0 [default= true]
  * @return {boolean}
  */
 is.number = function(val, zero) {
-  return (zero === true || !!val) && typeof val === 'number';
+  return (zero !== false || !!val) && typeof val === 'number';
 };
 is.num = is.number;
 
