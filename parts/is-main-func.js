@@ -31,7 +31,10 @@ var is = (function() {
     }
 
     types = type.toLowerCase().replace(regex.charBloat, '').split('|');
-    validTypeString(type);
+    
+    if ( !validTypeString(types) ) {
+      return false;
+    }
 
     // Check for automatic pass ('*' = any value)
     if ( regex.any.test(type) ) {
@@ -209,21 +212,18 @@ var is = (function() {
 
     /** @type {number} */
     var i;
-    /** @type {boolean} */
-    var pass;
 
     i = types.length;
-    pass = true;
-    while (pass && i--) {
-      pass = regex.allTypes.test( types[i] );
+    while (i--) {
+      if ( !regex.allTypes.test( types[i] ) ) {
+        throw new Error(
+          'An is(type, val) call received an invalid data type within the ' +
+          'type param; invalid type => ' + types[i]
+        );
+        return false;
+      }
     }
-    if (!pass) {
-      throw new Error(
-        'An is(type, val) call received an invalid data type within the type ' +
-        'param; invalid type => ' + types[i]
-      );
-    }
-    return pass;
+    return true;
   }
 
   /**
@@ -237,14 +237,11 @@ var is = (function() {
     var i;
     /** @type {string} */
     var type;
-    /** @type {boolean} */
-    var pass;
     /** @type {?function} */
     var check;
 
     i = types.length;
-    pass = false;
-    while (!pass && i--) {
+    while (i--) {
       type = types[i];
       type = shorthand.hasOwnProperty(type) ? shorthand[type] : type;
       check = regex.arrays.test(type) ? checkArrayVals : null;
@@ -256,9 +253,11 @@ var is = (function() {
           'missing prop => ' + type
         );
       }
-      pass = check ? check(val, type) : checks['_' + type](val);
+      if ( check ? check(val, type) : checks['_' + type](val) ) {
+        return true;
+      }
     }
-    return pass;
+    return false;
   }
 
   /**
@@ -269,15 +268,14 @@ var is = (function() {
 
     /** @type {number} */
     var i;
-    /** @type {boolean} */
-    var pass;
 
     i = types.length;
-    pass = true;
-    while (pass && i--) {
-      pass = !regex.nonNull.test( types[i] );
+    while (i--) {
+      if ( !regex.nonNull.test( types[i] ) ) {
+        return true;
+      }
     }
-    return pass;
+    return false;
   }
 
   /**
@@ -289,8 +287,6 @@ var is = (function() {
 
     /** @type {number} */
     var i;
-    /** @type {boolean} */
-    var pass;
     /** @type {function} */
     var check;
 
@@ -309,11 +305,12 @@ var is = (function() {
     check = checks['_' + type];
 
     i = arr.length;
-    pass = true;
-    while (pass && i--) {
-      pass = check( arr[i] );
+    while (i--) {
+      if ( !check( arr[i] ) ) {
+        return false;
+      }
     }
-    return pass;
+    return true;
   }
 
   /**
