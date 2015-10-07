@@ -34,7 +34,7 @@
 
 'use strict';
 
-require('./node_helpers/vitals')(); // appends helpers to global obj
+require('./helpers/vitals')(); // appends helpers to global obj
 
 
 ////////////////////////////////////////////////////////////////////////////////

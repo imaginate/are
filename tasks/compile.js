@@ -11,10 +11,10 @@
 
 'use strict';
 
-require('../node_helpers/vitals')(); // appends helpers to global obj
+require('../helpers/vitals')(); // appends helpers to global obj
 
 /** @type {function} */
-var makeTask = require('../node_helpers/task');
+var makeTask = require('../helpers/task');
 
 
 ////////////////////////////////////////////////////////////////////////////////
