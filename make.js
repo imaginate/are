@@ -17,7 +17,7 @@
  * -----------------------------------------------------------------------------
  * `$ node make` => `$node make dev`
  * `$ node make dev` => `$ node make compile`
- * `$ node make live` => `$ node make dev minify`
+ * `$ node make live` => `$ node make compile minify`
  * `$ node make production` => `$ node make live`
  */
 
@@ -56,7 +56,7 @@ var tasks;
 
 shortcuts = {
   dev: 'compile',
-  live: 'dev minify'
+  live: 'compile minify'
 };
 shortcuts.production = shortcuts.live;
 
