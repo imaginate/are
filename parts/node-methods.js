@@ -49,7 +49,9 @@ is.directory = function(dirpath) {
   catch (e) {
     result = false;
   }
-  return result;
+  finally {
+    return result;
+  }
 };
 is.dir = is.directory;
 
@@ -86,7 +88,9 @@ is.file = function(filepath) {
   catch (e) {
     result = false;
   }
-  return result;
+  finally {
+    return result;
+  }
 };
 
 /**
