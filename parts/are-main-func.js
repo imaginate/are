@@ -11,6 +11,10 @@
  */
 
 
+// *****************************************************************************
+// SECTION: ARE MAIN FUNCTION
+// *****************************************************************************
+
 /**
  * @param {string} type - A string of the data types to check for.
  * @param {*...} vals - The values to be evaluated.
