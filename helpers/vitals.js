@@ -150,6 +150,33 @@ Vitals.fill = require('lodash/array/fill');
  */
 Vitals.exec = shell.exec;
 
+/**
+ * @param {string} source
+ * @param {string} dest
+ * @param {boolean=} force [default= true]
+ */
+Vitals.copy = function(source, dest, force) {
+
+  is.file(source) || log.error(
+    'Invalid `Vitals.copy` Call',
+    'invalid `source` param (i.e. must be a valid filepath string)',
+    { argMap: true, source: source }
+  );
+
+  is.str(dest) || log.error(
+    'Invalid `Vitals.copy` Call',
+    'invalid type for `dest` param',
+    { argMap: true, dest: dest }
+  );
+
+  if (force === false) {
+    shell.cp(source, dest)
+  }
+  else {
+    shell.cp('-f', source, dest);
+  }
+};
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // APPEND METHODS TO GLOBAL OBJ
