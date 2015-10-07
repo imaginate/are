@@ -15,10 +15,10 @@
  * -----------------------------------------------------------------------------
  * MAKE SHORTCUTS
  * -----------------------------------------------------------------------------
- * `$ node make` => `$node make dev`
- * `$ node make dev` => `$ node make compile`
- * `$ node make live` => `$ node make compile minify`
- * `$ node make production` => `$ node make live`
+ * optional task formats: `$ node make --task` or `node make task`
+ * shortcuts:
+ *   `$ node make` => `$ node make --dev`
+ *   `$ node make --dev` => `$ node make --compile --minify`
  */
 
 /*
