@@ -47,7 +47,7 @@ methods.are = function() {
         return ( insertname === filename ?
           retrieve('parts/' + filename)
             .replace(/\r\n?/g, '\n')
-            .replace(/^\/\*[\s\S]*?\*\//, '')
+            .replace(/^\/\*[\s\S]*?\*\/\n\n/, '')
           : match
         );
       }
