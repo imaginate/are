@@ -28,7 +28,7 @@
  * | Task    | Opts/Args  | Default Args |
  * | :------ | :--------- | :----------- |
  * | compile | are|nodeAre| are|nodeAre  |
- * | minify  | js         | js           |
+ * | minify  | are|nodeAre| are|nodeAre  |
  * ---------------------------------------
  */
 

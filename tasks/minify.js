@@ -22,6 +22,32 @@ var makeTask = require('../helpers/task');
 
 
 ////////////////////////////////////////////////////////////////////////////////
+// DEFINE PRIVATE METHODS
+////////////////////////////////////////////////////////////////////////////////
+
+function minify(filepath, copyright) {
+
+  /** @type {string} */
+  var compiler;
+  /** @type {string} */
+  var cmd;
+
+  compiler = 'vendor/closure-compiler.jar';
+
+  is.file(compiler) || log.error(
+    'Failed `minify` Task',
+    'missing compiler: `' + compiler + '`'
+  );
+
+  cmd = 'java -jar ' + compiler + ' --js ' + filepath + ' -W QUIET';
+  exec(cmd, { silent: true }).output
+    .replace(/\r\n?/g, '\n')
+    .replace(/^\/\*[\s\S]*?\*\//, copyright)
+    .to(filepath);
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
 // DEFINE THE TASK METHODS
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -29,41 +55,51 @@ var makeTask = require('../helpers/task');
 var methods = {};
 
 /** @type {function} */
-methods.js = function() {
+methods.are = function() {
 
   /** @type {string} */
   var source;
   /** @type {string} */
   var dest;
   /** @type {string} */
-  var compiler;
-  /** @type {string} */
   var copyright;
-  /** @type {string} */
-  var cmd;
 
   source = 'src/are.js';
   dest = 'src/are.min.js';
-  compiler = 'vendor/closure-compiler.jar';
   copyright = (
     '/* are.js v0.0.1 (https://github.com/imaginate/are)\n' +
     ' * Copyright (c) 2015 Adam A Smith <adam@imaginate.life>\n' +
     ' * The Apache License (github.com/imaginate/are/blob/master/LICENSE.md) */'
   );
 
-  is.file(compiler) || log.error(
-    'Failed `minify` Task',
-    'missing compiler: `' + compiler + '`'
+  copy(source, dest);
+  minify(dest, copyright);
+
+  log.pass('Completed `minify.are` Task');
+};
+
+/** @type {function} */
+methods.nodeAre = function() {
+
+  /** @type {string} */
+  var source;
+  /** @type {string} */
+  var dest;
+  /** @type {string} */
+  var copyright;
+
+  source = 'src/node-are.js';
+  dest = 'src/node-are.min.js';
+  copyright = (
+    '/* node-are.js v0.0.1 (https://github.com/imaginate/are)\n' +
+    ' * Copyright (c) 2015 Adam A Smith <adam@imaginate.life>\n' +
+    ' * The Apache License (github.com/imaginate/are/blob/master/LICENSE.md) */'
   );
 
   copy(source, dest);
-  cmd = 'java -jar ' + compiler + ' --js ' + dest + ' -W QUIET';
-  exec(cmd, { silent: true }).output
-    .replace(/\r\n?/g, '\n')
-    .replace(/^\/\*[\s\S]*?\*\//, copyright)
-    .to(dest);
+  minify(dest, copyright);
 
-  log.pass('Completed `minify.js` Task');
+  log.pass('Completed `minify.nodeAre` Task');
 };
 
 
@@ -72,4 +108,4 @@ methods.js = function() {
 ////////////////////////////////////////////////////////////////////////////////
 
 /** @type {!Task} */
-module.exports = makeTask('minify', 'js', methods);
+module.exports = makeTask('minify', 'are-nodeAre', methods);
