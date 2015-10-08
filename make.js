@@ -55,10 +55,8 @@ var shortcuts;
 var tasks;
 
 shortcuts = {
-  dev: 'compile',
-  live: 'compile minify'
+  dev: 'compile minify'
 };
-shortcuts.production = shortcuts.live;
 
 tasks = ( process.argv.length > 2 ?
   process.argv
