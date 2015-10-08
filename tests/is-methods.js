@@ -107,34 +107,34 @@ var methods = {
 
 describe('is-methods', function() {
   forOwn(methods, function(/** !Object */ section, /** string */ sectionName) {
-    describe(sectionName, function() {
-      forOwn(section, function(/** !Object */ method, /** string */ methodName){
+    describe('\n    ' + sectionName, function() {
+      forOwn(section, function(/** !Object */ method,/** string */ methodName) {
         describe('is.' + methodName, function() {
-          it('true tests', function() {
+          it('truthy', function() {
             method.truthy.forEach(function(/** * */ val) {
               assert.strictEqual(true, is[methodName](val));
             });
           });
-          it('false tests', function() {
+          it('falsey', function() {
             method.falsey.forEach(function(/** * */ val) {
               assert.strictEqual(false, is[methodName](val));
             });
           });
-          if (method.hasOwnProperty('shortcut') && method.shortcut) {
-            describe('is.' + method.shortcut, function() {
-              it('true tests', function() {
-                method.truthy.forEach(function(/** * */ val) {
-                  assert.strictEqual(true, is[method.shortcut](val));
-                });
-              });
-              it('false tests', function() {
-                method.falsey.forEach(function(/** * */ val) {
-                  assert.strictEqual(false, is[method.shortcut](val));
-                });
+        });
+        if (method.hasOwnProperty('shortcut') && method.shortcut) {
+          describe('is.' + method.shortcut, function() {
+            it('truthy', function() {
+              method.truthy.forEach(function(/** * */ val) {
+                assert.strictEqual(true, is[method.shortcut](val));
               });
             });
-          }
-        });
+            it('falsey', function() {
+              method.falsey.forEach(function(/** * */ val) {
+                assert.strictEqual(false, is[method.shortcut](val));
+              });
+            });
+          });
+        }
       });
     });
   });
