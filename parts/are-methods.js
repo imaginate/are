@@ -92,6 +92,16 @@ are.string = function() {
 are.str = are.string;
 
 /**
+ * Empty strings return false in this method.
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are._string = function() {
+  return _checkAreArr('_string', arguments);
+};
+are._str = are._string;
+
+/**
  * @param {*...} vals
  * @return {boolean}
  */
@@ -99,6 +109,16 @@ are.number = function() {
   return _checkAreArr('number', arguments);
 };
 are.num = are.number;
+
+/**
+ * Zeros return false in this method.
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are._number = function() {
+  return _checkAreArr('_number', arguments);
+};
+are._num = are._number;
 
 
 ////////////////////////////////////////////////////////////////////////////
