@@ -122,7 +122,7 @@ is.regex = is.regexp;
  * @return {boolean}
  */
 is.document = function(val) {
-  return is.obj(val) && obj.nodeType === 9;
+  return is.obj(val) && val.nodeType === 9;
 };
 is.doc = is.document;
 
@@ -131,6 +131,6 @@ is.doc = is.document;
  * @return {boolean}
  */
 is.element = function(val) {
-  return is.obj(val) && obj.nodeType === 1;
+  return is.obj(val) && val.nodeType === 1;
 };
 is.elem = is.element;
