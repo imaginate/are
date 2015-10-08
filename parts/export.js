@@ -41,7 +41,6 @@
   if (checks.exp && checks.mod) {
     if (module.exports === exports) {
       module.exports = _are;
-      _applyAre(module.exports);
     }
     else {
       _applyAre(exports);
@@ -90,7 +89,7 @@
     return true;
   }
 
-})(this, function setupAre() {
+})(this, function setupAre(undefined) {
 
   "use strict";
 
