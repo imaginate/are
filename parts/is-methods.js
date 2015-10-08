@@ -55,6 +55,16 @@ is.string = function(val, empty) {
 is.str = is.string;
 
 /**
+ * Empty strings return false in this method.
+ * @param {*} val
+ * @return {boolean}
+ */
+is._string = function(val) {
+  return is.string(val, false);
+};
+is._str = is._string;
+
+/**
  * @param {*} val
  * @param {boolean=} zero - the return value for 0 [default= true]
  * @return {boolean}
@@ -63,6 +73,16 @@ is.number = function(val, zero) {
   return (zero !== false || !!val) && typeof val === 'number';
 };
 is.num = is.number;
+
+/**
+ * Zeros return false in this method.
+ * @param {*} val
+ * @return {boolean}
+ */
+is._number = function(val) {
+  return is.number(val, false);
+};
+is._num = is._number;
 
 
 //////////////////////////////////////////////////////////////////////////////
