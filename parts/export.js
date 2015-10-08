@@ -106,6 +106,8 @@
 
   // INSERT are-methods.js
 
+  // INSERT node-methods.js
+
   return {
     is:  is,
     Is:  is,
