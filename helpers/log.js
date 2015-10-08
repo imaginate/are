@@ -353,9 +353,9 @@ function log(style, args) {
  */
 function logSpace(spaces) {
   is.num(spaces, true) || helperError('logSpace', 'spaces', spaces);
-  spaces > 0 && Array.apply(null, Array(spaces)).forEach(function() {
+  while (spaces--) {
     console.log('');
-  });
+  }
   return true;
 }
 

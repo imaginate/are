@@ -60,7 +60,9 @@ Vitals.loop = function(cycles, action) {
   );
 
   cycles = cycles < 0 ? Math.abs(cycles) : cycles;
-  cycles && Array.apply(null, Array(cycles)).forEach(action);
+  while(cycles--) {
+    action();
+  }
   return true;
 };
 
