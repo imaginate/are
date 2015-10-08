@@ -42,7 +42,6 @@
   if (checks.exp && checks.mod) {
     if (module.exports === exports) {
       module.exports = _are;
-      _applyAre(module.exports);
     }
     else {
       _applyAre(exports);
@@ -91,7 +90,7 @@
     return true;
   }
 
-})(this, function setupAre() {
+})(this, function setupAre(undefined) {
 
   "use strict";
 
@@ -489,6 +488,16 @@ is.string = function(val, empty) {
 is.str = is.string;
 
 /**
+ * Empty strings return false in this method.
+ * @param {*} val
+ * @return {boolean}
+ */
+is._string = function(val) {
+  return is.string(val, false);
+};
+is._str = is._string;
+
+/**
  * @param {*} val
  * @param {boolean=} zero - the return value for 0 [default= true]
  * @return {boolean}
@@ -497,6 +506,16 @@ is.number = function(val, zero) {
   return (zero !== false || !!val) && typeof val === 'number';
 };
 is.num = is.number;
+
+/**
+ * Zeros return false in this method.
+ * @param {*} val
+ * @return {boolean}
+ */
+is._number = function(val) {
+  return is.number(val, false);
+};
+is._num = is._number;
 
 
 //////////////////////////////////////////////////////////////////////////////
@@ -912,170 +931,181 @@ var are = (function() {
 // SECTION: ARE METHODS
 // *****************************************************************************
 
-;(function() {
 
-  ////////////////////////////////////////////////////////////////////////////
-  // DEFINE PRIVATE ARE HELPERS
-  ////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+// DEFINE PRIVATE ARE HELPERS
+////////////////////////////////////////////////////////////////////////
 
-  /**
-   * @private
-   * @param {string} method
-   * @param {!Arguments} args
-   * @return {!Array<*>}
-   */
-  function parseArgs(method, args) {
-    args = args.length > 1 ? _sliceArr.call(args, 0) : args[0];
-    if ( !is.arr(args) ) {
-      throw new Error(
-        'An are.' + method + '(vals) call did not receive multiple vals to ' +
-        'evaluate'
-      );
-      return [ args ];
-    }
-    return args;
-  }
+/**
+ * @private
+ * @param {string} method
+ * @param {!Arguments} args
+ * @return {boolean}
+ */
+function _checkAreArr(method, args) {
 
-  /**
-   * @private
-   * @param {function} check
-   * @param {!Array<*>} vals
-   * @return {boolean}
-   */
-  function checkArr(check, vals) {
+  /** @type {function} */
+  var check;
+  /** @type {number} */
+  var i;
 
-    /** @type {number} */
-    var i;
-
-    i = vals.length;
-    while (i--) {
-      if ( !check( vals[i] ) ) {
-        return false;
-      }
-    }
-    return true;
-  }
-
-
-  ////////////////////////////////////////////////////////////////////////////
-  // DEFINE PUBLIC ARE METHODS - PRIMITIVES
-  ////////////////////////////////////////////////////////////////////////
-
-  /**
-   * @param {*...} vals
-   * @return {boolean}
-   */
-  are.null = function() {
-    return checkArr(is.null, parseArgs('null', arguments));
-  };
-
-  /**
-   * @param {*...} vals
-   * @return {boolean}
-   */
-  are.undefined = function() {
-    return checkArr(is.undefined, parseArgs('undefined', arguments));
-  };
-
-  /**
-   * @param {*...} vals
-   * @return {boolean}
-   */
-  are.boolean = function() {
-    return checkArr(is.boolean, parseArgs('boolean', arguments));
-  };
-  are.bool = are.boolean;
-
-  /**
-   * @param {*...} vals
-   * @return {boolean}
-   */
-  are.string = function() {
-    return checkArr(is.string, parseArgs('string', arguments));
-  };
-  are.str = are.string;
-
-  /**
-   * @param {*...} vals
-   * @return {boolean}
-   */
-  are.number = function() {
-    return checkArr(is.number, parseArgs('number', arguments));
-  };
-  are.num = are.number;
-
-
-  ////////////////////////////////////////////////////////////////////////////
-  // DEFINE PUBLIC ARE METHODS - JS OBJECTS
-  ////////////////////////////////////////////////////////////////////////
-
-  /**
-   * @param {*...} vals
-   * @return {boolean}
-   */
-  are.object = function() {
-    return checkArr(is.object, parseArgs('object', arguments));
-  };
-  are.obj = are.object;
-
-  /**
-   * @param {*...} vals
-   * @return {boolean}
-   */
-  are.func = function() {
-    return checkArr(is.func, parseArgs('function', arguments));
-  };
-  try {
-    are.function = are.func;
-  }
-  catch(e) {
-    console.log(
-      'Your JS engine does not support are.function(). Use are.func() instead.'
+  args = args.length > 1 ? _sliceArr.call(args, 0) : args[0];
+  if ( !is.array(args) ) {
+    throw new Error(
+      'An are.' + method + '(vals) call did not receive multiple vals to ' +
+      'evaluate'
     );
+    args = [ args ];
   }
 
-  /**
-   * @param {*...} vals
-   * @return {boolean}
-   */
-  are.array = function() {
-    return checkArr(is.array, parseArgs('array', arguments));
-  };
-  are.arr = are.array;
-
-  /**
-   * @param {*...} vals
-   * @return {boolean}
-   */
-  are.regexp = function() {
-    return checkArr(is.regexp, parseArgs('regexp', arguments));
-  };
-  are.regex = are.regexp;
+  check = is[method];
+  i = args.length;
+  while (i--) {
+    if ( !check( args[i] ) ) {
+      return false;
+    }
+  }
+  return true;
+}
 
 
-  ////////////////////////////////////////////////////////////////////////////
-  // DEFINE PUBLIC ARE METHODS - DOM OBJECTS
-  ////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////
+// DEFINE PUBLIC ARE METHODS - PRIMITIVES
+////////////////////////////////////////////////////////////////////////
 
-  /**
-   * @param {*...} vals
-   * @return {boolean}
-   */
-  are.document = function() {
-    return checkArr(is.document, parseArgs('document', arguments));
-  };
-  are.doc = are.document;
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.null = function() {
+  return _checkAreArr('null', arguments);
+};
 
-  /**
-   * @param {*...} vals
-   * @return {boolean}
-   */
-  are.element = function() {
-    return checkArr(is.element, parseArgs('element', arguments));
-  };
-  are.elem = are.element;
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.undefined = function() {
+  return _checkAreArr('undefined', arguments);
+};
 
-})();
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.boolean = function() {
+  return _checkAreArr('boolean', arguments);
+};
+are.bool = are.boolean;
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.string = function() {
+  return _checkAreArr('string', arguments);
+};
+are.str = are.string;
+
+/**
+ * Empty strings return false in this method.
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are._string = function() {
+  return _checkAreArr('_string', arguments);
+};
+are._str = are._string;
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.number = function() {
+  return _checkAreArr('number', arguments);
+};
+are.num = are.number;
+
+/**
+ * Zeros return false in this method.
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are._number = function() {
+  return _checkAreArr('_number', arguments);
+};
+are._num = are._number;
+
+
+////////////////////////////////////////////////////////////////////////////
+// DEFINE PUBLIC ARE METHODS - JS OBJECTS
+////////////////////////////////////////////////////////////////////////
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.object = function() {
+  return _checkAreArr('object', arguments);
+};
+are.obj = are.object;
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.func = function() {
+  return _checkAreArr('func', arguments);
+};
+try {
+  are.function = are.func;
+}
+catch(e) {
+  console.log(
+    'Your JS engine does not support are.function(). Use are.func() instead.'
+  );
+}
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.array = function() {
+  return _checkAreArr('array', arguments);
+};
+are.arr = are.array;
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.regexp = function() {
+  return _checkAreArr('regexp', arguments);
+};
+are.regex = are.regexp;
+
+
+////////////////////////////////////////////////////////////////////////////
+// DEFINE PUBLIC ARE METHODS - DOM OBJECTS
+////////////////////////////////////////////////////////////////////////
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.document = function() {
+  return _checkAreArr('document', arguments);
+};
+are.doc = are.document;
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.element = function() {
+  return _checkAreArr('element', arguments);
+};
+are.elem = are.element;
 
   return {
     is:  is,
