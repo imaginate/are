@@ -13,28 +13,47 @@
 
 ;(function(/** Object */ root, /** function(Object) */ setupAre) {
 
-  /** @type {(Object|?function)} */
-  var exports = _isObj(typeof exports) && _getObj(exports, true);
-  /** @type {(Object|?function)} */
-  var module = _isObj(typeof module) && _getObj(module, true);
-  /** @type {(Object|?function)} */
-  var window = _isObj(typeof window) && _getObj(window);
+  /** @type {!{ is: !Object, are: !Object }} */
+  var _are = setupAre();
+  /** @type {!Object} */
+  var checks = {
+    exp: _isObj(typeof exports) && _getObj(exports, true),
+    mod: _isObj(typeof module) && _getObj(module, true),
+    glo: _isObj(typeof global, true) && _getObj(global),
+    win: _isObj(typeof window) && _getObj(window),
+    sel: _isObj(typeof self) && _getObj(self),
+    roo: _isObj(typeof root) && _getObj(root)
+  };
+  checks.glo = checks.exp && checks.mod && checks.glo;
 
-  root = (function(global, window, self) {
-    return global || window || self || root;
-  })(
-    exports && module && _isObj(typeof global, true) && _getObj(global),
-    ( window && root && window === root.window ? null : window ),
-    _isObj(typeof self) && _getObj(self)
+  root = ( checks.glo ?
+    global : checks.win && window !== (root && root.window) ?
+      window : checks.sel ?
+        self : checks.roo ?
+          root : Function('return this')()
   );
 
-  setupAre(root || {});
+  // window | self | global | this
+  checks.win && _applyAre(window);
+  checks.sel && _applyAre(self);
+  _applyAre(root);
+
+  // exports
+  if (checks.exp && checks.mod) {
+    if (module.exports === exports) {
+      module.exports = _are;
+      _applyAre(module.exports);
+    }
+    else {
+      _applyAre(exports);
+    }
+  }
 
   // AMD
   if (typeof define === 'function' && define.amd &&
       typeof define.amd === 'object') {
-    define('are', function() {
-      return null;
+    define(function() {
+      return _are;
     });
   }
 
@@ -42,10 +61,10 @@
    * @private
    * @param {string} typeOf
    * @param {boolean=} noFunc
-   * @return {?boolean}
+   * @return {boolean}
    */
   function _isObj(typeOf, noFunc) {
-    return typeOf === 'object' || (!noFunc && typeOf === 'function') || null;
+    return typeOf === 'object' || (!noFunc && typeOf === 'function');
   }
 
   /**
@@ -55,17 +74,26 @@
    * @return {boolean}
    */
   function _getObj(obj, testNodeType) {
-    obj = obj && testNodeType && obj.nodeType ? null : obj;
-    return obj && !testNodeType && !obj.Object ? null : obj;
+    obj = obj && testNodeType && obj.nodeType ? false : obj;
+    return obj && !testNodeType && obj.Object !== Object ? false : !!obj;
   }
 
-})(this, function setupAre(/** Object */ root) {
+  /**
+   * @private
+   * @param {(!Object|function)} obj
+   * @return {boolean}
+   */
+  function _applyAre(obj) {
+    obj.is = _are.is;
+    obj.Is = _are.Is;
+    obj.are = _are.are;
+    obj.Are = _are.Are;
+    return true;
+  }
+
+})(this, function setupAre() {
 
   "use strict";
-
-  /** @type {!Object} */
-  var console = typeof console === 'object' && console ? console : {};
-  console.log = console.log || function() {};
 
   /** @type {function} */
   var _toStr = Object.prototype.toString;
@@ -1049,8 +1077,10 @@ var are = (function() {
 
 })();
 
-  root.is = is;
-  root.Is = is;
-  root.are = are;
-  root.Are = are;
+  return {
+    is:  is,
+    Is:  is,
+    are: are,
+    Are: are
+  };
 });
