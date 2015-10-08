@@ -76,9 +76,9 @@ methods.nodeAre = function() {
   contents = retrieve('parts/export.js')
                .replace(/\r\n?/g, '\n')
                .replace(/^\/\*[\s\S]*?\*\//, '');
-  inserts = 'is-main-func is-methods '   +
-            'are-main-func are-methods ' +
-            'node-methods'.split(' ');
+  inserts = (
+    'is-main-func is-methods are-main-func are-methods node-methods'
+  ).split(' ');
 
   regex = /  \/\/ INSERT ([a-z-]+\.js)\n/g;
   each(inserts, function(/** string */ filename) {
