@@ -34,7 +34,7 @@ function _checkAreArr(method, args) {
   var i;
 
   args = args.length > 1 ? _sliceArr.call(args, 0) : args[0];
-  if ( !is.arr(args) ) {
+  if ( !is.array(args) ) {
     throw new Error(
       'An are.' + method + '(vals) call did not receive multiple vals to ' +
       'evaluate'
