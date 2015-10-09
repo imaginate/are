@@ -27,7 +27,7 @@ var makeTask = require('../helpers/task');
 ////////////////////////////////////////////////////////////////////////////////
 
 /** @type {string} */
-var mocha = 'node ./node_modules/mocha/bin/mocha -c';
+var mocha = 'node ./node_modules/mocha/bin/mocha -c -R dot';
 
 /** @type {function} */
 function configLog() {
@@ -52,7 +52,7 @@ methods.are = function() {
   /** @type {string} */
   var tests;
 
-  source = './src/are.min.js';
+  source = './src/are.js';
   tests = './tests/node/*.js';
 
   configLog();
@@ -72,7 +72,7 @@ methods.nodeAre = function() {
   /** @type {string} */
   var tests;
 
-  source = './src/node-are.min.js';
+  source = './src/node-are.js';
   tests = './tests/node/*.js';
 
   configLog();
