@@ -97,10 +97,10 @@ var are = (function() {
     return _is.obj(val) && _toStr.call(val) === '[object RegExp]';
   };
   _is.doc = function(val) {
-    return _is.obj(val) && obj.nodeType === 9;
+    return _is.obj(val) && val.nodeType === 9;
   };
   _is.elem = function(val) {
-    return _is.obj(val) && obj.nodeType === 1;
+    return _is.obj(val) && val.nodeType === 1;
   };
 
   ////////////////////////////////////////////////////////////////////////
