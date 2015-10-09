@@ -97,6 +97,12 @@
   var _toStr = Object.prototype.toString;
   /** @type {function} */
   var _sliceArr = Array.prototype.slice;
+  /** @type {function} */
+  var _has = function(obj, prop) {
+    return obj.hasOwnProperty(prop);
+  };
+  /** @type {boolean} */
+  var _log = typeof console === 'object' && typeof console.log === 'function';
 
   // INSERT is-methods.js
 
