@@ -110,6 +110,8 @@
 
   // INSERT node-methods.js
 
+  // INSERT main-func-helpers.js
+
   // INSERT is-main-func.js
 
   // INSERT are-main-func.js
@@ -125,13 +127,13 @@
     var prop;
 
     for (prop in is) {
-      if ( is.hasOwnProperty(prop) ) {
+      if ( _has(is, prop) ) {
         Is[prop] = is[prop];
       }
     }
 
     for (prop in are) {
-      if ( are.hasOwnProperty(prop) ) {
+      if ( _has(are, prop) ) {
         Are[prop] = are[prop];
       }
     }
