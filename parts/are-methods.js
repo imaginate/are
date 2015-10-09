@@ -138,6 +138,7 @@ are.object = function() {
 are.obj = are.object;
 
 /**
+ * Functions return true in this method.
  * @param {*...} vals
  * @return {boolean}
  */

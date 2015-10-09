@@ -95,19 +95,23 @@ is._num = is._number;
 
 /**
  * @param {*} val
+ * @param {boolean=} funcs - the return value for functions [default= false]
  * @return {boolean}
  */
-is.object = function(val) {
-  return !!val && typeof val === 'object';
+is.object = function(val, funcs) {
+  return !!val && (typeof val === 'object' || (
+    funcs === true && typeof val === 'function'
+  ));
 };
 is.obj = is.object;
 
 /**
+ * Functions return true in this method.
  * @param {*} val
  * @return {boolean}
  */
 is._object = function(val) {
-  return !!val && (typeof val === 'object' || typeof val === 'function');
+  return is.object(val, true);
 };
 is._obj = is._object;
 
