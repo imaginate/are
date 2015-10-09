@@ -45,7 +45,7 @@ var methods = {
     },
     undefined: {
       truthy: [ refs.un ],
-      falsey: [ refs.obj, refs.nil, refs.str, refs.arr, refs._bool ]
+      falsey: [ refs.obj, refs.nil, refs.str, refs.arr ]
     },
     boolean: {
       shortcut: 'bool',
