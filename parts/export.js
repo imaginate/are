@@ -117,32 +117,13 @@
   // INSERT are-main-func.js
 
 // *****************************************************************************
-// SECTION: END - RETURN IS & ARE
+// SECTION: END
 // *****************************************************************************
 
-  // append is & are methods to the is & are main functions
-  ;(function () {
-
-    /** @type {string} */
-    var prop;
-
-    for (prop in is) {
-      if ( _has(is, prop) ) {
-        Is[prop] = is[prop];
-      }
-    }
-
-    for (prop in are) {
-      if ( _has(are, prop) ) {
-        Are[prop] = are[prop];
-      }
-    }
-  })();
-
   return {
-    is:  Is,
-    Is:  Is,
-    are: Are,
-    Are: Are
+    is:  is,
+    Is:  is,
+    are: are,
+    Are: are
   };
 });

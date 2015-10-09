@@ -21,7 +21,7 @@
  * @return {boolean} The evaluation result.
  * @see [main is function docs for more info]{@link https://github.com/imaginate/are/blob/master/docs/is-main-func.md}
  */
-function Is(type, val) {
+function is(type, val) {
 
   /** @type {!Array<string>} */
   var types;
