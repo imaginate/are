@@ -782,8 +782,8 @@ var _shorthand = {
  */
 var _mainChecks = {
   _null:      is.nil,
-  _string:    is._str,
-  _number:    is._num,
+  _string:    is.str,
+  _number:    is.num,
   _boolean:   is.bool,
   _object:    is.obj,
   _function:  is.func,
