@@ -210,6 +210,10 @@ are.elem = are.element;
 //////////////////////////////////////////////////////////////////////////
 
 /**
+ * Checks if each value is considered empty. See below for all empty values.
+ *   empty values: 0, "", {}, [], null, undefined, false, NaN, function(){...}
+ *   note: for functions this method checks whether it has any defined params:
+ *     function(){} => true | function(param){} => false
  * @param {*...} vals
  * @return {boolean}
  */
