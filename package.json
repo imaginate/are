@@ -2,7 +2,7 @@
   "name": "node-are",
   "version": "0.0.1",
   "description": "Simple & Powerful JavaScript Type Checking",
-  "main": "src/node-are.js",
+  "main": "src/node-are.min.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/imaginate/are.git"
@@ -20,7 +20,7 @@
     "shelljs": "^0.5.1"
   },
   "scripts": {
-    "test": "node ./node_modules/mocha/bin/mocha -r ./src/are.min.js ./tests/*.js"
+    "test": "node make test"
   },
   "keywords": [
     "are",
