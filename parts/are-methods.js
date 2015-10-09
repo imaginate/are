@@ -67,6 +67,7 @@ function _checkAreArr(method, args) {
 are.null = function() {
   return _checkAreArr('null', arguments);
 };
+are.nil = are.null;
 
 /**
  * @param {*...} vals
@@ -154,6 +155,7 @@ are._obj = are._object;
 are.func = function() {
   return _checkAreArr('func', arguments);
 };
+are.fn = are.func;
 try {
   are.function = are.func;
 }

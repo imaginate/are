@@ -30,6 +30,7 @@ var is = {};
 is.null = function(val) {
   return val === null;
 };
+is.nil = is.null;
 
 /**
  * @param {*} val
@@ -122,6 +123,7 @@ is._obj = is._object;
 is.func = function(val) {
   return !!val && typeof val === 'function';
 };
+is.fn = is.func;
 try {
   is.function = is.func;
 }
