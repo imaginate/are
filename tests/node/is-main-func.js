@@ -81,12 +81,12 @@ var methods = {
     string: {
       shortcut: 'str',
       truthy: [ refs.str ],
-      falsey: [ refs.num, refs.bool, refs.obj ]
+      falsey: [ refs.num, refs.bool, refs.obj, refs.nil ]
     },
     number: {
       shortcut: 'num',
       truthy: [ refs.num, -5, 1.5 ],
-      falsey: [ refs.bool, refs.obj, refs.str ]
+      falsey: [ refs.bool, refs.obj, refs.str, refs.nil ]
     }
   },
   js_objects: {
@@ -124,10 +124,6 @@ var methods = {
     }
   },
   arrays: {
-    emptyArray: {
-      truthy: [ refs.arrays.un, refs.arr ],
-      falsey: [ refs.arrays.obj, refs.arrays.bool, refs.un ]
-    },
     booleans: {
       shortcut: 'bools',
       truthy: [ refs.arrays.bool, refs.arr ],
@@ -175,10 +171,6 @@ var methods = {
     }
   },
   maps: {
-    emptyMap: {
-      truthy: [ refs.maps.un, refs.obj ],
-      falsey: [ refs.maps.obj, refs.maps.bool, refs.un ]
-    },
     booleanMap: {
       shortcut: 'boolMap',
       truthy: [ refs.maps.bool, refs.obj ],

@@ -1,18 +1,17 @@
 ### Main Function: is
 
 
-| Primitives | Objects  | Arrays     | Hash Maps   | DOM Objects |
-| :--------: | :------: | :--------: | :---------: | :---------: |
-| string     | object   | strings    | stringMap   | element     |
-| number     | function | numbers    | numberMap   | document    |
-| boolean    | regexp   | booleans   | booleanMap  |             |
-| undefined  | array    | emptyArray | emptyMap    |             |
-|            |          | objects    | objectMap   |             |
-|            |          | functions  | functionMap |             |
-|            |          | regexps    | regexpMap   |             |
-|            |          | arrays     | arrayMap    |             |
-|            |          | elements   | elementMap  |             |
-|            |          | documents  | documentMap |             |
+| Primitives | Objects  | Arrays    | Hash Maps   | DOM Objects |
+| :--------: | :------: | :-------: | :---------: | :---------: |
+| string     | object   | strings   | stringMap   | element     |
+| number     | function | numbers   | numberMap   | document    |
+| boolean    | regexp   | booleans  | booleanMap  |             |
+| undefined  | array    | objects   | objectMap   |             |
+|            |          | functions | functionMap |             |
+|            |          | regexps   | regexpMap   |             |
+|            |          | arrays    | arrayMap    |             |
+|            |          | elements  | elementMap  |             |
+|            |          | documents | documentMap |             |
 
 
 ### Important Characters:
@@ -37,7 +36,6 @@
 | arr   | array     |
 | elem  | element   |
 | doc   | document  |
-| empty | undefined |
 | any   | *         |
 | null  | ?         |
 
