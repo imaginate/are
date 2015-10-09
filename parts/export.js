@@ -93,6 +93,8 @@
 
   "use strict";
 
+  /** @type {boolean} */
+  var _log = typeof console === 'object' && typeof console.log === 'function';
   /** @type {function} */
   var _toStr = Object.prototype.toString;
   /** @type {function} */
@@ -101,8 +103,6 @@
   var _has = function(obj, prop) {
     return obj.hasOwnProperty(prop);
   };
-  /** @type {boolean} */
-  var _log = typeof console === 'object' && typeof console.log === 'function';
 
   // INSERT is-methods.js
 
@@ -115,6 +115,7 @@
   // INSERT is-main-func.js
 
   // INSERT are-main-func.js
+
 
 // *****************************************************************************
 // SECTION: END
