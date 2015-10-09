@@ -58,10 +58,20 @@ var methods = {
       truthy: [ refs._str, refs.str ],
       falsey: [ refs.num, refs._bool, refs.obj ]
     },
+    _string: {
+      shortcut: '_str',
+      truthy: [ refs.str ],
+      falsey: [ refs._str, refs.num, refs._bool, refs.obj ]
+    },
     number: {
       shortcut: 'num',
       truthy: [ refs._num, refs.num, -5, 1.5 ],
       falsey: [ refs._str, refs.bool, refs.obj, refs.str ]
+    },
+    _number: {
+      shortcut: '_num',
+      truthy: [ refs.num, -5, 1.5 ],
+      falsey: [ refs._num, refs._str, refs.bool, refs.obj, refs.str ]
     }
   },
   js_objects: {
