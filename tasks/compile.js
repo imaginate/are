@@ -40,7 +40,9 @@ methods.are = function() {
                .replace(/\r\n?/g, '\n')
                .replace(/^\/\*[\s\S]*?\*\//, '')
                .replace(/  \/\/ INSERT node-methods.js\n\n/, '');
-  inserts = 'is-main-func is-methods are-main-func are-methods'.split(' ');
+  inserts = (
+    'main-func-helpers is-main-func are-main-func is-methods are-methods'
+  ).split(' ');
 
   regex = /  \/\/ INSERT ([a-z-]+\.js)\n/g;
   each(inserts, function(/** string */ filename) {
@@ -82,7 +84,8 @@ methods.nodeAre = function() {
                .replace(/\r\n?/g, '\n')
                .replace(/^\/\*[\s\S]*?\*\//, '');
   inserts = (
-    'is-main-func is-methods are-main-func are-methods node-methods'
+    'main-func-helpers is-main-func are-main-func is-methods are-methods ' +
+    'node-methods'
   ).split(' ');
 
   regex = /  \/\/ INSERT ([a-z-]+\.js)\n/g;
