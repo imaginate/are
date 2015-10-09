@@ -106,6 +106,15 @@ is.obj = is.object;
  * @param {*} val
  * @return {boolean}
  */
+is._object = function(val) {
+  return !!val && (typeof val === 'object' || typeof val === 'function');
+};
+is._obj = is._object;
+
+/**
+ * @param {*} val
+ * @return {boolean}
+ */
 is.func = function(val) {
   return !!val && typeof val === 'function';
 };
