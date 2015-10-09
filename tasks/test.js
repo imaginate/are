@@ -27,7 +27,15 @@ var makeTask = require('../helpers/task');
 ////////////////////////////////////////////////////////////////////////////////
 
 /** @type {string} */
-var mocha = 'node ./node_modules/mocha/bin/mocha -c -R dot';
+var mocha = (
+  'node ./node_modules/mocha/bin/mocha ' +
+  '--colors '         +
+  '--reporter dot '   +
+  '--slow 5 '         +
+  '--timeout 1000 '   +
+  '--globals is,are ' +
+  '--require '
+);
 
 /** @type {function} */
 function configLog() {
@@ -53,12 +61,12 @@ methods.are = function() {
   var tests;
 
   source = './src/are.js';
-  tests = './tests/node/*.js';
+  tests = './tests/all/*.js';
 
   configLog();
   log.debug('Starting `test.are` Task');
 
-  exec(mocha + ' -r ' + source + ' ' + tests);
+  exec(mocha + source + ' ' + tests);
 
   log.pass('Completed `test.are` Task');
   log.resetConfig();
@@ -73,12 +81,12 @@ methods.nodeAre = function() {
   var tests;
 
   source = './src/node-are.js';
-  tests = './tests/node/*.js';
+  tests = './tests/all/*.js';
 
   configLog();
   log.debug('Starting `test.nodeAre` Task');
 
-  exec(mocha + ' -r ' + source + ' ' + tests);
+  exec(mocha + source + ' ' + tests);
 
   log.pass('Completed `test.nodeAre` Task');
   log.resetConfig();
