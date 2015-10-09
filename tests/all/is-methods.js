@@ -80,6 +80,11 @@ var methods = {
       truthy: [ refs.obj, refs.arr, refs.regex ],
       falsey: [ refs.func, refs.nil, refs.str ]
     },
+    _object: {
+      shortcut: '_obj',
+      truthy: [ refs.func, refs.obj, refs.arr, refs.regex ],
+      falsey: [ refs.nil, refs.str, refs.num ]
+    },
     function: {
       shortcut: 'func',
       truthy: [ refs.func ],
