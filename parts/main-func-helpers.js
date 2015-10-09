@@ -53,15 +53,15 @@ var _regexps = {
  * @type {!Object<string, function>}
  */
 var _test = {
-  allTypes:  function(str) { return _regexps.allTypes.test(str);  },
-  nonNull:   function(str) { return _regexps.nonNull.test(str);   },
-  arrays:    function(str) { return _regexps.arrays.test(str);    },
-  maps:      function(str) { return _regexps.maps.test(str);      },
-  exPoint:   function(str) { return _regexps.exPoint.test(str);   },
-  quesMark:  function(str) { return _regexps.quesMark.test(str);  },
-  undefined: function(str) { return _regexps.undefined.test(str); },
-  any:       function(str) { return _regexps.any.test(str);       },
-  charBloat: function(str) { return _regexps.charBloat.test(str); }
+  allTypes:  _regexps.allTypes.test,
+  nonNull:   _regexps.nonNull.test,
+  arrays:    _regexps.arrays.test,
+  maps:      _regexps.maps.test,
+  exPoint:   _regexps.exPoint.test,
+  quesMark:  _regexps.quesMark.test,
+  undefined: _regexps.undefined.test,
+  any:       _regexps.any.test,
+  charBloat: _regexps.charBloat.test
 };
 
 /**
