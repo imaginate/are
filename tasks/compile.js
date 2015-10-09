@@ -28,6 +28,8 @@ var methods = {};
 methods.are = function() {
 
   /** @type {string} */
+  var fileIntro;
+  /** @type {string} */
   var contents;
   /** @type {!Array<string>} */
   var inserts;
@@ -55,10 +57,11 @@ methods.are = function() {
     );
   });
 
-  retrieve('src/are.js')
+  fileIntro = retrieve('src/are.js')
     .replace(/\r\n?/g, '\n')
-    .replace(/^(\/\*[\s\S]*?\*\/\n)[\s\S]*$/, '$1' + contents)
-    .to('src/are.js');
+    .replace(/^(\/\*[\s\S]*?\*\/\n)[\s\S]*$/, '$1');
+
+  (fileIntro + contents).to('src/are.js');
 
   log.pass('Completed `compile.are` Task');
 };
@@ -66,6 +69,8 @@ methods.are = function() {
 /** @type {function} */
 methods.nodeAre = function() {
 
+  /** @type {string} */
+  var fileIntro;
   /** @type {string} */
   var contents;
   /** @type {!Array<string>} */
@@ -95,10 +100,11 @@ methods.nodeAre = function() {
     );
   });
 
-  retrieve('src/node-are.js')
+  fileIntro = retrieve('src/node-are.js')
     .replace(/\r\n?/g, '\n')
-    .replace(/^(\/\*[\s\S]*?\*\/\n)[\s\S]*$/, '$1' + contents)
-    .to('src/node-are.js');
+    .replace(/^(\/\*[\s\S]*?\*\/\n)[\s\S]*$/, '$1');
+
+  (fileIntro + contents).to('src/node-are.js');
 
   log.pass('Completed `compile.nodeAre` Task');
 };
