@@ -90,7 +90,7 @@ is._num = is._number;
 
 
 //////////////////////////////////////////////////////////////////////////////
-// DEFINE PUBLIC IS METHODS - JS OBJECTS
+// IS METHODS - JS OBJECTS
 //////////////////////////////////////////////////////////////////////////
 
 /**
@@ -151,7 +151,7 @@ is.regex = is.regexp;
 
 
 //////////////////////////////////////////////////////////////////////////////
-// DEFINE PUBLIC IS METHODS - DOM OBJECTS
+// IS METHODS - DOM OBJECTS
 //////////////////////////////////////////////////////////////////////////
 
 /**
@@ -171,3 +171,40 @@ is.element = function(val) {
   return is.obj(val) && val.nodeType === 1;
 };
 is.elem = is.element;
+
+
+//////////////////////////////////////////////////////////////////////////////
+// IS METHODS - OTHERS
+//////////////////////////////////////////////////////////////////////////
+
+/**
+ * Checks if a value is considered empty. For a list of empty values see below.
+ *   empty values: 0, "", {}, [], null, undefined, false, NaN, function(){...}
+ *   note: for functions this method checks whether it has any defined params:
+ *     function(){} => true | function(param){} => false
+ * @param {*} val
+ * @return {boolean}
+ */
+is.empty = function(val) {
+
+    /** @type {string} */
+    var prop;
+
+    // return: 0, "", null, undefined, false, NaN => true
+    if ( !is._obj(val) ) {
+      return !val;
+    }
+
+    // return: [], function(){} => true
+    if ( is.arr(val) || is.func(val) ) {
+      return !val.length;
+    }
+
+    // return: {} => true
+    for (prop in val) {
+      if ( val.hasOwnProperty(prop) ) {
+        return false;
+      }
+    }
+    return true;
+};
