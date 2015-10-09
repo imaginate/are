@@ -199,11 +199,11 @@ var is = (function() {
    */
   var regex = {
     allTypes: new RegExp(
-      "^(?:any|null|undefined)$|^empty(?:array|map)?$|^(?:string|number|" +
-      "boolean|object|function|regexp|array|element|document|str|num|"  +
+      "^(?:any|null|undefined|empty)$|^(?:string|number|boolean|" +
+      "object|function|regexp|array|element|document|str|num|"  +
       "bool|obj|func|regex|arr|elem|doc)(?:s|map)?$"
     ),
-    nonNull: /^(?:string|number|boolean|function|undefined)$/,
+    nonNull: /^(?:string|number|boolean|function|undefined|str|num|bool|func)$/,
     arrays: new RegExp(
       "^(?:string|number|boolean|undefined|object|function|" +
       "regexp|array|element|document)s$"
@@ -214,7 +214,7 @@ var is = (function() {
     ),
     exPoint:   /\!/,
     quesMark:  /\?/,
-    undefined: /\=|undefined|^(?:.+\|)?empty(?:\|.+)?$/,
+    undefined: /\=|undefined/,
     any:       /\*|any/,
     charBloat: /[^a-z\|]/g
   };
@@ -251,9 +251,7 @@ var is = (function() {
     regexmap: 'regexpmap',
     arrmap:   'arraymap',
     elemmap:  'elementmap',
-    docmap:   'documentmap',
-    emptyarray: 'undefineds',
-    emptymap: 'undefinedmap'
+    docmap:   'documentmap'
   };
 
   ////////////////////////////////////////////////////////////////////////
