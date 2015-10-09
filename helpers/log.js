@@ -23,6 +23,8 @@ var fill = require('lodash/array/fill');
 /** @type {function} */
 var merge = require('lodash/object/merge');
 /** @type {function} */
+var clone = require('lodash/lang/cloneDeep');
+/** @type {function} */
 var forOwn = require('lodash/object/forOwn');
 /** @type {function} */
 var sliceArr = require('lodash/array/slice');
@@ -34,39 +36,78 @@ var sliceArr = require('lodash/array/slice');
 
 /**
  * @type {!{
- *   error: !Array<string>,
- *   warn:  !Array<string>,
- *   pass:  !Array<string>,
- *   debug: !Array<string>,
- *   plain: string,
- *   view:  string,
- *   fail:  string
+ *   error: (string|!Array<string>),
+ *   warn:  (string|!Array<string>),
+ *   pass:  (string|!Array<string>),
+ *   debug: (string|!Array<string>),
+ *   plain: (string|!Array<string>),
+ *   view:  (string|!Array<string>),
+ *   fail:  (string|!Array<string>)
  * }}
  */
 var themes = {
-  error: [ 'white', 'bold', 'bgRed' ],
+  error: [ 'white', 'bold', 'bgRed'    ],
   warn:  [ 'white', 'bold', 'bgYellow' ],
-  pass:  [ 'white', 'bold', 'bgGreen' ],
-  debug: [ 'white', 'bold', 'bgBlue' ],
+  pass:  [ 'white', 'bold', 'bgGreen'  ],
+  debug: [ 'white', 'bold', 'bgBlue'   ],
   plain: 'white',
   view:  'cyan',
   fail:  'red'
 };
 
-colors.setTheme(merge(themes, {
-  // accent settings for each theme
-  aerror: [ 'yellow', 'bold', 'bgRed' ],
-  awarn:  [ 'blue', 'bold', 'bgYellow' ],
-  apass:  [ 'yellow', 'bold', 'bgGreen' ],
-  adebug: [ 'magenta', 'bold', 'bgBlue' ],
-  aplain: 'magenta',
-  aview:  'magenta',
-  afail:  'yellow'
-}));
+// accent settings for each theme
+colors.setTheme(
+  merge(themes, {
+    aerror: [ 'yellow',  'bold', 'bgRed'    ],
+    awarn:  [ 'blue',    'bold', 'bgYellow' ],
+    apass:  [ 'yellow',  'bold', 'bgGreen'  ],
+    adebug: [ 'magenta', 'bold', 'bgBlue'   ],
+    aplain: 'magenta',
+    aview:  'magenta',
+    afail:  'yellow'
+  })
+);
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// DEFINE LOG METHODS & CONFIGS
+// DEFINE PRIVATE CONFIG
+////////////////////////////////////////////////////////////////////////////////
+
+/** @type {!Object} */
+var CONFIG = {
+  log: {
+    style: 'plain',
+    spaceBefore: 1,
+    spaceAfter: 1
+  },
+  pass: {
+    spaceBefore: 1,
+    spaceAfter: 1
+  },
+  error: {
+    spaceBefore: 1,
+    spaceAfter: 1,
+    exit: true
+  },
+  warn: {
+    spaceBefore: 1,
+    spaceAfter: 1
+  },
+  debug: {
+    spaceBefore: 1,
+    spaceAfter: 1
+  },
+  fail: {
+    spaceBefore: 1,
+    spaceAfter: 1
+  }
+};
+/** @type {!Object} */
+var config = clone(CONFIG);
+
+
+////////////////////////////////////////////////////////////////////////////////
+// DEFINE LOG METHODS
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -80,24 +121,11 @@ function Log() {
     return false;
   }
 
-  logSpace(Log.config.spaceBefore);
-  log(Log.config.style, sliceArr(arguments));
-  logSpace(Log.config.spaceAfter);
+  logSpace(config.log.spaceBefore);
+  log(config.log.style, sliceArr(arguments));
+  logSpace(config.log.spaceAfter);
   return true;
 }
-
-/**
- * @type {!{
- *   spaceBefore: number,
- *   spaceAfter: number,
- *   style: string
- * }}
- */
-Log.config = {
-  style: 'plain',
-  spaceBefore: 1,
-  spaceAfter:  1
-};
 
 /**
  * @param {string} header
@@ -115,22 +143,11 @@ Log.pass = function(header) {
     return false;
   }
 
-  logSpace(Log.pass.config.spaceBefore);
+  logSpace(config.pass.spaceBefore);
   logHeader('pass', header);
   arguments.length > 1 && logSpace(1) && log('view', sliceArr(arguments, 1));
-  logSpace(Log.pass.config.spaceAfter);
+  logSpace(config.pass.spaceAfter);
   return true;
-};
-
-/**
- * @type {!{
- *   spaceBefore: number,
- *   spaceAfter: number
- * }}
- */
-Log.pass.config = {
-  spaceBefore: 1,
-  spaceAfter:  1
 };
 
 /**
@@ -150,26 +167,13 @@ Log.error = function(header, msg) {
     return false;
   }
 
-  logSpace(Log.error.config.spaceBefore);
+  logSpace(config.error.spaceBefore);
   logHeader('error', header);
   logDetails('plain', msg);
   arguments.length > 2 && logSpace(1) && log('view', sliceArr(arguments, 2));
-  logSpace(Log.error.config.spaceAfter);
-  Log.error.config.exit && process.exit(1);
+  logSpace(config.error.spaceAfter);
+  config.error.exit && process.exit(1);
   return true;
-};
-
-/**
- * @type {!{
- *   spaceBefore: number,
- *   spaceAfter: number,
- *   exit: boolean
- * }}
- */
-Log.error.config = {
-  spaceBefore: 1,
-  spaceAfter:  1,
-  exit: true
 };
 
 /**
@@ -189,23 +193,12 @@ Log.warn = function(header, msg) {
     return false;
   }
 
-  logSpace(Log.warn.config.spaceBefore);
+  logSpace(config.warn.spaceBefore);
   logHeader('warn', header);
   logDetails('plain', msg);
   arguments.length > 2 && logSpace(1) && log('view', sliceArr(arguments, 2));
-  logSpace(Log.warn.config.spaceAfter);
+  logSpace(config.warn.spaceAfter);
   return true;
-};
-
-/**
- * @type {!{
- *   spaceBefore: number,
- *   spaceAfter: number
- * }}
- */
-Log.warn.config = {
-  spaceBefore: 1,
-  spaceAfter:  1
 };
 
 /**
@@ -224,22 +217,11 @@ Log.debug = function(header) {
     return false;
   }
 
-  logSpace(Log.debug.config.spaceBefore);
+  logSpace(config.debug.spaceBefore);
   logHeader('debug', header);
   arguments.length > 1 && logSpace(1) && log('view', sliceArr(arguments, 1));
-  logSpace(Log.debug.config.spaceAfter);
+  logSpace(config.debug.spaceAfter);
   return true;
-};
-
-/**
- * @type {!{
- *   spaceBefore: number,
- *   spaceAfter: number
- * }}
- */
-Log.debug.config = {
-  spaceBefore: 1,
-  spaceAfter:  1
 };
 
 /**
@@ -258,23 +240,65 @@ Log.fail = function(msg) {
     return false;
   }
 
-  logSpace(Log.fail.config.spaceBefore);
+  logSpace(config.fail.spaceBefore);
   logHeader('fail', msg);
   arguments.length > 1 && log('fail', sliceArr(arguments, 1));
-  logSpace(Log.fail.config.spaceAfter);
+  logSpace(config.fail.spaceAfter);
+  return true;
+};
+
+
+////////////////////////////////////////////////////////////////////////////////
+// DEFINE CONFIG METHODS
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @param {string} prop - <method>.<prop> (ex. "warn.spaceAfter") all options:
+ *   methods= all, log, pass, error, warn, debug, fail
+ *   props= all.spaceBefore, all.spaceAfter, log.style, error.exit
+ * @param {(number|string|boolean)} val
+ * @return {boolean}
+ */
+Log.setConfig = function(prop, val) {
+
+  /** @type {string} */
+  var method;
+
+  prop = is.str(prop) ? prop.split('.') : [];
+  method = prop.length === 2 ? prop.shift() : '';
+  method = has(config, method) || method === 'all' ? method : '';
+  prop = prop[0];
+
+  if (!method || !prop || !checkConfigVal(prop, val)) {
+    return false;
+  }
+
+  if (method === 'all') {
+    forOwn(config, function(/** !Object */ obj) {
+      if ( has(obj, prop) ) {
+        obj[prop] = val;
+      }
+    });
+  }
+  else if ( has(config[method], prop) ) {
+    config[method][prop] = val;
+  }
   return true;
 };
 
 /**
- * @type {!{
- *   spaceBefore: number,
- *   spaceAfter: number
- * }}
+ * @param {string=} method
  */
-Log.fail.config = {
-  spaceBefore: 1,
-  spaceAfter:  1
+Log.resetConfig = function(method) {
+  if ( is.str(method) && has(config, method) ) {
+    config[method] = clone( CONFIG[method] );
+  }
+  else {
+    config = clone(CONFIG);
+  }
+  return true;
 };
+
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -319,6 +343,37 @@ function hasAccent(str) {
   return /`.+`/.test(str);
 }
 
+/**
+ * @param {Object} obj
+ * @param {string} prop
+ * @return {boolean}
+ */
+function has(obj, prop) {
+  if ( !obj || ( !is.obj(obj) && !is.func(obj) ) ) {
+    return false;
+  }
+  return obj.hasOwnProperty(
+    is.str(prop) || is.num(prop) ? prop : String(prop)
+  );
+}
+
+/** @type {!Object<string, function(*): boolean>} */
+var configProps = {
+  spaceBefore: function(val) { return is.num(val, true); },
+  spaceAfter: function(val) { return is.num(val, true); },
+  style: function(val) { return is.str(val) && has(themes, val); },
+  exit: is.bool
+};
+
+/**
+ * @param {string} prop
+ * @param {string} val
+ * @return {boolean}
+ */
+function checkConfigVal(prop, val) {
+  return is.str(prop) && has(configProps, prop) && configProps[prop](val);
+}
+
 
 ////////////////////////////////////////////////////////////////////////////////
 // DEFINE LOG HELPERS
@@ -330,7 +385,7 @@ function hasAccent(str) {
  */
 function log(style, args) {
   is.str(style) || helperError('log', 'style', style);
-  themes.hasOwnProperty(style) || helperError('log', 'style', style);
+  has(themes, style) || helperError('log', 'style', style);
   is.arr(args) || helperError('log', 'args', args);
   args.forEach(function(/** * */ val) {
     if ( is.func(val) || ( is.obj(val) && !is.regex(val) && !is.arr(val) ) ) {
@@ -365,7 +420,7 @@ function logSpace(spaces) {
  */
 function logHeader(style, msg) {
   is.str(style) || helperError('logHeader', 'style', style);
-  themes.hasOwnProperty(style) || helperError('logHeader', 'style', style);
+  has(themes, style) || helperError('logHeader', 'style', style);
   is.str(msg) || helperError('logHeader', 'msg', msg);
   msg = hasAccent(msg) ? msg.split('`').map(
     function(/** string */ part, /** number */ i) {
@@ -381,7 +436,7 @@ function logHeader(style, msg) {
  */
 function logDetails(style, msg) {
   is.str(style) || helperError('logDetails', 'style', style);
-  themes.hasOwnProperty(style) || helperError('logDetails', 'style', style);
+  has(themes, style) || helperError('logDetails', 'style', style);
   is.str(msg) || helperError('logDetails', 'msg', msg);
   msg = hasAccent(msg) ? msg.split('`').map(
     function(/** string */ part, /** number */ i) {
@@ -424,7 +479,7 @@ function logObj(obj, style, indent) {
 
   ( is.obj(obj) || is.func(obj) ) || helperError('logObj', 'obj', obj);
 
-  style = is.str(style) && themes.hasOwnProperty(style) ? style : 'view';
+  style = is.str(style) && has(themes, style) ? style : 'view';
 
   indent = is.num(indent) ? indent : 0;
   indent || console.log(
