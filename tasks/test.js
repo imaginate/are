@@ -60,12 +60,15 @@ methods.are = function() {
   /** @type {string} */
   var tests;
 
-  source = './src/are.js';
-  tests = './tests/all/*.js';
+  tests = './tests/*.js';
 
   configLog();
   log.debug('Starting `test.are` Task');
 
+  source = './src/are.js';
+  exec(mocha + source + ' ' + tests);
+
+  source = './src/are.min.js';
   exec(mocha + source + ' ' + tests);
 
   log.pass('Completed `test.are` Task');
@@ -80,12 +83,15 @@ methods.nodeAre = function() {
   /** @type {string} */
   var tests;
 
-  source = './src/node-are.js';
-  tests = './tests/all/*.js';
+  tests = './tests/*.js';
 
   configLog();
   log.debug('Starting `test.nodeAre` Task');
 
+  source = './src/node-are.js';
+  exec(mocha + source + ' ' + tests);
+
+  source = './src/node-are.min.js';
   exec(mocha + source + ' ' + tests);
 
   log.pass('Completed `test.nodeAre` Task');
