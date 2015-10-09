@@ -98,20 +98,43 @@
   /** @type {function} */
   var _sliceArr = Array.prototype.slice;
 
-  // INSERT is-main-func.js
-
   // INSERT is-methods.js
-
-  // INSERT are-main-func.js
 
   // INSERT are-methods.js
 
   // INSERT node-methods.js
 
+  // INSERT is-main-func.js
+
+  // INSERT are-main-func.js
+
+// *****************************************************************************
+// SECTION: END - RETURN IS & ARE
+// *****************************************************************************
+
+  // append is & are methods to the is & are main functions
+  ;(function () {
+
+    /** @type {string} */
+    var prop;
+
+    for (prop in is) {
+      if ( is.hasOwnProperty(prop) ) {
+        Is[prop] = is[prop];
+      }
+    }
+
+    for (prop in are) {
+      if ( are.hasOwnProperty(prop) ) {
+        Are[prop] = are[prop];
+      }
+    }
+  })();
+
   return {
-    is:  is,
-    Is:  is,
-    are: are,
-    Are: are
+    is:  Is,
+    Is:  Is,
+    are: Are,
+    Are: Are
   };
 });
