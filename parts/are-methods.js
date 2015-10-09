@@ -138,6 +138,15 @@ are.obj = are.object;
  * @param {*...} vals
  * @return {boolean}
  */
+are._object = function() {
+  return _checkAreArr('_object', arguments);
+};
+are._obj = are._object;
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
 are.func = function() {
   return _checkAreArr('func', arguments);
 };
