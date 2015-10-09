@@ -114,7 +114,7 @@ var is = (function() {
       "boolean|object|function|regexp|array|element|document|str|num|"  +
       "bool|obj|func|regex|arr|elem|doc)(?:s|map)?$"
     ),
-    nonNull: /^(?:string|number|boolean|function)$/,
+    nonNull: /^(?:string|number|boolean|function|undefined)$/,
     arrays: new RegExp(
       "^(?:string|number|boolean|undefined|object|function|" +
       "regexp|array|element|document)s$"
@@ -183,7 +183,24 @@ var is = (function() {
     _array:     _is.arr,
     _document:  _is.doc,
     _element:   _is.elem,
-    _null:      function() { return false; }
+    _null:      function() { return false; },
+    _empty:     function(val) {
+      if (!val) {
+        return true;
+      }
+      if ( _is.arr(val) || _is.func(val) ) {
+        return !val.length;
+      }
+      if ( !_is.obj(val) ) {
+        return false;
+      }
+      for (var key in val) {
+        if ( val.hasOwnProperty(key) ) {
+          return false;
+        }
+      }
+      return true;
+    }
   };
 
   ////////////////////////////////////////////////////////////////////////
