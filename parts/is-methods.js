@@ -204,7 +204,7 @@ is.empty = function(val) {
 
     // return: {} => true
     for (prop in val) {
-      if ( val.hasOwnProperty(prop) ) {
+      if ( _has(val, prop) ) {
         return false;
       }
     }
