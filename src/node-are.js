@@ -1024,7 +1024,7 @@ function is(type, val) {
  * @return {boolean} The evaluation result.
  * @see [main are function docs for more info]{@link https://github.com/imaginate/are/blob/master/docs/are-main-func.md}
  */
-function are(type) {
+function are(type, vals) {
 
   /** @type {!Array<string>} */
   var types;
@@ -1039,10 +1039,7 @@ function are(type) {
     );
   }
 
-  vals = ( arguments.length > 2 ?
-    _sliceArr.call(arguments, 1) : arguments.length === 2 ?
-      arguments[1] : null
-  );
+  vals = arguments.length > 2 ? _sliceArr.call(arguments, 1) : vals;
 
   if ( !is.arr(vals) ) {
     throw new TypeError(
