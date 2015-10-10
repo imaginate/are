@@ -62,6 +62,7 @@ var refs = {
 var methods = {
   primitives: {
     null: {
+      shortcut: 'nil',
       truthy: [ refs.nil ],
       falsy:  [ refs.obj, refs.bool, refs.str, refs.arr ]
     },
