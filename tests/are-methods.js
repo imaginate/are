@@ -40,6 +40,7 @@ var refs = {
 var methods = {
   primitives: {
     null: {
+      shortcut: 'nil',
       truthy: [ refs.nil ],
       falsy:  [ refs.obj, refs.bool, refs.str, refs.arr ]
     },
@@ -85,7 +86,7 @@ var methods = {
       falsy:  [ refs.nil, refs.str, refs.num ]
     },
     function: {
-      shortcut: 'func',
+      shortcut: 'fn|func',
       truthy: [ refs.func ],
       falsy:  [ refs.nil, refs.obj, refs.bool ]
     },
@@ -110,6 +111,19 @@ var methods = {
       shortcut: 'elem',
       truthy: [ refs.elem ],
       falsy:  [ refs.doc, refs.obj, refs.num ]
+    }
+  },
+  others: {
+    empty: {
+      truthy: [ null, undefined, false, '', 0, {}, [], function(){}, NaN ],
+      falsy: [
+        [ false, true, false ],
+        [ '', 'a', '' ],
+        [ 0, -1, 0 ],
+        [ {}, { a: null }, {} ],
+        [ [], [ 'a' ], [] ],
+        [ function(){}, function(a){}, function(){} ]
+      ]
     }
   }
 };
