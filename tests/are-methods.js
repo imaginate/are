@@ -152,17 +152,19 @@ describe('are-methods', function() {
           });
         });
         if (method.hasOwnProperty('shortcut') && method.shortcut) {
-          describe('are.' + method.shortcut, function() {
-            it('truthy', function() {
-              method.truthy.forEach(function(/** * */ val) {
-                assert.strictEqual(true, are[method.shortcut](val));
-                assert.strictEqual(true, are[method.shortcut].apply(null, val));
+          method.shortcut.split('|').forEach(function(/** string */ shortname) {
+            describe('are.' + shortname, function() {
+              it('truthy', function() {
+                method.truthy.forEach(function(/** * */ val) {
+                  assert.strictEqual(true, are[shortname](val));
+                  assert.strictEqual(true, are[shortname].apply(null, val));
+                });
               });
-            });
-            it('falsy', function() {
-              method.falsy.forEach(function(/** * */ val) {
-                assert.strictEqual(false,are[method.shortcut](val));
-                assert.strictEqual(false,are[method.shortcut].apply(null, val));
+              it('falsy', function() {
+                method.falsy.forEach(function(/** * */ val) {
+                  assert.strictEqual(false, are[shortname](val));
+                  assert.strictEqual(false, are[shortname].apply(null, val));
+                });
               });
             });
           });
