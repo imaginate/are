@@ -112,6 +112,17 @@ var methods = {
       truthy: [ refs.elem ],
       falsey: [ refs.doc, refs.obj, refs.num ]
     }
+  },
+  others: {
+    empty: {
+      truthy: [
+        refs.nil, refs.un, refs._bool, refs._str, refs._num, refs.obj, refs.arr,
+        refs.func, NaN
+      ],
+      falsy: [
+        refs.bool, refs.str, refs.num, refs.doc, function(a){}, [ 1 ]
+      ]
+    }
   }
 };
 
