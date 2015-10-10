@@ -93,7 +93,7 @@ var methods = {
       falsy:  [ refs.func, refs.num, refs.str ]
     },
     function: {
-      shortcut: 'func',
+      shortcut: 'fn|func',
       truthy: [ refs.func ],
       falsy:  [ refs.nil, refs.obj, refs.bool ]
     },
@@ -142,7 +142,7 @@ var methods = {
       falsy:  [ refs.arrays.func, refs.arrays.num, refs.arrays.str ]
     },
     functions: {
-      shortcut: 'funcs',
+      shortcut: 'fns|funcs',
       truthy: [ refs.arrays.func, refs.arr ],
       falsy:  [ refs.arrays.arr, refs.arrays.obj, refs.arrays.bool ]
     },
@@ -189,7 +189,7 @@ var methods = {
       falsy:  [ refs.maps.func, refs.maps.num, refs.maps.str ]
     },
     functionMap: {
-      shortcut: 'funcMap',
+      shortcut: 'fnMap|funcMap',
       truthy: [ refs.maps.func, refs.obj ],
       falsy:  [ refs.maps.arr, refs.maps.obj, refs.maps.bool ]
     },

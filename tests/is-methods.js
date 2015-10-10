@@ -87,7 +87,7 @@ var methods = {
       falsy:  [ refs.nil, refs.str, refs.num ]
     },
     function: {
-      shortcut: 'func',
+      shortcut: 'fn|func',
       truthy: [ refs.func ],
       falsy:  [ refs.nil, refs.obj, refs.bool ]
     },
