@@ -32,13 +32,13 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat sollici
 <br />
 ## Special Characters
 
-| Char | Details                                  | Example         |
-| :--- | :--------------------------------------- | :-------------- |
-| *    | value can be any type                    |                 |
-| \|   | separates multiple type options          | string\|number  |
-| !    | marks objects as non-nullable            | !stringMap      |
-| ?    | marks primitives & functions as nullable | ?string         |
-| =    | value may be undefined                   | string\|array=  |
+| Char   | Details                                  | Example            |
+| :----- | :--------------------------------------- | :----------------- |
+| *      | value can be any type                    | *                  |
+| &#124; | separates multiple type options          | string&#124;number |
+| !      | marks objects as non-nullable            | !stringMap         |
+| ?      | marks primitives & functions as nullable | ?string            |
+| =      | value may be undefined                   | string&#124;array= |
 
 
 <a name="shorthand-tests"></a>
