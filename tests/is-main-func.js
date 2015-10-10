@@ -70,7 +70,7 @@ var methods = {
     },
     undefined: {
       truthy: [ refs.un ],
-      falsy:  [ refs.obj, refs.nil, refs.str, refs.arr ]
+      falsy:  [ refs.obj, refs.str, refs.arr, refs.nil ]
     },
     boolean: {
       shortcut: 'bool',
@@ -91,138 +91,142 @@ var methods = {
   js_objects: {
     object: {
       shortcut: 'obj',
-      truthy: [ refs.obj, refs.arr, refs.regex ],
+      truthy: [ refs.obj, refs.arr, refs.regex, refs.nil ],
       falsy:  [ refs.func, refs.num, refs.str ]
     },
     function: {
       shortcut: 'fn|func',
       truthy: [ refs.func ],
-      falsy:  [ refs.nil, refs.obj, refs.bool ]
+      falsy:  [ refs.str, refs.obj, refs.bool, refs.nil ]
     },
     array: {
       shortcut: 'arr',
-      truthy: [ refs.arr ],
+      truthy: [ refs.arr, refs.nil ],
       falsy:  [ refs.obj, refs.regex, refs.num ]
     },
     regexp: {
       shortcut: 'regex',
-      truthy: [ refs.regex ],
+      truthy: [ refs.regex, refs.nil ],
       falsy:  [ refs.obj, refs.bool, refs.arr ]
     }
   },
   dom_objects: {
     document: {
       shortcut: 'doc',
-      truthy: [ refs.doc ],
+      truthy: [ refs.doc, refs.nil ],
       falsy:  [ refs.obj, refs.elem, refs.str ]
     },
     element: {
       shortcut: 'elem',
-      truthy: [ refs.elem ],
+      truthy: [ refs.elem, refs.nil ],
       falsy:  [ refs.doc, refs.obj, refs.num ]
     }
   },
   arrays: {
     nulls: {
       shortcut: 'nils',
-      truthy: [ refs.arrays.nil, refs.arr ],
+      truthy: [ refs.arrays.nil, refs.arr, refs.nil ],
       falsy:  [ refs.arrays.obj, refs.arrays.bool, refs.str ]
     },
     booleans: {
       shortcut: 'bools',
-      truthy: [ refs.arrays.bool, refs.arr ],
+      truthy: [ refs.arrays.bool, refs.arr, refs.nil ],
       falsy:  [ refs.arrays.obj, refs.arrays.num, refs.arrays.str ]
     },
     strings: {
       shortcut: 'strs',
-      truthy: [ refs.arrays.str, refs.arr ],
+      truthy: [ refs.arrays.str, refs.arr, refs.nil ],
       falsy:  [ refs.arrays.num, refs.arrays.bool, refs.arrays.obj ]
     },
     numbers: {
       shortcut: 'nums',
-      truthy: [ refs.arrays.num, refs.arr ],
+      truthy: [ refs.arrays.num, refs.arr, refs.nil ],
       falsy:  [ refs.arrays.bool, refs.arrays.obj, refs.arrays.str ]
     },
     objects: {
       shortcut: 'objs',
-      truthy: [ refs.arrays.obj, refs.arrays.arr, refs.arrays.regex, refs.arr ],
-      falsy:  [ refs.arrays.func, refs.arrays.num, refs.arrays.str ]
+      truthy: [
+        refs.arrays.obj, refs.arrays.arr, refs.arrays.regex, refs.arr, refs.nil
+      ],
+      falsy: [ refs.arrays.func, refs.arrays.num, refs.arrays.str ]
     },
     functions: {
       shortcut: 'fns|funcs',
-      truthy: [ refs.arrays.func, refs.arr ],
+      truthy: [ refs.arrays.func, refs.arr, refs.nil ],
       falsy:  [ refs.arrays.arr, refs.arrays.obj, refs.arrays.bool ]
     },
     arrays: {
       shortcut: 'arrs',
-      truthy: [ refs.arrays.arr, refs.arr ],
+      truthy: [ refs.arrays.arr, refs.arr, refs.nil ],
       falsy:  [ refs.arrays.obj, refs.arrays.regex, refs.arrays.num ]
     },
     regexps: {
       shortcut: 'regexs',
-      truthy: [ refs.arrays.regex, refs.arr ],
+      truthy: [ refs.arrays.regex, refs.arr, refs.nil ],
       falsy:  [ refs.arrays.obj, refs.arrays.bool, refs.arrays.num ]
     },
     documents: {
       shortcut: 'docs',
-      truthy: [ refs.arrays.doc, refs.arr ],
+      truthy: [ refs.arrays.doc, refs.arr, refs.nil ],
       falsy:  [ refs.arrays.obj, refs.arrays.elem, refs.arrays.str ]
     },
     elements: {
       shortcut: 'elems',
-      truthy: [ refs.arrays.elem, refs.arr ],
+      truthy: [ refs.arrays.elem, refs.arr, refs.nil ],
       falsy:  [ refs.arrays.doc, refs.arrays.obj, refs.arrays.num ]
     }
   },
   maps: {
     nullMap: {
       shortcut: 'nilMap',
-      truthy: [ refs.maps.nil, refs.obj ],
+      truthy: [ refs.maps.nil, refs.obj, refs.nil ],
       falsy:  [ refs.maps.obj, refs.maps.bool, refs.str ]
     },
     booleanMap: {
       shortcut: 'boolMap',
-      truthy: [ refs.maps.bool, refs.obj ],
+      truthy: [ refs.maps.bool, refs.obj, refs.nil ],
       falsy:  [ refs.maps.obj, refs.maps.num, refs.maps.str ]
     },
     stringMap: {
       shortcut: 'strMap',
-      truthy: [ refs.maps.str, refs.obj ],
+      truthy: [ refs.maps.str, refs.obj, refs.nil ],
       falsy:  [ refs.maps.num, refs.maps.bool, refs.maps.obj ]
     },
     numberMap: {
       shortcut: 'numMap',
-      truthy: [ refs.maps.num, refs.obj ],
+      truthy: [ refs.maps.num, refs.obj, refs.nil ],
       falsy:  [ refs.maps.bool, refs.maps.obj, refs.maps.str ]
     },
     objectMap: {
       shortcut: 'objMap',
-      truthy: [ refs.maps.obj, refs.maps.arr, refs.maps.regex, refs.obj ],
-      falsy:  [ refs.maps.func, refs.maps.num, refs.maps.str ]
+      truthy: [
+        refs.maps.obj, refs.maps.arr, refs.maps.regex, refs.obj, refs.nil
+      ],
+      falsy: [ refs.maps.func, refs.maps.num, refs.maps.str ]
     },
     functionMap: {
       shortcut: 'fnMap|funcMap',
-      truthy: [ refs.maps.func, refs.obj ],
+      truthy: [ refs.maps.func, refs.obj, refs.nil ],
       falsy:  [ refs.maps.arr, refs.maps.obj, refs.maps.bool ]
     },
     arrayMap: {
       shortcut: 'arrMap',
-      truthy: [ refs.maps.arr, refs.obj ],
+      truthy: [ refs.maps.arr, refs.obj, refs.nil ],
       falsy:  [ refs.maps.obj, refs.maps.regex, refs.maps.num ]
     },
     regexpMap: {
       shortcut: 'regexMap',
-      truthy: [ refs.maps.regex, refs.obj ],
+      truthy: [ refs.maps.regex, refs.obj, refs.nil ],
       falsy:  [ refs.maps.obj, refs.maps.bool, refs.maps.num ]
     },
     documentMap: {
       shortcut: 'docMap',
-      truthy: [ refs.maps.doc, refs.obj ],
+      truthy: [ refs.maps.doc, refs.obj, refs.nil ],
       falsy:  [ refs.maps.obj, refs.maps.elem, refs.maps.str ]
     },
     elementMap: {
       shortcut: 'elemMap',
-      truthy: [ refs.maps.elem, refs.obj ],
+      truthy: [ refs.maps.elem, refs.obj, refs.nil ],
       falsy:  [ refs.maps.doc, refs.maps.obj, refs.maps.num ]
     }
   },
