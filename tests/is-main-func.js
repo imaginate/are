@@ -33,6 +33,7 @@ var refs = {
   doc:   { nodeType: 9 },
   elem:  { nodeType: 1 },
   arrays: {
+    nil:   [ null, null ],
     un:    [ undefined, undefined ],
     bool:  [ true, false ],
     str:   [ 'str', 'str', '' ],
@@ -45,6 +46,7 @@ var refs = {
     elem:  [ { nodeType: 1 }, { nodeType: 1 } ]
   },
   maps: {
+    nil:   { a: null, b: null },
     un:    { a: undefined, b: undefined },
     bool:  { a: true, b: false },
     str:   { a: 'str', b: 'str', c: '' },
@@ -121,6 +123,11 @@ var methods = {
     }
   },
   arrays: {
+    nulls: {
+      shortcut: 'nils',
+      truthy: [ refs.arrays.nil, refs.arr ],
+      falsy:  [ refs.arrays.obj, refs.arrays.bool, refs.str ]
+    },
     booleans: {
       shortcut: 'bools',
       truthy: [ refs.arrays.bool, refs.arr ],
@@ -168,6 +175,11 @@ var methods = {
     }
   },
   maps: {
+    nullMap: {
+      shortcut: 'nilMap',
+      truthy: [ refs.maps.nil, refs.obj ],
+      falsy:  [ refs.maps.obj, refs.maps.bool, refs.str ]
+    },
     booleanMap: {
       shortcut: 'boolMap',
       truthy: [ refs.maps.bool, refs.obj ],
