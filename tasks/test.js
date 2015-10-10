@@ -31,7 +31,7 @@ var mocha = (
   'node ./node_modules/mocha/bin/mocha ' +
   '--colors '         +
   '--reporter dot '   +
-  '--slow 5 '         +
+  '--slow 10 '        +
   '--timeout 1000 '   +
   '--globals is,are ' +
   '--require '
@@ -63,15 +63,17 @@ methods.are = function() {
   tests = './tests/*.js';
 
   configLog();
-  log.debug('Starting `test.are` Task');
 
   source = './src/are.js';
+  log.debug('Testing `' + source + '`');
   exec(mocha + source + ' ' + tests);
+  log.pass('Finished testing `' + source + '`');
 
   source = './src/are.min.js';
+  log.debug('Testing `' + source + '`');
   exec(mocha + source + ' ' + tests);
+  log.pass('Finished testing `' + source + '`');
 
-  log.pass('Completed `test.are` Task');
   log.resetConfig();
 };
 
@@ -86,15 +88,16 @@ methods.nodeAre = function() {
   tests = './tests/*.js';
 
   configLog();
-  log.debug('Starting `test.nodeAre` Task');
 
   source = './src/node-are.js';
+  log.debug('Testing `' + source + '`');
   exec(mocha + source + ' ' + tests);
 
   source = './src/node-are.min.js';
+  log.debug('Testing `' + source + '`');
   exec(mocha + source + ' ' + tests);
+  log.pass('Finished testing `' + source + '`');
 
-  log.pass('Completed `test.nodeAre` Task');
   log.resetConfig();
 };
 
