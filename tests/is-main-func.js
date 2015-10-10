@@ -232,10 +232,8 @@ var methods = {
   },
   others: {
     empty: {
-      truthy: [
-        refs.nil, refs.un, false, '', 0, refs.obj, refs.arr,  refs.func, NaN
-      ],
-      falsy: [ refs.bool, refs.str, refs.num, refs.doc, function(a){}, [ 1 ] ]
+      truthy: [ null, undefined, false, '', 0, {}, [], function(){}, NaN ],
+      falsy: [ true, 'a', 1, { a: null }, [ 'a' ], function(a){} ]
     }
   },
   special_chars: {
