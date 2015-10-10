@@ -148,7 +148,7 @@ is.files = function(filepaths, rootdir) {
  * @return {boolean}
  */
 are.buffer = function() {
-  return _checkAreArr('buffer', arguments);
+  return _checkAreMethod('buffer', arguments);
 };
 are.buff = are.buffer;
 
@@ -157,7 +157,7 @@ are.buff = are.buffer;
  * @return {boolean}
  */
 are.directory = function() {
-  return _checkAreArr('directory', arguments);
+  return _checkAreMethod('directory', arguments);
 };
 are.dir = are.directory;
 
@@ -166,5 +166,5 @@ are.dir = are.directory;
  * @return {boolean}
  */
 are.file = function() {
-  return _checkAreArr('file', arguments);
+  return _checkAreMethod('file', arguments);
 };

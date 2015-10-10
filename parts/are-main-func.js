@@ -16,8 +16,10 @@
 // *****************************************************************************
 
 /**
- * @param {string} type - A string of the data types to check for.
- * @param {*...} vals - The values to be evaluated.
+ * @param {string} type - The types to check for.
+ * @param {*...} vals - The values to evaluate. Must have at least two different
+ *   values to evaluate. The values can be provided in a single array or
+ *   multiple params.
  * @return {boolean} The evaluation result.
  * @see [main are function docs for more info]{@link https://github.com/imaginate/are/blob/master/docs/are-main-func.md}
  */
@@ -25,8 +27,6 @@ function are(type) {
 
   /** @type {!Array<string>} */
   var types;
-  /** @type {!Array<*>} */
-  var vals;
   /** @type {*} */
   var val;
   /** @type {number} */
@@ -38,7 +38,10 @@ function are(type) {
     );
   }
 
-  vals = arguments.length > 2 ? _sliceArr.call(arguments, 1) : arguments[1];
+  vals = ( arguments.length > 2 ?
+    _sliceArr.call(arguments, 1) : arguments.length === 2 ?
+      arguments[1] : null
+  );
 
   if ( !is.arr(vals) ) {
     throw new TypeError(

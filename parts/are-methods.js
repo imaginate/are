@@ -15,6 +15,179 @@
 // SECTION: ARE METHODS
 // *****************************************************************************
 
+// Note for all are methods:
+// @param {*...} vals - The values to evaluate. Must have at least two different
+//   values to evaluate. The values can be provided in a single array or
+//   multiple params.
+
+
+////////////////////////////////////////////////////////////////////////////
+// ARE METHODS - PRIMITIVES
+////////////////////////////////////////////////////////////////////////
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.null = function() {
+  return _checkAreMethod('null', arguments);
+};
+are.nil = are.null;
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.undefined = function() {
+  return _checkAreMethod('undefined', arguments);
+};
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.boolean = function() {
+  return _checkAreMethod('boolean', arguments);
+};
+are.bool = are.boolean;
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.string = function() {
+  return _checkAreMethod('string', arguments);
+};
+are.str = are.string;
+
+/**
+ * Empty strings return false in this method.
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are._string = function() {
+  return _checkAreMethod('_string', arguments);
+};
+are._str = are._string;
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.number = function() {
+  return _checkAreMethod('number', arguments);
+};
+are.num = are.number;
+
+/**
+ * Zeros return false in this method.
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are._number = function() {
+  return _checkAreMethod('_number', arguments);
+};
+are._num = are._number;
+
+
+////////////////////////////////////////////////////////////////////////////
+// ARE METHODS - JS OBJECTS
+////////////////////////////////////////////////////////////////////////
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.object = function() {
+  return _checkAreMethod('object', arguments);
+};
+are.obj = are.object;
+
+/**
+ * Functions return true in this method.
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are._object = function() {
+  return _checkAreMethod('_object', arguments);
+};
+are._obj = are._object;
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.func = function() {
+  return _checkAreMethod('func', arguments);
+};
+are.fn = are.func;
+try {
+  are.function = are.func;
+}
+catch(e) {
+  console.log(
+    'Your JS engine does not support are.function(). Use are.func() instead.'
+  );
+}
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.array = function() {
+  return _checkAreMethod('array', arguments);
+};
+are.arr = are.array;
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.regexp = function() {
+  return _checkAreMethod('regexp', arguments);
+};
+are.regex = are.regexp;
+
+
+////////////////////////////////////////////////////////////////////////////
+// ARE METHODS - DOM OBJECTS
+////////////////////////////////////////////////////////////////////////
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.document = function() {
+  return _checkAreMethod('document', arguments);
+};
+are.doc = are.document;
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.element = function() {
+  return _checkAreMethod('element', arguments);
+};
+are.elem = are.element;
+
+
+//////////////////////////////////////////////////////////////////////////////
+// ARE METHODS - OTHERS
+//////////////////////////////////////////////////////////////////////////
+
+/**
+ * Checks if each value is considered empty. See below for all empty values.
+ *   empty values: 0, "", {}, [], null, undefined, false, NaN, function(){...}
+ *   note: for functions this method checks whether it has any defined params:
+ *     function(){} => true | function(param){} => false
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.empty = function() {
+  return _checkAreMethod('empty', arguments);
+};
+
 
 ////////////////////////////////////////////////////////////////////////////
 // ARE HELPERS
@@ -26,7 +199,7 @@
  * @param {!Arguments} args
  * @return {boolean}
  */
-function _checkAreArr(method, args) {
+function _checkAreMethod(method, args) {
 
   /** @type {function} */
   var check;
@@ -51,171 +224,3 @@ function _checkAreArr(method, args) {
   }
   return true;
 }
-
-
-////////////////////////////////////////////////////////////////////////////
-// ARE METHODS - PRIMITIVES
-////////////////////////////////////////////////////////////////////////
-
-/**
- * @param {*...} vals
- * @return {boolean}
- */
-are.null = function() {
-  return _checkAreArr('null', arguments);
-};
-are.nil = are.null;
-
-/**
- * @param {*...} vals
- * @return {boolean}
- */
-are.undefined = function() {
-  return _checkAreArr('undefined', arguments);
-};
-
-/**
- * @param {*...} vals
- * @return {boolean}
- */
-are.boolean = function() {
-  return _checkAreArr('boolean', arguments);
-};
-are.bool = are.boolean;
-
-/**
- * @param {*...} vals
- * @return {boolean}
- */
-are.string = function() {
-  return _checkAreArr('string', arguments);
-};
-are.str = are.string;
-
-/**
- * Empty strings return false in this method.
- * @param {*...} vals
- * @return {boolean}
- */
-are._string = function() {
-  return _checkAreArr('_string', arguments);
-};
-are._str = are._string;
-
-/**
- * @param {*...} vals
- * @return {boolean}
- */
-are.number = function() {
-  return _checkAreArr('number', arguments);
-};
-are.num = are.number;
-
-/**
- * Zeros return false in this method.
- * @param {*...} vals
- * @return {boolean}
- */
-are._number = function() {
-  return _checkAreArr('_number', arguments);
-};
-are._num = are._number;
-
-
-////////////////////////////////////////////////////////////////////////////
-// ARE METHODS - JS OBJECTS
-////////////////////////////////////////////////////////////////////////
-
-/**
- * @param {*...} vals
- * @return {boolean}
- */
-are.object = function() {
-  return _checkAreArr('object', arguments);
-};
-are.obj = are.object;
-
-/**
- * Functions return true in this method.
- * @param {*...} vals
- * @return {boolean}
- */
-are._object = function() {
-  return _checkAreArr('_object', arguments);
-};
-are._obj = are._object;
-
-/**
- * @param {*...} vals
- * @return {boolean}
- */
-are.func = function() {
-  return _checkAreArr('func', arguments);
-};
-are.fn = are.func;
-try {
-  are.function = are.func;
-}
-catch(e) {
-  console.log(
-    'Your JS engine does not support are.function(). Use are.func() instead.'
-  );
-}
-
-/**
- * @param {*...} vals
- * @return {boolean}
- */
-are.array = function() {
-  return _checkAreArr('array', arguments);
-};
-are.arr = are.array;
-
-/**
- * @param {*...} vals
- * @return {boolean}
- */
-are.regexp = function() {
-  return _checkAreArr('regexp', arguments);
-};
-are.regex = are.regexp;
-
-
-////////////////////////////////////////////////////////////////////////////
-// ARE METHODS - DOM OBJECTS
-////////////////////////////////////////////////////////////////////////
-
-/**
- * @param {*...} vals
- * @return {boolean}
- */
-are.document = function() {
-  return _checkAreArr('document', arguments);
-};
-are.doc = are.document;
-
-/**
- * @param {*...} vals
- * @return {boolean}
- */
-are.element = function() {
-  return _checkAreArr('element', arguments);
-};
-are.elem = are.element;
-
-
-//////////////////////////////////////////////////////////////////////////////
-// ARE METHODS - OTHERS
-//////////////////////////////////////////////////////////////////////////
-
-/**
- * Checks if each value is considered empty. See below for all empty values.
- *   empty values: 0, "", {}, [], null, undefined, false, NaN, function(){...}
- *   note: for functions this method checks whether it has any defined params:
- *     function(){} => true | function(param){} => false
- * @param {*...} vals
- * @return {boolean}
- */
-are.empty = function() {
-  return _checkAreArr('empty', arguments);
-};

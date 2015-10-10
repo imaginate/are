@@ -16,8 +16,8 @@
 // *****************************************************************************
 
 /**
- * @param {string} type - A string of the data types to check for.
- * @param {*} val - The value to be evaluated.
+ * @param {string} type - The types to check for.
+ * @param {*} val - The value to evaluate.
  * @return {boolean} The evaluation result.
  * @see [main is function docs for more info]{@link https://github.com/imaginate/are/blob/master/docs/is-main-func.md}
  */
