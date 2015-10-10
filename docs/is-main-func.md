@@ -1,20 +1,37 @@
-### Main Function: is
+# _is_ Main Function
+- [Overview](#overview)
+- [Type Tests](#type-tests)
+- [Special Characters](#special-chars)
+- [Shorthand Type Test Options](#shorthand-tests)
+
+<a name="overview"></a>
+
+## Overview
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat sollicitudin dolor. Ut hendrerit tortor risus, at rhoncus augue imperdiet eget. Nunc dapibus vel neque sit amet porttitor. Duis ipsum ex, malesuada a auctor a, tincidunt non ligula. Etiam vel consequat felis. In id porta est, sit amet ullamcorper nisl. Nunc euismod felis molestie suscipit efficitur. Vestibulum odio ante, convallis vel massa vitae, imperdiet consectetur neque.
 
 
-| Primitives | Objects  | Arrays    | Hash Maps   | DOM Objects |
-| :--------: | :------: | :-------: | :---------: | :---------: |
-| string     | object   | strings   | stringMap   | element     |
-| number     | function | numbers   | numberMap   | document    |
-| boolean    | regexp   | booleans  | booleanMap  |             |
-| undefined  | array    | objects   | objectMap   |             |
-|            |          | functions | functionMap |             |
-|            |          | regexps   | regexpMap   |             |
-|            |          | arrays    | arrayMap    |             |
-|            |          | elements  | elementMap  |             |
-|            |          | documents | documentMap |             |
+<a name="type-tests"></a>
+<br />
+## Type Tests
+
+| Primitives | JS Objects | DOM Objects | Arrays    | Hash Maps   | Others |
+| :--------- | :--------- | :---------- | :-------- | :---------- | :----- |
+| null       | object     | element     | nulls     | nullMap     | empty  |
+| undefined  | function   | document    | booleans  | booleanMap  |        |
+| boolean    | regexp     |             | strings   | stringMap   |        |
+| string     | array      |             | numbers   | numberMap   |        |
+| number     |            |             | objects   | objectMap   |        |
+|            |            |             | functions | functionMap |        |
+|            |            |             | regexps   | regexpMap   |        |
+|            |            |             | arrays    | arrayMap    |        |
+|            |            |             | elements  | elementMap  |        |
+|            |            |             | documents | documentMap |        |
 
 
-### Important Characters:
+<a name="special-chars"></a>
+<br />
+## Special Characters
+
 | Char | Details                                  | Example         |
 | :--- | :--------------------------------------- | :-------------- |
 | *    | value can be any type                    |                 |
@@ -24,46 +41,64 @@
 | =    | value may be undefined                   | string\|array=  |
 
 
-### Valid General Shorthand:
-| Name  | Value     |
-| :---- | :-------- |
-| str   | string    |
-| num   | number    |
-| bool  | boolean   |
-| obj   | object    |
-| func  | function  |
-| regex | regexp    |
-| arr   | array     |
-| elem  | element   |
-| doc   | document  |
-| any   | *         |
-| null  | ?         |
+<a name="shorthand-tests"></a>
+<br />
+## Shorthand Type Test Options
+- [General](#shorthand-general)
+- [Arrays](#shorthand-arrays)
+- [Hash Maps](#shorthand-maps)
 
-### Valid Array Shorthand:
-| Name   | Value     |
-| :----- | :-------- |
-| strs   | strings   |
-| nums   | numbers   |
-| bools  | booleans  |
-| objs   | objects   |
-| funcs  | functions |
-| regexs | regexps   |
-| arrs   | arrays    |
-| elems  | elements  |
-| docs   | documents |
+<a name="shorthand-general"></a>
+### General
 
-### Valid Hash Map Shorthand:
-| Name     | Value       |
-| :------- | :---------- |
-| strMap   | stringMap   |
-| numMap   | numberMap   |
-| boolMap  | booleanMap  |
-| objMap   | objectMap   |
-| funcMap  | functionMap |
-| regexMap | regexpMap   |
-| arrMap   | arrayMap    |
-| elemMap  | elementMap  |
-| docMap   | documentMap |
+| Type  | same as | Type      |
+| :---- | :-----: | :-------- |
+| nil   | =>      | null      |
+| str   | =>      | string    |
+| num   | =>      | number    |
+| bool  | =>      | boolean   |
+| obj   | =>      | object    |
+| fn    | =>      | function  |
+| func  | =>      | function  |
+| regex | =>      | regexp    |
+| arr   | =>      | array     |
+| elem  | =>      | element   |
+| doc   | =>      | document  |
+| any   | =>      | *         |
+
+<a name="shorthand-arrays"></a>
+### Arrays
+
+| Type   | same as | Type      |
+| :----- | :-----: | :-------- |
+| nils   | =>      | nulls     |
+| strs   | =>      | strings   |
+| nums   | =>      | numbers   |
+| bools  | =>      | booleans  |
+| objs   | =>      | objects   |
+| fns    | =>      | functions |
+| funcs  | =>      | functions |
+| regexs | =>      | regexps   |
+| arrs   | =>      | arrays    |
+| elems  | =>      | elements  |
+| docs   | =>      | documents |
+
+<a name="shorthand-maps"></a>
+### Hash Maps
+
+| Type     | same as | Type        |
+| :------- | :-----: | :---------- |
+| nilMap   | =>      | nullMap     |
+| strMap   | =>      | stringMap   |
+| numMap   | =>      | numberMap   |
+| boolMap  | =>      | booleanMap  |
+| objMap   | =>      | objectMap   |
+| fnMap    | =>      | functionMap |
+| funcMap  | =>      | functionMap |
+| regexMap | =>      | regexpMap   |
+| arrMap   | =>      | arrayMap    |
+| elemMap  | =>      | elementMap  |
+| docMap   | =>      | documentMap |
 
 
 <br />
