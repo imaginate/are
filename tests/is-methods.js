@@ -42,75 +42,75 @@ var methods = {
   primitives: {
     null: {
       truthy: [ refs.nil ],
-      falsey: [ refs.obj, refs.bool, refs.str, refs.arr ]
+      falsy:  [ refs.obj, refs.bool, refs.str, refs.arr ]
     },
     undefined: {
       truthy: [ refs.un ],
-      falsey: [ refs.obj, refs.nil, refs.str, refs.arr, refs._bool ]
+      falsy:  [ refs.obj, refs.nil, refs.str, refs.arr, refs._bool ]
     },
     boolean: {
       shortcut: 'bool',
       truthy: [ refs.bool, refs._bool ],
-      falsey: [ refs.obj, refs._str, refs.num, refs.str, refs.nil ]
+      falsy:  [ refs.obj, refs._str, refs.num, refs.str, refs.nil ]
     },
     string: {
       shortcut: 'str',
       truthy: [ refs._str, refs.str ],
-      falsey: [ refs.num, refs._bool, refs.obj ]
+      falsy:  [ refs.num, refs._bool, refs.obj ]
     },
     _string: {
       shortcut: '_str',
       truthy: [ refs.str ],
-      falsey: [ refs._str, refs.num, refs._bool, refs.obj ]
+      falsy:  [ refs._str, refs.num, refs._bool, refs.obj ]
     },
     number: {
       shortcut: 'num',
       truthy: [ refs._num, refs.num, -5, 1.5 ],
-      falsey: [ refs._str, refs.bool, refs.obj, refs.str ]
+      falsy:  [ refs._str, refs.bool, refs.obj, refs.str ]
     },
     _number: {
       shortcut: '_num',
       truthy: [ refs.num, -5, 1.5 ],
-      falsey: [ refs._num, refs._str, refs.bool, refs.obj, refs.str ]
+      falsy:  [ refs._num, refs._str, refs.bool, refs.obj, refs.str ]
     }
   },
   js_objects: {
     object: {
       shortcut: 'obj',
       truthy: [ refs.obj, refs.arr, refs.regex ],
-      falsey: [ refs.func, refs.nil, refs.str ]
+      falsy:  [ refs.func, refs.nil, refs.str ]
     },
     _object: {
       shortcut: '_obj',
       truthy: [ refs.func, refs.obj, refs.arr, refs.regex ],
-      falsey: [ refs.nil, refs.str, refs.num ]
+      falsy:  [ refs.nil, refs.str, refs.num ]
     },
     function: {
       shortcut: 'func',
       truthy: [ refs.func ],
-      falsey: [ refs.nil, refs.obj, refs.bool ]
+      falsy:  [ refs.nil, refs.obj, refs.bool ]
     },
     array: {
       shortcut: 'arr',
       truthy: [ refs.arr ],
-      falsey: [ refs.obj, refs.regex, refs.nil ]
+      falsy:  [ refs.obj, refs.regex, refs.nil ]
     },
     regexp: {
       shortcut: 'regex',
       truthy: [ refs.regex ],
-      falsey: [ refs.obj, refs._bool, refs.bool, refs.nil, refs.arr ]
+      falsy:  [ refs.obj, refs._bool, refs.bool, refs.nil, refs.arr ]
     }
   },
   dom_objects: {
     document: {
       shortcut: 'doc',
       truthy: [ refs.doc ],
-      falsey: [ refs.obj, refs.elem, refs.str ]
+      falsy:  [ refs.obj, refs.elem, refs.str ]
     },
     element: {
       shortcut: 'elem',
       truthy: [ refs.elem ],
-      falsey: [ refs.doc, refs.obj, refs.num ]
+      falsy:  [ refs.doc, refs.obj, refs.num ]
     }
   },
   others: {
@@ -119,9 +119,7 @@ var methods = {
         refs.nil, refs.un, refs._bool, refs._str, refs._num, refs.obj, refs.arr,
         refs.func, NaN
       ],
-      falsy: [
-        refs.bool, refs.str, refs.num, refs.doc, function(a){}, [ 1 ]
-      ]
+      falsy: [ refs.bool, refs.str, refs.num, refs.doc, function(a){}, [ 1 ] ]
     }
   }
 };
@@ -141,8 +139,8 @@ describe('is-methods', function() {
               assert.strictEqual(true, is[methodName](val));
             });
           });
-          it('falsey', function() {
-            method.falsey.forEach(function(/** * */ val) {
+          it('falsy', function() {
+            method.falsy.forEach(function(/** * */ val) {
               assert.strictEqual(false, is[methodName](val));
             });
           });
@@ -154,8 +152,8 @@ describe('is-methods', function() {
                 assert.strictEqual(true, is[method.shortcut](val));
               });
             });
-            it('falsey', function() {
-              method.falsey.forEach(function(/** * */ val) {
+            it('falsy', function() {
+              method.falsy.forEach(function(/** * */ val) {
                 assert.strictEqual(false, is[method.shortcut](val));
               });
             });

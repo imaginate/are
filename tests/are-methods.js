@@ -41,75 +41,75 @@ var methods = {
   primitives: {
     null: {
       truthy: [ refs.nil ],
-      falsey: [ refs.obj, refs.bool, refs.str, refs.arr ]
+      falsy:  [ refs.obj, refs.bool, refs.str, refs.arr ]
     },
     undefined: {
       truthy: [ refs.un ],
-      falsey: [ refs.obj, refs.nil, refs.str, refs.arr ]
+      falsy:  [ refs.obj, refs.nil, refs.str, refs.arr ]
     },
     boolean: {
       shortcut: 'bool',
       truthy: [ refs.bool ],
-      falsey: [ refs.obj, refs._str, refs.num, refs.str, refs.nil ]
+      falsy:  [ refs.obj, refs._str, refs.num, refs.str, refs.nil ]
     },
     string: {
       shortcut: 'str',
       truthy: [ refs._str, refs.str ],
-      falsey: [ refs.num, refs.bool, refs.obj ]
+      falsy:  [ refs.num, refs.bool, refs.obj ]
     },
     _string: {
       shortcut: '_str',
       truthy: [ refs.str ],
-      falsey: [ refs._str, refs.num, refs.bool, refs.obj ]
+      falsy:  [ refs._str, refs.num, refs.bool, refs.obj ]
     },
     number: {
       shortcut: 'num',
       truthy: [ refs._num, refs.num ],
-      falsey: [ refs._str, refs.bool, refs.obj, refs.str ]
+      falsy:  [ refs._str, refs.bool, refs.obj, refs.str ]
     },
     _number: {
       shortcut: '_num',
       truthy: [ refs.num ],
-      falsey: [ refs._num, refs._str, refs.bool, refs.obj, refs.str ]
+      falsy:  [ refs._num, refs._str, refs.bool, refs.obj, refs.str ]
     }
   },
   js_objects: {
     object: {
       shortcut: 'obj',
       truthy: [ refs.obj, refs.arr, refs.regex ],
-      falsey: [ refs.func, refs.nil, refs.str ]
+      falsy:  [ refs.func, refs.nil, refs.str ]
     },
     _object: {
       shortcut: '_obj',
       truthy: [ refs.func, refs.obj, refs.arr, refs.regex ],
-      falsey: [ refs.nil, refs.str, refs.num ]
+      falsy:  [ refs.nil, refs.str, refs.num ]
     },
     function: {
       shortcut: 'func',
       truthy: [ refs.func ],
-      falsey: [ refs.nil, refs.obj, refs.bool ]
+      falsy:  [ refs.nil, refs.obj, refs.bool ]
     },
     array: {
       shortcut: 'arr',
       truthy: [ refs.arr ],
-      falsey: [ refs.obj, refs.regex, refs.nil ]
+      falsy:  [ refs.obj, refs.regex, refs.nil ]
     },
     regexp: {
       shortcut: 'regex',
       truthy: [ refs.regex ],
-      falsey: [ refs.obj, refs.bool, refs.nil, refs.arr ]
+      falsy:  [ refs.obj, refs.bool, refs.nil, refs.arr ]
     }
   },
   dom_objects: {
     document: {
       shortcut: 'doc',
       truthy: [ refs.doc ],
-      falsey: [ refs.obj, refs.elem, refs.str ]
+      falsy:  [ refs.obj, refs.elem, refs.str ]
     },
     element: {
       shortcut: 'elem',
       truthy: [ refs.elem ],
-      falsey: [ refs.doc, refs.obj, refs.num ]
+      falsy:  [ refs.doc, refs.obj, refs.num ]
     }
   }
 };
@@ -130,8 +130,8 @@ describe('are-methods', function() {
               assert.strictEqual(true, are[methodName].apply(null, val));
             });
           });
-          it('falsey', function() {
-            method.falsey.forEach(function(/** * */ val) {
+          it('falsy', function() {
+            method.falsy.forEach(function(/** * */ val) {
               assert.strictEqual(false, are[methodName](val));
               assert.strictEqual(false, are[methodName].apply(null, val));
             });
@@ -145,8 +145,8 @@ describe('are-methods', function() {
                 assert.strictEqual(true, are[method.shortcut].apply(null, val));
               });
             });
-            it('falsey', function() {
-              method.falsey.forEach(function(/** * */ val) {
+            it('falsy', function() {
+              method.falsy.forEach(function(/** * */ val) {
                 assert.strictEqual(false,are[method.shortcut](val));
                 assert.strictEqual(false,are[method.shortcut].apply(null, val));
               });
