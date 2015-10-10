@@ -145,10 +145,8 @@ var methods = {
     },
     objects: {
       shortcut: 'objs',
-      truthy: [
-        refs.arrays.obj, refs.arrays.arr, refs.arrays.regex, refs.arr, refs.nil
-      ],
-      falsy: [ refs.arrays.func, refs.arrays.num, refs.arrays.str ]
+      truthy: [ refs.arrays.obj, refs.arrays.regex, refs.arr, refs.nil ],
+      falsy:  [ refs.arrays.func, refs.arrays.num, refs.arrays.str ]
     },
     functions: {
       shortcut: 'fns|funcs',
@@ -199,10 +197,8 @@ var methods = {
     },
     objectMap: {
       shortcut: 'objMap',
-      truthy: [
-        refs.maps.obj, refs.maps.arr, refs.maps.regex, refs.obj, refs.nil
-      ],
-      falsy: [ refs.maps.func, refs.maps.num, refs.maps.str ]
+      truthy: [ refs.maps.obj, refs.maps.arr, refs.obj, refs.nil ],
+      falsy:  [ refs.maps.func, refs.maps.num, refs.maps.str ]
     },
     functionMap: {
       shortcut: 'fnMap|funcMap',
@@ -243,7 +239,7 @@ var methods = {
       falsy:  []
     },
     'obj|str': {
-      truthy: [ refs.obj, refs.arr, refs.str, refs.nil ],
+      truthy: [ refs.obj, refs.str, refs.nil ],
       falsy:  [ refs.num, refs.bool ]
     },
     '!obj': {

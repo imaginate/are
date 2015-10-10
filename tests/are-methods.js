@@ -141,15 +141,15 @@ describe('are-methods', function() {
       forOwn(section, function(/** !Object */ method,/** string */ methodName) {
         describe('are.' + methodName, function() {
           it('truthy', function() {
-            method.truthy.forEach(function(/** * */ val) {
-              assert.strictEqual(true, are[methodName](val));
-              assert.strictEqual(true, are[methodName].apply(null, val));
+            method.truthy.forEach(function(/** * */ vals) {
+              assert.strictEqual(true, are[methodName](vals));
+              assert.strictEqual(true, are[methodName].apply(null, vals));
             });
           });
           it('falsy', function() {
-            method.falsy.forEach(function(/** * */ val) {
-              assert.strictEqual(false, are[methodName](val));
-              assert.strictEqual(false, are[methodName].apply(null, val));
+            method.falsy.forEach(function(/** * */ vals) {
+              assert.strictEqual(false, are[methodName](vals));
+              assert.strictEqual(false, are[methodName].apply(null, vals));
             });
           });
         });
@@ -157,15 +157,15 @@ describe('are-methods', function() {
           method.shortcut.split('|').forEach(function(/** string */ shortname) {
             describe('are.' + shortname, function() {
               it('truthy', function() {
-                method.truthy.forEach(function(/** * */ val) {
-                  assert.strictEqual(true, are[shortname](val));
-                  assert.strictEqual(true, are[shortname].apply(null, val));
+                method.truthy.forEach(function(/** * */ vals) {
+                  assert.strictEqual(true, are[shortname](vals));
+                  assert.strictEqual(true, are[shortname].apply(null, vals));
                 });
               });
               it('falsy', function() {
-                method.falsy.forEach(function(/** * */ val) {
-                  assert.strictEqual(false, are[shortname](val));
-                  assert.strictEqual(false, are[shortname].apply(null, val));
+                method.falsy.forEach(function(/** * */ vals) {
+                  assert.strictEqual(false, are[shortname](vals));
+                  assert.strictEqual(false, are[shortname].apply(null, vals));
                 });
               });
             });
