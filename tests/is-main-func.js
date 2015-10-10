@@ -246,15 +246,17 @@ describe('is-main-func', function() {
           });
         });
         if (method.hasOwnProperty('shortcut') && method.shortcut) {
-          describe('is("' + method.shortcut + '", val)', function() {
-            it('truthy', function() {
-              method.truthy.forEach(function(/** * */ val) {
-                assert.strictEqual(true, is(method.shortcut, val));
+          method.shortcut.split('|').forEach(function(/** string */ shortname) {
+            describe('is("' + shortname + '", val)', function() {
+              it('truthy', function() {
+                method.truthy.forEach(function(/** * */ val) {
+                  assert.strictEqual(true, is(shortname, val));
+                });
               });
-            });
-            it('falsy', function() {
-              method.falsy.forEach(function(/** * */ val) {
-                assert.strictEqual(false, is(method.shortcut, val));
+              it('falsy', function() {
+                method.falsy.forEach(function(/** * */ val) {
+                  assert.strictEqual(false, is(shortname, val));
+                });
               });
             });
           });
