@@ -115,7 +115,9 @@ var methods = {
   },
   others: {
     empty: {
-      truthy: [ null, undefined, false, '', 0, {}, [], function(){}, NaN ],
+      truthy: [ 
+        [ null, undefined, false, '', 0, {}, [], function(){}, NaN ]
+      ],
       falsy: [
         [ false, true, false ],
         [ '', 'a', '' ],
