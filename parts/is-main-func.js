@@ -34,6 +34,15 @@ function is(type, val) {
     );
   }
 
+  // check for automatic pass ('*' = any value)
+  if ( _test.any(type) ) {
+    type !== '*' && type !== 'any' && _log && console.log(
+      'Confusing is() Syntax: an asterisk should not be used with other ' +
+      'data types as the check will pass regardless of the value\'s type'
+    );
+    return true;
+  }
+
   types = type.toLowerCase()
     .replace(_regexps.charBloat, '')
     .split('|');
@@ -48,15 +57,6 @@ function is(type, val) {
       );
       return false;
     }
-  }
-
-  // check for automatic pass ('*' = any value)
-  if ( _test.any(type) ) {
-    type.length > 1 && _log && console.log(
-      'Confusing is() Syntax: an asterisk should not be used with other ' +
-      'data types as the check will pass regardless of the value\'s type'
-    );
-    return true;
   }
 
   // check for an optional value ('=' = undefined)
