@@ -61,10 +61,6 @@ var refs = {
 /** @type {!Object<string, !Object>} */
 var methods = {
   primitives: {
-    empty: {
-      truthy: [ refs.obj, refs.nil, refs.un, 0, '', refs.arr ],
-      falsy:  [ refs.str, refs.num ]
-    },
     null: {
       truthy: [ refs.nil ],
       falsy:  [ refs.obj, refs.bool, refs.str, refs.arr ]
@@ -215,6 +211,14 @@ var methods = {
       shortcut: 'elemMap',
       truthy: [ refs.maps.elem, refs.obj ],
       falsy:  [ refs.maps.doc, refs.maps.obj, refs.maps.num ]
+    }
+  },
+  others: {
+    empty: {
+      truthy: [
+        refs.nil, refs.un, false, '', 0, refs.obj, refs.arr,  refs.func, NaN
+      ],
+      falsy: [ refs.bool, refs.str, refs.num, refs.doc, function(a){}, [ 1 ] ]
     }
   }
 };
