@@ -2,7 +2,7 @@
   "name": "node-are",
   "version": "0.0.1",
   "description": "Simple & Powerful JavaScript Type Checking",
-  "main": "src/node-are.min.js",
+  "main": "src/node-are.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/imaginate/are.git"
