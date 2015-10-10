@@ -177,7 +177,7 @@ function _checkEachType(val, types) {
     type = types[i];
     type = _has(_shorthand, type) ? _shorthand[type] : type;
     check = _test.arrays(type) && _checkArrayVals;
-    check = !check && _test.maps(type) && _checkMapVals;
+    check = check || (_test.maps(type) && _checkMapVals);
     if ( !check && !_has(_mainChecks, '_' + type) ) {
       throw new Error(
         'Failed is/are Helper, _checkEachType(), Call: ' +
