@@ -237,6 +237,29 @@ var methods = {
       ],
       falsy: [ refs.bool, refs.str, refs.num, refs.doc, function(a){}, [ 1 ] ]
     }
+  },
+  special_chars: {
+    '*': {
+      shortcut: 'any',
+      truthy: [ refs.obj, refs.arr, refs.str, refs.nil ],
+      falsy:  []
+    },
+    'obj|str': {
+      truthy: [ refs.obj, refs.arr, refs.str, refs.nil ],
+      falsy:  [ refs.num, refs.bool ]
+    },
+    '!obj': {
+      truthy: [ refs.obj, refs.arr ],
+      falsy:  [ refs.str, refs.nil ]
+    },
+    '?str': {
+      truthy: [ refs.str, refs.nil ],
+      falsy:  [ refs.obj, refs.arr ]
+    },
+    'str=': {
+      truthy: [ refs.str, refs.un ],
+      falsy:  [ refs.obj, refs.arr, refs.nil ]
+    }
   }
 };
 
