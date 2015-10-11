@@ -1,5 +1,5 @@
 ### Simple & Powerful JavaScript Type Checking
-You get two powerful libraries: **_is_**  and  **_are_**. Plus the choice of using the main or sub functions and complete or shorthand type names. Take a look at some examples below.
+You get two powerful libraries: **_is_**  and  **_are_**. Plus the choice of using main or sub functions and long or short check names. Take a look at some examples below.
 - **_is_**
 ```javascript
 // example string checks
@@ -53,7 +53,6 @@ For a Node.js environment:
 - [**_is_** methods](https://github.com/imaginate/are/blob/master/docs/is-methods.md)
 - [**_are_** main function](https://github.com/imaginate/are/blob/master/docs/are-main-func.md)
 - [**_are_** methods](https://github.com/imaginate/are/blob/master/docs/are-methods.md)
-- [node.js specific functionality](https://github.com/imaginate/are/blob/master/docs/node-are.md)
 
 
 ## Contact Us
