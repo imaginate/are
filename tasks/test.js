@@ -85,17 +85,17 @@ methods.nodeAre = function() {
   /** @type {string} */
   var tests;
 
-  tests = './tests/*.js';
+  tests = './tests';
 
   configLog();
 
   source = './src/node-are.js';
   log.debug('Testing `' + source + '`');
-  exec(mocha + ' --recursive --require ' + source + ' ' + tests);
+  exec(mocha + ' --require ' + source + ' ' + tests + ' --recursive');
 
   source = './src/node-are.min.js';
   log.debug('Testing `' + source + '`');
-  exec(mocha + ' --recursive --require ' + source + ' ' + tests);
+  exec(mocha + ' --require ' + source + ' ' + tests + ' --recursive');
   log.pass('Finished testing `' + source + '`');
 
   log.resetConfig();
