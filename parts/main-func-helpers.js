@@ -332,7 +332,7 @@ function getValidTypes(typeStr) {
     types[i] = type;
   }
 
-  hasSpecialChar('=', typeStr) && types.push('undefined');
+  hasSpecialChar('=', typeStr) && types.push('_undefined');
   return types;
 }
 
