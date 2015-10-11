@@ -31,8 +31,14 @@ var forOwn = require('lodash/object/forOwn');
 // DEFINE MAIN FUNCTION
 ////////////////////////////////////////////////////////////////////////////////
 
-/** @type {!Object} */
-var Vitals = {};
+/** @type {!Function<string, function>} */
+function Vitals() {
+  forOwn(Vitals, function(/** function */ method, /** string */ key) {
+    global[key] = method;
+  });
+  global.is = is;
+  global.log = log;
+}
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -202,11 +208,7 @@ Vitals.retrieve = function(filepath, encoding) {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// APPEND METHODS TO GLOBAL OBJ
+// EXPORT LIBRARY
 ////////////////////////////////////////////////////////////////////////////////
 
-forOwn(Vitals, function(/** function */ method, /** string */ key) {
-  global[key] = method;
-});
-global.is = is;
-global.log = log;
+module.exports = Vitals;

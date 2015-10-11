@@ -11,7 +11,7 @@
 
 'use strict';
 
-require('./vitals'); // appends helper methods and objects to global obj
+require('./vitals')(); // appends helper methods and objects to global obj
 
 
 ////////////////////////////////////////////////////////////////////////////////
