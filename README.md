@@ -1,5 +1,5 @@
 ### Simple & Powerful JavaScript Type Checking
-You get two powerful libraries: **_is_**  and  **_are_**. Plus the choice of using main or sub functions and long or short check names. Take a look at some examples below.
+You get two awesome libraries, **_is_**  and  **_are_**, that will make your JavaScript development more **elegant** and **intuitive**. Both are built to offer you the freedom to **choose** your coding style preferences (e.g. main vs sub functions / long vs short names). Take a look at some examples below.
 - **_is_**
 ```javascript
 // example string checks
