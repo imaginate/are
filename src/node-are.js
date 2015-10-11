@@ -1096,7 +1096,7 @@ function is(typeStr, val) {
  * @return {boolean} The evaluation result.
  * @see [main are function docs for more info]{@link https://github.com/imaginate/are/blob/master/docs/are-main-func.md}
  */
-function are(type, vals) {
+function are(typeStr, vals) {
 
   /** @type {!Array<string>} */
   var types;
