@@ -34,8 +34,7 @@ var mocha = (
   '--reporter dot '   +
   '--slow 5 '         +
   '--timeout 1000 '   +
-  '--globals is,are ' +
-  '--require '
+  '--globals is,are'
 );
 
 /** @type {function} */
@@ -67,12 +66,12 @@ methods.are = function() {
 
   source = './src/are.js';
   log.debug('Testing `' + source + '`');
-  exec(mocha + source + ' ' + tests);
+  exec(mocha + ' --require ' + source + ' ' + tests);
   log.pass('Finished testing `' + source + '`');
 
   source = './src/are.min.js';
   log.debug('Testing `' + source + '`');
-  exec(mocha + source + ' ' + tests);
+  exec(mocha + ' --require ' + source + ' ' + tests);
   log.pass('Finished testing `' + source + '`');
 
   log.resetConfig();
@@ -92,11 +91,11 @@ methods.nodeAre = function() {
 
   source = './src/node-are.js';
   log.debug('Testing `' + source + '`');
-  exec(mocha + source + ' ' + tests);
+  exec(mocha + ' --recursive --require ' + source + ' ' + tests);
 
   source = './src/node-are.min.js';
   log.debug('Testing `' + source + '`');
-  exec(mocha + source + ' ' + tests);
+  exec(mocha + ' --recursive --require ' + source + ' ' + tests);
   log.pass('Finished testing `' + source + '`');
 
   log.resetConfig();
