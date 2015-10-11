@@ -135,7 +135,7 @@ catch(e) {
  * @return {boolean}
  */
 is.array = function(val) {
-  return is.obj(val) && _toStr.call(val) === '[object Array]';
+  return is.obj(val) && toStr.call(val) === '[object Array]';
 };
 is.arr = is.array;
 
@@ -144,7 +144,7 @@ is.arr = is.array;
  * @return {boolean}
  */
 is.regexp = function(val) {
-  return is.obj(val) && _toStr.call(val) === '[object RegExp]';
+  return is.obj(val) && toStr.call(val) === '[object RegExp]';
 };
 is.regex = is.regexp;
 
@@ -201,7 +201,7 @@ is.empty = function(val) {
 
     // return: {} => true
     for (prop in val) {
-      if ( _has(val, prop) ) {
+      if ( has(val, prop) ) {
         return false;
       }
     }

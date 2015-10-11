@@ -20,6 +20,8 @@
 //   values to evaluate. The values can be provided in a single array or
 //   multiple params.
 
+// The helper, checkAreMethod, is defined at the bottom of this section.
+
 
 ////////////////////////////////////////////////////////////////////////////
 // ARE METHODS - PRIMITIVES
@@ -30,7 +32,7 @@
  * @return {boolean}
  */
 are.null = function() {
-  return _checkAreMethod('null', arguments);
+  return checkAreMethod('null', arguments);
 };
 are.nil = are.null;
 
@@ -39,7 +41,7 @@ are.nil = are.null;
  * @return {boolean}
  */
 are.undefined = function() {
-  return _checkAreMethod('undefined', arguments);
+  return checkAreMethod('undefined', arguments);
 };
 
 /**
@@ -47,7 +49,7 @@ are.undefined = function() {
  * @return {boolean}
  */
 are.boolean = function() {
-  return _checkAreMethod('boolean', arguments);
+  return checkAreMethod('boolean', arguments);
 };
 are.bool = are.boolean;
 
@@ -56,7 +58,7 @@ are.bool = are.boolean;
  * @return {boolean}
  */
 are.string = function() {
-  return _checkAreMethod('string', arguments);
+  return checkAreMethod('string', arguments);
 };
 are.str = are.string;
 
@@ -66,7 +68,7 @@ are.str = are.string;
  * @return {boolean}
  */
 are._string = function() {
-  return _checkAreMethod('_string', arguments);
+  return checkAreMethod('_string', arguments);
 };
 are._str = are._string;
 
@@ -75,7 +77,7 @@ are._str = are._string;
  * @return {boolean}
  */
 are.number = function() {
-  return _checkAreMethod('number', arguments);
+  return checkAreMethod('number', arguments);
 };
 are.num = are.number;
 
@@ -85,7 +87,7 @@ are.num = are.number;
  * @return {boolean}
  */
 are._number = function() {
-  return _checkAreMethod('_number', arguments);
+  return checkAreMethod('_number', arguments);
 };
 are._num = are._number;
 
@@ -99,7 +101,7 @@ are._num = are._number;
  * @return {boolean}
  */
 are.object = function() {
-  return _checkAreMethod('object', arguments);
+  return checkAreMethod('object', arguments);
 };
 are.obj = are.object;
 
@@ -109,7 +111,7 @@ are.obj = are.object;
  * @return {boolean}
  */
 are._object = function() {
-  return _checkAreMethod('_object', arguments);
+  return checkAreMethod('_object', arguments);
 };
 are._obj = are._object;
 
@@ -118,7 +120,7 @@ are._obj = are._object;
  * @return {boolean}
  */
 are.func = function() {
-  return _checkAreMethod('func', arguments);
+  return checkAreMethod('func', arguments);
 };
 are.fn = are.func;
 try {
@@ -135,7 +137,7 @@ catch(e) {
  * @return {boolean}
  */
 are.array = function() {
-  return _checkAreMethod('array', arguments);
+  return checkAreMethod('array', arguments);
 };
 are.arr = are.array;
 
@@ -144,7 +146,7 @@ are.arr = are.array;
  * @return {boolean}
  */
 are.regexp = function() {
-  return _checkAreMethod('regexp', arguments);
+  return checkAreMethod('regexp', arguments);
 };
 are.regex = are.regexp;
 
@@ -158,7 +160,7 @@ are.regex = are.regexp;
  * @return {boolean}
  */
 are.document = function() {
-  return _checkAreMethod('document', arguments);
+  return checkAreMethod('document', arguments);
 };
 are.doc = are.document;
 
@@ -167,7 +169,7 @@ are.doc = are.document;
  * @return {boolean}
  */
 are.element = function() {
-  return _checkAreMethod('element', arguments);
+  return checkAreMethod('element', arguments);
 };
 are.elem = are.element;
 
@@ -185,7 +187,7 @@ are.elem = are.element;
  * @return {boolean}
  */
 are.empty = function() {
-  return _checkAreMethod('empty', arguments);
+  return checkAreMethod('empty', arguments);
 };
 
 
@@ -199,15 +201,15 @@ are.empty = function() {
  * @param {!Arguments} args
  * @return {boolean}
  */
-function _checkAreMethod(method, args) {
+function checkAreMethod(method, args) {
 
   /** @type {function} */
   var check;
   /** @type {number} */
   var i;
 
-  args = args.length > 1 ? _sliceArr.call(args, 0) : args[0];
-  if ( !is.array(args) ) {
+  args = args.length > 1 ? sliceArr.call(args, 0) : args[0];
+  if ( !is.arr(args) ) {
     throw new Error(
       'An are.' + method + '(vals) call did not receive multiple vals to ' +
       'evaluate'
