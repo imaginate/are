@@ -34,7 +34,7 @@ function are(typeStr, vals) {
     );
   }
 
-  vals = arguments.length > 2 ? _sliceArr.call(arguments, 1) : vals;
+  vals = arguments.length > 2 ? sliceArr.call(arguments, 1) : vals;
 
   if ( !is.arr(vals) ) {
     throw new TypeError(

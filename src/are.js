@@ -835,7 +835,7 @@ function getValidTypes(typeStr) {
   i = types.length;
   while (i--) {
     type = '_' + types[i];
-    type = has(typeShortcuts, type) ? typeShortcuts[type] : type;
+    type = has(typeShortcuts, type) ? '_' + typeShortcuts[type] : type;
     if ( !has(allTypes, type) ) {
       return type;
     }
@@ -948,7 +948,7 @@ function are(typeStr, vals) {
     );
   }
 
-  vals = arguments.length > 2 ? _sliceArr.call(arguments, 1) : vals;
+  vals = arguments.length > 2 ? sliceArr.call(arguments, 1) : vals;
 
   if ( !is.arr(vals) ) {
     throw new TypeError(

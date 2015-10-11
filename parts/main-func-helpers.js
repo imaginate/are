@@ -325,7 +325,7 @@ function getValidTypes(typeStr) {
   i = types.length;
   while (i--) {
     type = '_' + types[i];
-    type = has(typeShortcuts, type) ? typeShortcuts[type] : type;
+    type = has(typeShortcuts, type) ? '_' + typeShortcuts[type] : type;
     if ( !has(allTypes, type) ) {
       return type;
     }
