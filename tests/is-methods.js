@@ -132,28 +132,36 @@ describe('is-methods', function() {
     describe('\n    ' + sectionName, function() {
       forOwn(section, function(/** !Object */ method,/** string */ methodName) {
         describe('is.' + methodName, function() {
-          it('truthy', function() {
-            method.truthy.forEach(function(/** * */ val) {
-              assert.strictEqual(true, is[methodName](val));
+          describe('truthy', function() {
+            method.truthy.forEach(function(/** * */ val, /** number */ i) {
+              it(i, function() {
+                assert.strictEqual(true, is[methodName](val));
+              });
             });
           });
-          it('falsy', function() {
-            method.falsy.forEach(function(/** * */ val) {
-              assert.strictEqual(false, is[methodName](val));
+          describe('falsy', function() {
+            method.falsy.forEach(function(/** * */ val, /** number */ i) {
+              it(i, function() {
+                assert.strictEqual(false, is[methodName](val));
+              });
             });
           });
         });
         if (method.hasOwnProperty('shortcut') && method.shortcut) {
           method.shortcut.split('|').forEach(function(/** string */ shortname) {
             describe('is.' + shortname, function() {
-              it('truthy', function() {
-                method.truthy.forEach(function(/** * */ val) {
-                  assert.strictEqual(true, is[shortname](val));
+              describe('truthy', function() {
+                method.truthy.forEach(function(/** * */ val, /** number */ i) {
+                  it(i, function() {
+                    assert.strictEqual(true, is[shortname](val));
+                  });
                 });
               });
-              it('falsy', function() {
-                method.falsy.forEach(function(/** * */ val) {
-                  assert.strictEqual(false, is[shortname](val));
+              describe('falsy', function() {
+                method.falsy.forEach(function(/** * */ val, /** number */ i) {
+                  it(i, function() {
+                    assert.strictEqual(false, is[shortname](val));
+                  });
                 });
               });
             });
