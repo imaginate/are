@@ -16,58 +16,41 @@
 // *****************************************************************************
 
 /**
- * @param {string} type - The types to check for.
+ * @param {string} typeStr - The type string containing the types to check for.
  * @param {*} val - The value to evaluate.
  * @return {boolean} The evaluation result.
  * @see [main is function docs for more info]{@link https://github.com/imaginate/are/blob/master/docs/is-main-func.md}
  */
-function is(type, val) {
+function is(typeStr, val) {
 
   /** @type {!Array<string>} */
   var types;
-  /** @type {number} */
-  var i;
 
-  if ( !is._str(type) ) {
+  if ( !is._str(typeStr) ) {
     throw new TypeError(
-      'An is(type, val) call received a non-string type param'
+      'An is(typeStr, val) call received a non-string typeStr param'
     );
   }
 
-  // check for automatic pass ('*' = any value)
-  if ( _test.any(type) ) {
-    type !== '*' && type !== 'any' && _log && console.log(
+  if ( hasSpecialChar('*', typeStr) ) {
+    typeStr !== '*' && typeStr !== 'any' && _log && console.log(
       'Confusing is() Syntax: an asterisk should not be used with other ' +
       'data types as the check will pass regardless of the value\'s type'
     );
     return true;
   }
 
-  types = type.toLowerCase()
-    .replace(_regexps.charBloat, '')
-    .split('|');
+  types = getValidTypes(typeStr);
 
-  // check each type in the type string
-  i = types.length;
-  while (i--) {
-    if ( !_test.allTypes( types[i] ) ) {
-      throw new Error(
-        'An is(type, val) call received an invalid data type within the ' +
-        'type param; invalid type => ' + types[i]
-      );
-      return false;
-    }
+  if ( is.str(types) ) {
+    throw new Error(
+      'Invalid is(typeStr, val) Call: invalid type in the typeStr param; ' +
+      'invalid type => ' + types
+    );
+    return false;
   }
 
-  // check for an optional value ('=' = undefined)
-  if ( is.undefined(val) && _test.undefined(type) ) {
-    return true;
-  }
+  setNullableOverride(typeStr);
 
-  // check for a nullable override ('!' = non-nullable) ('?' = nullable)
-  if ( is.null(val) && _isNullOverride(type) ) {
-    return _isNullable(type);
-  }
-
-  return is.null(val) ? _checkEachNull(types) : _checkEachType(val, types);
+  return checkVal(types, val);
 }

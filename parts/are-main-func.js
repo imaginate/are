@@ -16,7 +16,7 @@
 // *****************************************************************************
 
 /**
- * @param {string} type - The types to check for.
+ * @param {string} typeStr - The type string containing the types to check for.
  * @param {*...} vals - The values to evaluate. Must have at least two different
  *   values to evaluate. The values can be provided in a single array or
  *   multiple params.
@@ -27,14 +27,10 @@ function are(type, vals) {
 
   /** @type {!Array<string>} */
   var types;
-  /** @type {*} */
-  var val;
-  /** @type {number} */
-  var i;
 
-  if ( !is._str(type) ) {
+  if ( !is._str(typeStr) ) {
     throw new TypeError(
-      'An are(type, vals) call received a non-string type param'
+      'An are(typeStr, vals) call received a non-string typeStr param'
     );
   }
 
@@ -42,44 +38,29 @@ function are(type, vals) {
 
   if ( !is.arr(vals) ) {
     throw new TypeError(
-      'An are(type, vals) call did not receive multiple vals to evaluate'
+      'An are(typeStr, vals) call did not receive multiple vals to evaluate'
     );
   }
 
-  // check for automatic pass ('*' = any value)
-  if ( _test.any(type) ) {
-    type !== '*' && type !== 'any' && _log && console.log(
+  if ( hasSpecialChar('*', typeStr) ) {
+    typeStr !== '*' && typeStr !== 'any' && _log && console.log(
       'Confusing are() Syntax: an asterisk should not be used with other ' +
       'data types as the check will pass regardless of the value\'s type'
     );
     return true;
   }
 
-  types = type.toLowerCase()
-    .replace(_regexps.charBloat, '')
-    .split('|');
+  types = getValidTypes(typeStr);
 
-  // check each type in the type string
-  i = types.length;
-  while (i--) {
-    if ( !_test.allTypes( types[i] ) ) {
-      throw new Error(
-        'An are(type, vals) call received an invalid data type within the ' +
-        'type param; invalid type => ' + types[i]
-      );
-      return false;
-    }
+  if ( is.str(types) ) {
+    throw new Error(
+      'Invalid are(typeStr, val) Call: invalid type in the typeStr param; ' +
+      'invalid type => ' + types
+    );
+    return false;
   }
 
-  // check for undefined and null special chars
-  _test.undefined(type) && types.push('undefined');
-  _isNullOverride(type) && _isNullable(type) && types.push('null');
+  setNullableOverride(typeStr);
 
-  // check all of the values
-  while (i--) {
-    if ( !_checkEachType(vals[i], types) ) {
-      return false;
-    }
-  }
-  return true;
+  return checkVals(types, vals);
 }
