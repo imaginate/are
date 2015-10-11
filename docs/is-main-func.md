@@ -7,25 +7,46 @@
 <a name="overview"></a>
 
 ## Overview
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla consequat sollicitudin dolor. Ut hendrerit tortor risus, at rhoncus augue imperdiet eget. Nunc dapibus vel neque sit amet porttitor. Duis ipsum ex, malesuada a auctor a, tincidunt non ligula. Etiam vel consequat felis. In id porta est, sit amet ullamcorper nisl. Nunc euismod felis molestie suscipit efficitur. Vestibulum odio ante, convallis vel massa vitae, imperdiet consectetur neque.
+Lorem ipsum ... (overview coming soon)
 
 
 <a name="type-tests"></a>
 <br />
 ## Type Tests
+- [General](#type-general)
+- [Arrays](#type-arrays)
+- [Hash Maps](#type-maps)
 
-| Primitives | JS Objects | DOM Objects | Arrays    | Hash Maps   | Others |
-| :--------- | :--------- | :---------- | :-------- | :---------- | :----- |
-| null       | object     | element     | nulls     | nullMap     | empty  |
-| undefined  | function   | document    | booleans  | booleanMap  |        |
-| boolean    | regexp     |             | strings   | stringMap   |        |
-| string     | array      |             | numbers   | numberMap   |        |
-| number     |            |             | objects   | objectMap   |        |
-|            |            |             | functions | functionMap |        |
-|            |            |             | regexps   | regexpMap   |        |
-|            |            |             | arrays    | arrayMap    |        |
-|            |            |             | elements  | elementMap  |        |
-|            |            |             | documents | documentMap |        |
+<a name="type-general"></a>
+### General
+
+| Primitives | JS Objects | DOM Objects | Others |
+| :--------- | :--------- | :---------- | :----- |
+| null       | object     | element     | empty  |
+| undefined  | function   | document    |        |
+| boolean    | regexp     |             |        |
+| string     | array      |             |        |
+| number     |            |             |        |
+
+<a name="type-arrays"></a>
+### Arrays
+
+| Primitives | JS Objects | DOM Objects |
+| :--------- | :--------- | :---------- |
+| nulls      | objects    | elements    |
+| booleans   | functions  | documents   |
+| strings    | regexps    |             |
+| numbers    | arrays     |             |
+
+<a name="type-maps"></a>
+### Hash Maps
+
+| Primitives | JS Objects  | DOM Objects |
+| :--------- | :---------- | :---------- |
+| nullMap    | objectMap   | elementMap  |
+| booleanMap | functionMap | documentMap |
+| stringMap  | regexpMap   |             |
+| numberMap  | arrayMap    |             |
 
 
 <a name="special-chars"></a>
