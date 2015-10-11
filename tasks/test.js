@@ -29,9 +29,10 @@ var makeTask = require('../helpers/task');
 /** @type {string} */
 var mocha = (
   'node ./node_modules/mocha/bin/mocha ' +
+  '--bail '           +
   '--colors '         +
   '--reporter dot '   +
-  '--slow 10 '        +
+  '--slow 5 '         +
   '--timeout 1000 '   +
   '--globals is,are ' +
   '--require '
