@@ -363,8 +363,8 @@ function cleanTypeStr(typeStr) {
  * @param {string} typeStr - The type string to evaluate.
  */
 function setNullableOverride(typeStr) {
-  nullableOverride = hasSpecialChar('?', type) ?
-    !hasSpecialChar('!', type) : hasSpecialChar('!', type);
+  nullableOverride = hasSpecialChar('?', typeStr) ?
+    !hasSpecialChar('!', typeStr) : hasSpecialChar('!', typeStr);
   nullable = nullableOverride &&
-    !hasSpecialChar('!', type) && hasSpecialChar('?', type);
+    !hasSpecialChar('!', typeStr) && hasSpecialChar('?', typeStr);
 }
