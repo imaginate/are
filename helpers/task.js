@@ -20,37 +20,37 @@ require('./vitals')(); // appends helper methods and objects to global obj
 
 /**
  * @param {string} name
- * @param {(string|!Array<string>)} defaultArgs
+ * @param {(string|!Array<string>)} defaultOpts
  * @param {!Object<string, function>} methods
  * @return {!Object}
  */
-function makeTask(name, defaultArgs, methods) {
+function makeTask(name, defaultOpts, methods) {
 
-  defaultArgs = is.str(defaultArgs) ? defaultArgs.split('-') : defaultArgs;
+  defaultOpts = is.str(defaultOpts) ? defaultOpts.split('-') : defaultOpts;
 
-  ( is.str(name) && is.arr(defaultArgs) && is.obj(methods) ) || log.error(
+  ( is.str(name) && is.arr(defaultOpts) && is.obj(methods) ) || log.error(
     'Invalid `makeTask` Call',
-    'invalid type for `name`, `defaultArgs`, or `methods` param',
-    { argMap: true, name: name, defaultArgs: defaultArgs, methods: methods }
+    'invalid type for `name`, `defaultOpts`, or `methods` param',
+    { argMap: true, name: name, defaultOpts: defaultOpts, methods: methods }
   );
 
   /**
-   * @param {string} arg
+   * @param {string} opt
    */
-  var run = function(arg) {
-    has(methods, arg) || log.error(
+  var run = function(opt) {
+    has(methods, opt) || log.error(
       'Invalid `Task.run` Call',
       'invalid argument name (i.e. prop did not exist in the task\'s methods)',
-      { argMap: true, task: name, invalidArg: arg }
+      { argMap: true, task: name, invalidArg: opt }
     );
-    methods[arg]();
+    methods[opt]();
   };
 
   return {
     run: run,
     name: name,
     methods: methods,
-    defaultArgs: defaultArgs
+    defaultOpts: defaultOpts
   };
 }
 
