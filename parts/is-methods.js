@@ -24,10 +24,15 @@
  * @param {*} val
  * @return {boolean}
  */
-is.null = function(val) {
+is.nil = function(val) {
   return val === null;
 };
-is.nil = is.null;
+try {
+  is.null = is.nil;
+}
+catch (e) {
+  logSupportMsg('is', 'null', 'nil');
+}
 
 /**
  * @param {*} val
@@ -41,10 +46,15 @@ is.undefined = function(val) {
  * @param {*} val
  * @return {boolean}
  */
-is.boolean = function(val) {
+is.bool = function(val) {
   return typeof val === 'boolean';
 };
-is.bool = is.boolean;
+try {
+  is.boolean = is.bool;
+}
+catch (e) {
+  logSupportMsg('is', 'boolean', 'bool');
+}
 
 /**
  * @param {*} val

@@ -124,10 +124,15 @@
  * @param {*} val
  * @return {boolean}
  */
-is.null = function(val) {
+is.nil = function(val) {
   return val === null;
 };
-is.nil = is.null;
+try {
+  is.null = is.nil;
+}
+catch (e) {
+  logSupportMsg('is', 'null', 'nil');
+}
 
 /**
  * @param {*} val
@@ -141,10 +146,15 @@ is.undefined = function(val) {
  * @param {*} val
  * @return {boolean}
  */
-is.boolean = function(val) {
+is.bool = function(val) {
   return typeof val === 'boolean';
 };
-is.bool = is.boolean;
+try {
+  is.boolean = is.bool;
+}
+catch (e) {
+  logSupportMsg('is', 'boolean', 'bool');
+}
 
 /**
  * @param {*} val
@@ -379,10 +389,15 @@ is.empty = function(val) {
  * @param {*...} vals
  * @return {boolean}
  */
-are.null = function() {
+are.nil = function() {
   return checkAreMethod('null', arguments);
 };
-are.nil = are.null;
+try {
+  are.null = are.nil;
+}
+catch (e) {
+  logSupportMsg('are', 'null', 'nil');
+}
 
 /**
  * @param {*...} vals
@@ -396,10 +411,15 @@ are.undefined = function() {
  * @param {*...} vals
  * @return {boolean}
  */
-are.boolean = function() {
-  return checkAreMethod('boolean', arguments);
+are.bool = function() {
+  return checkAreMethod('bool', arguments);
 };
-are.bool = are.boolean;
+try {
+  are.boolean = are.bool;
+}
+catch (e) {
+  logSupportMsg('are', 'boolean', 'bool');
+}
 
 /**
  * @param {*...} vals

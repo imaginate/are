@@ -31,10 +31,15 @@
  * @param {*...} vals
  * @return {boolean}
  */
-are.null = function() {
+are.nil = function() {
   return checkAreMethod('null', arguments);
 };
-are.nil = are.null;
+try {
+  are.null = are.nil;
+}
+catch (e) {
+  logSupportMsg('are', 'null', 'nil');
+}
 
 /**
  * @param {*...} vals
@@ -48,10 +53,15 @@ are.undefined = function() {
  * @param {*...} vals
  * @return {boolean}
  */
-are.boolean = function() {
-  return checkAreMethod('boolean', arguments);
+are.bool = function() {
+  return checkAreMethod('bool', arguments);
 };
-are.bool = are.boolean;
+try {
+  are.boolean = are.bool;
+}
+catch (e) {
+  logSupportMsg('are', 'boolean', 'bool');
+}
 
 /**
  * @param {*...} vals
