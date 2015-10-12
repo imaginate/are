@@ -109,8 +109,7 @@ var methods = {
       truthy: [ refs.regex ],
       falsy:  [ refs.obj, refs.bool, refs.nil, refs.arr ]
     },
-    arguments: {
-      shortcut: 'args',
+    args: {
       truthy: [ refs.args ],
       falsy:  [ refs.obj, refs.regex, refs.nil, refs.arr ]
     }
