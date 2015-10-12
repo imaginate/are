@@ -1,6 +1,7 @@
 # _are_ Methods
 - [Overview](#overview)
 - [Methods](#methods)
+- [Compatibility](#compatibility)
 
 <a name="overview"></a>
 
@@ -66,6 +67,19 @@ Lorem ipsum ... (overview coming soon)
 | are.buffer      | are.buff |
 | are.directory   | are.dir  |
 | are.file        |          |
+
+
+<a name="compatibility"></a>
+<br />
+## Compatibility
+Accessing properties using reserved keywords will fail in some JavaScript engines. See the following table for methods that could produce issues.
+
+| Method        | Use Instead | EcmaScript Versions |
+| :------------ | :---------- | :------------------ |
+| are.null      | are.nil     | ES1+                |
+| are.boolean   | are.bool    | ES2-ES4             |
+| are.function  | are.func    | ES1+                |
+| are.arguments | are.args    | ES5+                |
 
 
 <br />

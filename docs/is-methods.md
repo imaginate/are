@@ -1,6 +1,7 @@
 # _is_ Methods
 - [Overview](#overview)
 - [Methods](#methods)
+- [Compatibility](#compatibility)
 
 <a name="overview"></a>
 
@@ -68,6 +69,19 @@ Lorem ipsum ... (overview coming soon)
 | is.directories | is.dirs &#124; is.directorys | 2nd optional param: set to add a root dirpath to all dirpaths. |
 | is.file        |         |             |
 | is.files       |         | 2nd optional param: set to add a root dirpath to all filepaths. |
+
+
+<a name="compatibility"></a>
+<br />
+## Compatibility
+Accessing properties using reserved keywords will fail in some JavaScript engines. See the following table for methods that could produce issues.
+
+| Method       | Use Instead | EcmaScript Versions |
+| :----------- | :---------- | :------------------ |
+| is.null      | is.nil      | ES1+                |
+| is.boolean   | is.bool     | ES2-ES4             |
+| is.function  | is.func     | ES1+                |
+| is.arguments | is.args     | ES5+                |
 
 
 <br />
