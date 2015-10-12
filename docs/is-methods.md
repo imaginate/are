@@ -39,7 +39,9 @@ Lorem ipsum ... (overview coming soon)
 | is._object  | is._obj  | Operates the same as ``` is.object ``` except it returns ``` true ``` for functions. |
 | is.function | is.fn &#124; is.func |   |
 | is.regexp   | is.regex |               |
-| is.array    | is.arr   |               |
+| is.array    | is.arr   | 2nd optional param: set to ``` true ``` to return ``` true ``` for arguments. |
+| is._array   | is._arr  | Operates the same as ``` is.array ``` except it returns ``` true ``` for arguments. |
+| is.args     | is.arguments |           |
 
 <a name="methods-dom-objects"></a>
 ### DOM Objects

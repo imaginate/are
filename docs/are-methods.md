@@ -40,6 +40,8 @@ Lorem ipsum ... (overview coming soon)
 | are.function | are.fn &#124; are.func |  |
 | are.regexp   | are.regex |               |
 | are.array    | are.arr   |               |
+| are._array   | are._arr  | Operates the same as ``` are.array ``` except it returns ``` true ``` for arguments. |
+| are.args     | are.arguments |           |
 
 <a name="methods-dom-objects"></a>
 ### DOM Objects

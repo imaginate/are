@@ -26,7 +26,7 @@ Lorem ipsum ... (overview coming soon)
 | undefined  | function   | document    |        |
 | boolean    | regexp     |             |        |
 | string     | array      |             |        |
-| number     |            |             |        |
+| number     | arguments  |             |        |
 
 <a name="type-arrays"></a>
 ### Arrays
@@ -83,6 +83,7 @@ Lorem ipsum ... (overview coming soon)
 | func  | =>      | function  |
 | regex | =>      | regexp    |
 | arr   | =>      | array     |
+| args  | =>      | arguments |
 | elem  | =>      | element   |
 | doc   | =>      | document  |
 | any   | =>      | *         |
