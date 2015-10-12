@@ -527,23 +527,6 @@ function checkAreMethod(method, args) {
 
 
 //////////////////////////////////////////////////////////////////////////////
-// VARIABLES
-//////////////////////////////////////////////////////////////////////////
-
-/**
- * @private
- * @type {boolean}
- */
-var nullableOverride;
-
-/**
- * @private
- * @type {boolean}
- */
-var nullable;
-
-
-//////////////////////////////////////////////////////////////////////////////
 // FACTORY METHODS
 //////////////////////////////////////////////////////////////////////////
 
@@ -582,8 +565,8 @@ function makeTypes(section, types, nullableDefault) {
 function makeType(section, type, check, nullableDefault) {
   check = has(makeType, section) ? makeType[section](check) : check;
   nullableDefault = nullableDefault !== false;
-  allTypes['_' + type] = function(val) {
-    nullable = nullableOverride ? nullable : nullableDefault;
+  allTypes['_' + type] = function(val, nullable) {
+    nullable = is.bool(nullable) ? nullable : nullableDefault;
     return is.nil(val) ? nullable : check(val);
   };
 }
@@ -652,7 +635,7 @@ makeType.maps = function(eachCheck) {
 
 /**
  * @private
- * @type {!Object<string, function(*): boolean>}
+ * @type {!Object<string, function(*, (undefined|boolean)): boolean>}
  */
 var allTypes = {};
 
@@ -778,16 +761,17 @@ var specialChars = (function(pipe, exPoint, quesMark, equals, asterisk) {
  * @private
  * @param {!Array<string>} types - The types to check for.
  * @param {*} val - The value to evaluate.
+ * @param {(undefined|boolean)} nullable - The nullability of the type string.
  * @return {boolean} The evaluation result.
  */
-function checkVal(types, val) {
+function checkVal(types, val, nullable) {
 
   /** @type {number} */
   var i;
 
   i = types.length;
   while (i--) {
-    if ( allTypes[ types[i] ](val) ) {
+    if ( allTypes[ types[i] ](val, nullable) ) {
       return true;
     }
   }
@@ -798,16 +782,17 @@ function checkVal(types, val) {
  * @private
  * @param {!Array<string>} types - The types to check for.
  * @param {!Array<*>} vals - The values to evaluate.
+ * @param {(undefined|boolean)} nullable - The nullability of the type string.
  * @return {boolean} The evaluation result.
  */
-function checkVals(types, vals) {
+function checkVals(types, vals, nullable) {
 
   /** @type {number} */
   var i;
 
   i = vals.length;
   while (i--) {
-    if ( !checkVal(types, vals[i]) ) {
+    if ( !checkVal(types, vals[i], nullable) ) {
       return false;
     }
   }
@@ -867,16 +852,21 @@ function cleanTypeStr(typeStr) {
 }
 
 /**
- * Method checks whether "!" or "?" exists in the type string and sets the vars,
- *   nullableOverride and nullable, accordingly.
+ * Method checks whether "!" or "?" exists in the type string.
  * @private
  * @param {string} typeStr - The type string to evaluate.
+ * @return {(undefined|boolean)} If undefined then no override exists. If
+ *   boolean then override exists, and the boolean is the nullable value.
  */
-function setNullableOverride(typeStr) {
-  nullableOverride = hasSpecialChar('?', typeStr) ?
+function getNullable(typeStr) {
+
+  /** @type {boolean} */
+  var override;
+
+  override = hasSpecialChar('?', typeStr) ?
     !hasSpecialChar('!', typeStr) : hasSpecialChar('!', typeStr);
-  nullable = nullableOverride &&
-    !hasSpecialChar('!', typeStr) && hasSpecialChar('?', typeStr);
+  return !override ?
+    undefined : !hasSpecialChar('!', typeStr) && hasSpecialChar('?', typeStr);
 }
 
 
@@ -894,6 +884,8 @@ function is(typeStr, val) {
 
   /** @type {!Array<string>} */
   var types;
+  /** @type {string} */
+  var nullable;
 
   if ( !is._str(typeStr) ) {
     throw new TypeError(
@@ -919,9 +911,9 @@ function is(typeStr, val) {
     return false;
   }
 
-  setNullableOverride(typeStr);
+  nullable = getNullable(typeStr);
 
-  return checkVal(types, val);
+  return checkVal(types, val, nullable);
 }
 
 
@@ -941,6 +933,8 @@ function are(typeStr, vals) {
 
   /** @type {!Array<string>} */
   var types;
+  /** @type {string} */
+  var nullable;
 
   if ( !is._str(typeStr) ) {
     throw new TypeError(
@@ -974,9 +968,9 @@ function are(typeStr, vals) {
     return false;
   }
 
-  setNullableOverride(typeStr);
+  nullable = getNullable(typeStr);
 
-  return checkVals(types, vals);
+  return checkVals(types, vals, nullable);
 }
 
 

@@ -27,6 +27,8 @@ function are(typeStr, vals) {
 
   /** @type {!Array<string>} */
   var types;
+  /** @type {string} */
+  var nullable;
 
   if ( !is._str(typeStr) ) {
     throw new TypeError(
@@ -60,7 +62,7 @@ function are(typeStr, vals) {
     return false;
   }
 
-  setNullableOverride(typeStr);
+  nullable = getNullable(typeStr);
 
-  return checkVals(types, vals);
+  return checkVals(types, vals, nullable);
 }
