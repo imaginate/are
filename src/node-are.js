@@ -867,6 +867,7 @@ makeTypes('js_objects', {
   'regexp': is.regex,
   'array':  is.arr
 });
+makeType('js_objects', 'arguments', is.args);
 makeType('js_objects', 'function', is.func, false);
 
 makeTypes('dom_objects', {
@@ -920,6 +921,7 @@ var typeShortcuts = {
   _fn:    'function',
   _regex: 'regexp',
   _arr:   'array',
+  _args:  'arguments',
 
   // dom objects
   _elem: 'element',
