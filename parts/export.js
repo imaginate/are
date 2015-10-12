@@ -91,8 +91,6 @@
 
 })(this, function setupAre(undefined) {
 
-  "use strict";
-
   /** @type {boolean} */
   var _log = typeof console === 'object' && typeof console.log === 'function';
   /** @type {function} */
