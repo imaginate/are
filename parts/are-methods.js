@@ -140,6 +140,16 @@ are.array = function() {
 are.arr = are.array;
 
 /**
+ * Arguments return true in this method.
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are._array = function() {
+  return checkAreMethod('_array', arguments);
+};
+are._arr = are._array;
+
+/**
  * @param {*...} vals
  * @return {boolean}
  */

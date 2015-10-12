@@ -97,9 +97,8 @@ is._num = is._number;
  * @return {boolean}
  */
 is.object = function(val, funcs) {
-  return !!val && (typeof val === 'object' || (
-    funcs === true && typeof val === 'function'
-  ));
+  val = !!val && typeof val;
+  return val && ( val === 'object' || (funcs === true && val === 'function') );
 };
 is.obj = is.object;
 
@@ -109,7 +108,7 @@ is.obj = is.object;
  * @return {boolean}
  */
 is._object = function(val) {
-  return is.object(val, true);
+  return is.obj(val, true);
 };
 is._obj = is._object;
 
@@ -130,12 +129,26 @@ catch(e) {
 
 /**
  * @param {*} val
+ * @param {boolean=} args - the return value for arguments [default= false]
  * @return {boolean}
  */
-is.array = function(val) {
-  return is.obj(val) && toStr.call(val) === '[object Array]';
+is.array = function(val, args) {
+  val = is.obj(val) && toStr.call(val);
+  return val && (
+    val === '[object Array]' || (args === true && val === '[object Arguments]')
+  );
 };
 is.arr = is.array;
+
+/**
+ * Arguments return true in this method.
+ * @param {*} val
+ * @return {boolean}
+ */
+is._array = function(val) {
+  return is.arr(val, true);
+};
+is._arr = is._array;
 
 /**
  * @param {*} val
