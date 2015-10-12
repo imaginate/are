@@ -103,6 +103,13 @@
   var has = function(obj, prop) {
     return obj.hasOwnProperty(prop);
   };
+  /** @type {function} */
+  var logSupportMsg = function(lib, avoid, use) {
+    _log && console.log(
+      'Your JS engine does not support ' + lib + '.' + avoid + '(). ' +
+      'Use ' + lib + '.' + use + '() instead.'
+    );
+  };
 
   // INSERT is-methods.js
 

@@ -127,9 +127,7 @@ try {
   are.function = are.func;
 }
 catch(e) {
-  console.log(
-    'Your JS engine does not support are.function(). Use are.func() instead.'
-  );
+  logSupportMsg('are', 'function', 'func');
 }
 
 /**
@@ -161,9 +159,7 @@ try {
   are.arguments = are.args;
 }
 catch(e) {
-  console.log(
-    'Your JS engine does not support are.arguments(). Use are.args() instead.'
-  );
+  logSupportMsg('are', 'arguments', 'args');
 }
 
 

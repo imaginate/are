@@ -125,9 +125,7 @@ try {
   is.function = is.func;
 }
 catch(e) {
-  console.log(
-    'Your JS engine does not support is.function(). Use is.func() instead.'
-  );
+  logSupportMsg('is', 'function', 'func');
 }
 
 /**
@@ -161,9 +159,7 @@ try {
   is.arguments = is.args;
 }
 catch(e) {
-  console.log(
-    'Your JS engine does not support is.arguments(). Use is.args() instead.'
-  );
+  logSupportMsg('is', 'arguments', 'args');
 }
 
 

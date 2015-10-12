@@ -104,6 +104,13 @@
   var has = function(obj, prop) {
     return obj.hasOwnProperty(prop);
   };
+  /** @type {function} */
+  var logSupportMsg = function(lib, avoid, use) {
+    _log && console.log(
+      'Your JS engine does not support ' + lib + '.' + avoid + '(). ' +
+      'Use ' + lib + '.' + use + '() instead.'
+    );
+  };
 
 
 // *****************************************************************************
@@ -220,9 +227,7 @@ try {
   is.function = is.func;
 }
 catch(e) {
-  console.log(
-    'Your JS engine does not support is.function(). Use is.func() instead.'
-  );
+  logSupportMsg('is', 'function', 'func');
 }
 
 /**
@@ -256,9 +261,7 @@ try {
   is.arguments = is.args;
 }
 catch(e) {
-  console.log(
-    'Your JS engine does not support is.arguments(). Use is.args() instead.'
-  );
+  logSupportMsg('is', 'arguments', 'args');
 }
 
 
@@ -438,9 +441,7 @@ try {
   are.function = are.func;
 }
 catch(e) {
-  console.log(
-    'Your JS engine does not support are.function(). Use are.func() instead.'
-  );
+  logSupportMsg('are', 'function', 'func');
 }
 
 /**
@@ -472,9 +473,7 @@ try {
   are.arguments = are.args;
 }
 catch(e) {
-  console.log(
-    'Your JS engine does not support are.arguments(). Use are.args() instead.'
-  );
+  logSupportMsg('are', 'arguments', 'args');
 }
 
 
