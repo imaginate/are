@@ -235,10 +235,24 @@ catch(e) {
 is.array = function(val, args) {
   val = is.obj(val) && toStr.call(val);
   return val && (
+    val === '[object Array]' || (
+      args === true && (val === '[object Arguments]' || 'callee' in val)
+    )
+  );
+};
+is.arr = function(val, args) {
+  val = is.obj(val) && toStr.call(val);
+  return val && (
     val === '[object Array]' || (args === true && val === '[object Arguments]')
   );
 };
-is.arr = is.array;
+try {
+  is.array({}, true);
+  is.arr = is.array;
+}
+catch (e) {
+  is.array = is.arr;
+}
 
 /**
  * Arguments return true in this method.
@@ -268,10 +282,19 @@ is.args = function(val) {
     toStr.call(val) === '[object Arguments]' || 'callee' in val
   );
 };
+is._args = function(val) {
+  return is.obj(val) && toStr.call(val) === '[object Arguments]';
+};
+try {
+  is.args({});
+}
+catch (e) {
+  is.args = is._args;
+}
 try {
   is.arguments = is.args;
 }
-catch(e) {
+catch (e) {
   logSupportMsg('is', 'arguments', 'args');
 }
 
@@ -493,7 +516,7 @@ are.args = function() {
 try {
   are.arguments = are.args;
 }
-catch(e) {
+catch (e) {
   logSupportMsg('are', 'arguments', 'args');
 }
 

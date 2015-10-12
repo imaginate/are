@@ -168,7 +168,7 @@ are.args = function() {
 try {
   are.arguments = are.args;
 }
-catch(e) {
+catch (e) {
   logSupportMsg('are', 'arguments', 'args');
 }
 
