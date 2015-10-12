@@ -578,8 +578,8 @@ function checkAreMethod(method, args) {
   /** @type {number} */
   var i;
 
-  args = args.length > 1 ? sliceArr.call(args, 0) : args[0];
-  if ( !is.arr(args) ) {
+  args = args.length > 1 ? args : args[0];
+  if ( !is._arr(args) ) {
     throw new Error(
       'An are.' + method + '(vals) call did not receive multiple vals to ' +
       'evaluate'
