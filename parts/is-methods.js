@@ -148,6 +148,24 @@ is.regexp = function(val) {
 };
 is.regex = is.regexp;
 
+/**
+ * @param {*} val
+ * @return {boolean}
+ */
+is.args = function(val) {
+  return is.obj(val) && (
+    toStr.call(val) === '[object Arguments]' || 'callee' in val
+  );
+};
+try {
+  is.arguments = is.args;
+}
+catch(e) {
+  console.log(
+    'Your JS engine does not support is.arguments(). Use is.args() instead.'
+  );
+}
+
 
 //////////////////////////////////////////////////////////////////////////////
 // IS METHODS - DOM OBJECTS

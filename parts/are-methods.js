@@ -150,6 +150,22 @@ are.regexp = function() {
 };
 are.regex = are.regexp;
 
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.args = function() {
+  return checkAreMethod('args', arguments);
+};
+try {
+  are.arguments = are.args;
+}
+catch(e) {
+  console.log(
+    'Your JS engine does not support are.arguments(). Use are.args() instead.'
+  );
+}
+
 
 ////////////////////////////////////////////////////////////////////////////
 // ARE METHODS - DOM OBJECTS

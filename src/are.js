@@ -243,6 +243,24 @@ is.regexp = function(val) {
 };
 is.regex = is.regexp;
 
+/**
+ * @param {*} val
+ * @return {boolean}
+ */
+is.args = function(val) {
+  return is.obj(val) && (
+    toStr.call(val) === '[object Arguments]' || 'callee' in val
+  );
+};
+try {
+  is.arguments = is.args;
+}
+catch(e) {
+  console.log(
+    'Your JS engine does not support is.arguments(). Use is.args() instead.'
+  );
+}
+
 
 //////////////////////////////////////////////////////////////////////////////
 // IS METHODS - DOM OBJECTS
@@ -442,6 +460,22 @@ are.regexp = function() {
   return checkAreMethod('regexp', arguments);
 };
 are.regex = are.regexp;
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.args = function() {
+  return checkAreMethod('args', arguments);
+};
+try {
+  are.arguments = are.args;
+}
+catch(e) {
+  console.log(
+    'Your JS engine does not support are.arguments(). Use are.args() instead.'
+  );
+}
 
 
 ////////////////////////////////////////////////////////////////////////////
