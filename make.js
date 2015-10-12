@@ -2,34 +2,55 @@
  * -----------------------------------------------------------------------------
  * MAKEFILE
  * -----------------------------------------------------------------------------
- * @file Use `$ node make <task>[-opt/arg][-opt/arg] ...` to execute make tasks.
- *   Tasks are executed in the order given. Tasks may be repeated. You may view
- *   each tasks source code in the "tasks" directory as "taskname.js".
+ * @file Use `$ node make <task>[-opt][=val] ...` to execute make tasks. Tasks
+ *   are executed in the order given. Tasks may be repeated. You may view each
+ *   task's source code in the "tasks" directory as "taskname.js".
+ *
  * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)
  * @copyright 2015 Adam A Smith <adam@imaginate.life> (https://github.com/imaginate)
+ *
  * @see [JSDoc3]{@link http://usejsdoc.org/}
  * @see [Closure Compiler specific JSDoc]{@link https://developers.google.com/closure/compiler/docs/js-for-compiler}
  */
 
 /*
  * -----------------------------------------------------------------------------
+ * MAKE COMMAND FORMATTING
+ * -----------------------------------------------------------------------------
+ * `$ node make --task` or `node make task`
+ * `$ node make --task-<opt>-<opt>`
+ * `$ node make --task=<val>`
+ */
+
+/*
+ * -----------------------------------------------------------------------------
  * MAKE SHORTCUTS
  * -----------------------------------------------------------------------------
- * optional task formats: `$ node make --task` or `node make task`
- * shortcuts:
- *   `$ node make` => `$ node make --dev`
- *   `$ node make --dev` => `$ node make --compile --minify`
+ * `$ node make`       => `$ node make --dev`
+ * `$ node make --dev` => `$ node make --compile --minify`
  */
 
 /*
  * -----------------------------------------------------------------------------
  * MAKE TASKS
  * -----------------------------------------------------------------------------
- * | Task    | Opts/Args  | Default Args |
- * | :------ | :--------- | :----------- |
- * | compile | are|nodeAre| are|nodeAre  |
- * | minify  | are|nodeAre| are|nodeAre  |
- * ---------------------------------------
+ *
+ * Options
+ * ----------------------------------------
+ * | Task    | Options     | Default Opts |
+ * | :------ | :---------- | :----------- |
+ * | compile | are|nodeAre | are|nodeAre  |
+ * | minify  | are|nodeAre | are|nodeAre  |
+ * | test    | are|nodeAre | are|nodeAre  |
+ * | version | all         | all          |
+ * ----------------------------------------
+ *
+ * Values
+ * ------------------------------------------------------------------
+ * | Task    | Option | Acceptable Values | Example | Default Value |
+ * | :------ | :----- | :---------------- | :------ | :------------ |
+ * | version | all    | Semantic Version  | 1.2.4   | (none)        |
+ * ------------------------------------------------------------------
  */
 
 'use strict';
@@ -58,43 +79,36 @@ shortcuts = {
   dev: 'compile minify'
 };
 
-tasks = ( process.argv.length > 2 ?
-  process.argv
-    .slice(2)
-    .join(' ')
-    .replace(/--/g, '')
-    .replace(/-/g, '_')
-    .replace(/\b([a-z]+)\b/gi, function(/** string */ match,/** string */ task){
-      return has(shortcuts, task) ? shortcuts[task] : match;
-    })
-    .replace(/_/g, '-')
-  : shortcuts.dev
-).split(' ');
+tasks = process.argv.length > 2 ? process.argv.slice(2) : shortcuts.dev;
+tasks = tasks.map(function(/** string */ task) {
+  task = task.replace(/^--/, '');
+  return has(shortcuts, task) ? shortcuts[task] : task;
+});
 
 
 ////////////////////////////////////////////////////////////////////////////////
 // RUN THE TASKS
 ////////////////////////////////////////////////////////////////////////////////
 
-taskDir = taskDir ? taskDir.replace(/([^\/])\/$/, '$1') : './tasks';
+taskDir = taskDir ? taskDir.replace(/([^\/])$/, '$1/') : './tasks/';
 is.dir(taskDir) || log.error(
   'Invalid `makefile` Config',
   'the tasks directory does not exist',
   { argMap: true, taskDir: taskDir }
 );
-taskDir += '/';
 
 each(tasks, function(/** string */ taskStr) {
 
   /** @type {string} */
   var name;
   /** @type {!Array<string>} */
-  var args;
+  var opts;
   /** @type {!Task} */
   var task;
+  /** @type {string} */
+  var val;
 
-  args = taskStr.split('-');
-  name = args.shift();
+  name = taskStr.replace(/^([a-z]+)(?:[^a-z].*)?$/i, '$1');
 
   is.file(taskDir + name + '.js') || log.error(
     'Invalid `make` Command',
@@ -103,7 +117,16 @@ each(tasks, function(/** string */ taskStr) {
   );
 
   task = require(taskDir + name);
-  args = args.length ? args : task.defaultArgs;
 
-  each(args, task.run);
+  opts = taskStr.split('-');
+
+  val = opts.shift();
+  val = val.replace(/^[a-z]+(\=.*)?$/i, '$1');
+
+  opts = opts.length ? opts : task.defaultOpts;
+  opts = !val ? opts : opts.map(function(/** string */ opt) {
+    return /=/.test(opt) ? opt : opt + val;
+  });
+
+  each(opts, task.run);
 });
