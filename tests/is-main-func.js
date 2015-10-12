@@ -30,6 +30,7 @@ var refs = {
   arr:   [],
   regex: /1/,
   func:  function(){},
+  args:  (function(){ return arguments; })(),
   doc:   { nodeType: 9 },
   elem:  { nodeType: 1 },
   arrays: {
@@ -107,6 +108,11 @@ var methods = {
     regexp: {
       shortcut: 'regex',
       truthy: [ refs.regex, refs.nil ],
+      falsy:  [ refs.obj, refs.bool, refs.arr ]
+    },
+    args: {
+      shortcut: 'arguments',
+      truthy: [ refs.args, refs.nil ],
       falsy:  [ refs.obj, refs.bool, refs.arr ]
     }
   },
