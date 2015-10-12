@@ -19,6 +19,9 @@ var forOwn = require('lodash/object/forOwn');
 // DEFINE PRIVATE HELPERS
 ////////////////////////////////////////////////////////////////////////////////
 
+/** @type {!Arguments} */
+var args = (function(){ return arguments; })();
+
 /** @type {!Object} */
 var refs = {
   nil:   [ null, null ],
@@ -32,6 +35,7 @@ var refs = {
   arr:   [ [], [] ],
   regex: [ /1/, /t/g ],
   func:  [ function(){}, function(){} ],
+  args:  [ args, args ],
   doc:   [ { nodeType: 9 }, { nodeType: 9 } ],
   elem:  [ { nodeType: 1 }, { nodeType: 1 } ]
 };
@@ -93,12 +97,22 @@ var methods = {
     array: {
       shortcut: 'arr',
       truthy: [ refs.arr ],
+      falsy:  [ refs.obj, refs.regex, refs.nil, refs.args ]
+    },
+    _array: {
+      shortcut: '_arr',
+      truthy: [ refs.arr, refs.args ],
       falsy:  [ refs.obj, refs.regex, refs.nil ]
     },
     regexp: {
       shortcut: 'regex',
       truthy: [ refs.regex ],
       falsy:  [ refs.obj, refs.bool, refs.nil, refs.arr ]
+    },
+    arguments: {
+      shortcut: 'args',
+      truthy: [ refs.args ],
+      falsy:  [ refs.obj, refs.regex, refs.nil, refs.arr ]
     }
   },
   dom_objects: {
