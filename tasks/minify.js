@@ -70,7 +70,7 @@ methods.are = function() {
   source = 'src/are.js';
   dest = 'src/are.min.js';
   copyright = (
-    '/* are.js v0.0.1 (https://github.com/imaginate/are)\n' +
+    '/* are.js v0.0.2 (https://github.com/imaginate/are)\n' +
     ' * Copyright (c) 2015 Adam A Smith <adam@imaginate.life>\n' +
     ' * The Apache License (github.com/imaginate/are/blob/master/LICENSE.md) */'
   );
@@ -94,7 +94,7 @@ methods.nodeAre = function() {
   source = 'src/node-are.js';
   dest = 'src/node-are.min.js';
   copyright = (
-    '/* node-are.js v0.0.1 (https://github.com/imaginate/are)\n' +
+    '/* node-are.js v0.0.2 (https://github.com/imaginate/are)\n' +
     ' * Copyright (c) 2015 Adam A Smith <adam@imaginate.life>\n' +
     ' * The Apache License (github.com/imaginate/are/blob/master/LICENSE.md) */'
   );

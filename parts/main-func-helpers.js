@@ -2,7 +2,7 @@
  * -----------------------------------------------------------------------------
  * IS & ARE MAIN FUNCTION HELPERS
  * -----------------------------------------------------------------------------
- * @version 0.0.1
+ * @version 0.0.2
  * @see [helpers]{@link https://github.com/imaginate/are/blob/master/parts/main-func-helpers.js}
  * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)
  * @copyright 2015 Adam A Smith <adam@imaginate.life> (https://github.com/imaginate)
