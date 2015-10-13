@@ -34,18 +34,18 @@ For a stand-alone browser environment:
 - Download [are.min.js](https://github.com/imaginate/are/blob/master/src/are.min.js)
 - Save it to your app's main folder
 - Add ``` <script src="are.min.js"></script> ``` to your ``` <head> ``` or ``` <body> ``` before any scripts that use it
-- The libraries, **_is_** and **_are_**, are now both globally available (i.e. attached to the ``` window ``` object)
+- Use ``` is ``` and ``` are ``` as you please (i.e. attached to the global ``` window ``` object)
 
 For an AMD browser environment:
 - Download [are.min.js](https://github.com/imaginate/are/blob/master/src/are.min.js)
 - Add it to your app's library folder
 - Use ``` require(['are'], function(null) { ... }); ```
-- The libraries, **_is_** and **_are_**, are now both globally available (i.e. attached to the ``` window ``` object)
+- Use ``` is ``` and ``` are ``` as you please (i.e. attached to the global ``` window ``` object)
 
 For a Node.js environment:
 - Run ``` $ npm install node-are ```
-- Use ``` require('node-are') ```
-- The libraries, **_is_** and **_are_**, are now both globally available (i.e. attached to the ``` global ``` object)
+- Use ``` require('node-are')() ``` to attach ``` is ``` and ``` are ``` to the global object or
+- Use ``` var areObj = require('node-are'); var is = areObj.is; var are = areObj.are; ```
 
 
 ## API Documentation
