@@ -124,7 +124,7 @@ each(tasks, function(/** string */ taskStr) {
 
   methods = taskStr.split('-');
 
-  defaultVal = opts.shift();
+  defaultVal = methods.shift();
   defaultVal = defaultVal.replace(/^[a-z]+(\=.*)?$/i, '$1');
 
   methods = methods.length ? methods : task.defaultMethods;
