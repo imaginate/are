@@ -20,37 +20,46 @@ require('./vitals')(); // appends helper methods and objects to global obj
 
 /**
  * @param {string} name
- * @param {(string|!Array<string>)} defaultOpts
+ * @param {(string|!Array<string>)} defaultMethods
  * @param {!Object<string, function>} methods
  * @return {!Object}
  */
-function makeTask(name, defaultOpts, methods) {
+function makeTask(name, defaultMethods, methods) {
 
-  defaultOpts = is.str(defaultOpts) ? defaultOpts.split('-') : defaultOpts;
+  defaultMethods = is.str(defaultMethods) ?
+    defaultMethods.split('-') : defaultMethods;
 
-  ( is.str(name) && is.arr(defaultOpts) && is.obj(methods) ) || log.error(
+  ( is.str(name) && is.arr(defaultMethods) && is.obj(methods) ) || log.error(
     'Invalid `makeTask` Call',
-    'invalid type for `name`, `defaultOpts`, or `methods` param',
-    { argMap: true, name: name, defaultOpts: defaultOpts, methods: methods }
+    'invalid type for `name`, `defaultMethods`, or `methods` param',
+    { argMap: true, name: name, defaultMethods:defaultMethods, methods:methods }
   );
 
   /**
-   * @param {string} opt
+   * @param {string} method
    */
-  var run = function(opt) {
-    has(methods, opt) || log.error(
+  var run = function(method) {
+    
+    /** @type {(string|boolean)} */
+    var val;
+
+    val = /=/.test(method) && method.split('=');
+    method = val ? val[0] : method;
+    val = val && val[1];
+
+    has(methods, method) || log.error(
       'Invalid `Task.run` Call',
-      'invalid argument name (i.e. prop did not exist in the task\'s methods)',
-      { argMap: true, task: name, invalidArg: opt }
+      'invalid method (i.e. method did not exist in the task\'s methods)',
+      { argMap: true, task: name, invalidMethod: method }
     );
-    methods[opt]();
+    methods[method](val);
   };
 
   return {
     run: run,
     name: name,
     methods: methods,
-    defaultOpts: defaultOpts
+    defaultMethods: defaultMethods
   };
 }
 

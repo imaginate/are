@@ -2,9 +2,9 @@
  * -----------------------------------------------------------------------------
  * MAKEFILE
  * -----------------------------------------------------------------------------
- * @file Use `$ node make <task>[-opt][=val] ...` to execute make tasks. Tasks
- *   are executed in the order given. Tasks may be repeated. You may view each
- *   task's source code in the "tasks" directory as "taskname.js".
+ * @file Use `$ node make <task>[-method][=val] ...` to execute make tasks.
+ *   Tasks are executed in the order given. Tasks may be repeated. You may view
+ *   each task's source code in the "tasks" directory as "taskname.js".
  *
  * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)
  * @copyright 2015 Adam A Smith <adam@imaginate.life> (https://github.com/imaginate)
@@ -15,11 +15,15 @@
 
 /*
  * -----------------------------------------------------------------------------
- * MAKE COMMAND FORMATTING
+ * MAKE COMMAND EXAMPLES
  * -----------------------------------------------------------------------------
- * `$ node make --task` or `node make task`
- * `$ node make --task-<opt>-<opt>`
- * `$ node make --task=<val>`
+ * `$ node make <task>`
+ * `$ node make --<task>`
+ * `$ node make --task-<method>`
+ * `$ node make --task-<method>-<method>`
+ * `$ node make --task-<method>=<value>`
+ * `$ node make --task=<defaultValue>-<method>-<method>`
+ * `$ node make --task=<defaultValue>-<method>-<method>-<method>=<value>`
  */
 
 /*
@@ -35,19 +39,19 @@
  * MAKE TASKS
  * -----------------------------------------------------------------------------
  *
- * Options
- * ----------------------------------------
- * | Task    | Options     | Default Opts |
- * | :------ | :---------- | :----------- |
- * | compile | are|nodeAre | are|nodeAre  |
- * | minify  | are|nodeAre | are|nodeAre  |
- * | test    | are|nodeAre | are|nodeAre  |
- * | version | all         | all          |
- * ----------------------------------------
+ * Methods
+ * -------------------------------------------
+ * | Task    | Methods     | Default Methods |
+ * | :------ | :---------- | :-------------- |
+ * | compile | are|nodeAre | are|nodeAre     |
+ * | minify  | are|nodeAre | are|nodeAre     |
+ * | test    | are|nodeAre | are|nodeAre     |
+ * | version | all         | all             |
+ * -------------------------------------------
  *
  * Values
  * ------------------------------------------------------------------
- * | Task    | Option | Acceptable Values | Example | Default Value |
+ * | Task    | Method | Acceptable Values | Example | Default Value |
  * | :------ | :----- | :---------------- | :------ | :------------ |
  * | version | all    | Semantic Version  | 1.2.4   | (none)        |
  * ------------------------------------------------------------------
@@ -99,14 +103,14 @@ is.dir(taskDir) || log.error(
 
 each(tasks, function(/** string */ taskStr) {
 
-  /** @type {string} */
-  var name;
-  /** @type {!Array<string>} */
-  var opts;
   /** @type {!Task} */
   var task;
   /** @type {string} */
-  var val;
+  var name;
+  /** @type {!Array<string>} */
+  var methods;
+  /** @type {string} */
+  var defaultVal;
 
   name = taskStr.replace(/^([a-z]+)(?:[^a-z].*)?$/i, '$1');
 
@@ -118,15 +122,15 @@ each(tasks, function(/** string */ taskStr) {
 
   task = require(taskDir + name);
 
-  opts = taskStr.split('-');
+  methods = taskStr.split('-');
 
-  val = opts.shift();
-  val = val.replace(/^[a-z]+(\=.*)?$/i, '$1');
+  defaultVal = opts.shift();
+  defaultVal = defaultVal.replace(/^[a-z]+(\=.*)?$/i, '$1');
 
-  opts = opts.length ? opts : task.defaultOpts;
-  opts = !val ? opts : opts.map(function(/** string */ opt) {
-    return /=/.test(opt) ? opt : opt + val;
-  });
+  methods = methods.length ? methods : task.defaultMethods;
+  methods = defaultVal ? methods.map(function(/** string */ method) {
+    return /=/.test(method) ? method : method + defaultVal;
+  }) : methods;
 
-  each(opts, task.run);
+  each(methods, task.run);
 });
