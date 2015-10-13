@@ -83,14 +83,14 @@ methods.nodeAre = function() {
   /** @type {string} */
   var tests;
 
-  tests = './tests/node/*.js';
-
   configLog();
 
+  tests = './tests/node-methods/*.js';
   source = './src/node-are.js';
   log.debug('Testing `' + source + '`');
   exec(mocha + ' ' + tests);
 
+  tests = './tests/node-methods/min/*.js';
   source = './src/node-are.min.js';
   log.debug('Testing `' + source + '`');
   exec(mocha + ' ' + tests);
