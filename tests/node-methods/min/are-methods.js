@@ -1,6 +1,6 @@
 /**
  * -----------------------------------------------------------------------------
- * TEST: NODE.JS ONLY - IS METHODS
+ * TEST: NODE.JS ONLY - ARE METHODS
  * -----------------------------------------------------------------------------
  * @see [node methods]{@link https://github.com/imaginate/are/blob/master/parts/node-methods.js}
  *
@@ -12,9 +12,9 @@
  */
 
 /** @type {function} */
-var is = require('../../src/node-are.js').is;
+var are = require('../../../src/node-are.min.js').are;
 /** @type {!Function<string, function>} */
-var vitals = require('../../helpers/vitals');
+var vitals = require('../../../helpers/vitals');
 /** @type {!Object} */
 var assert = require('assert');
 /** @type {function} */
@@ -25,14 +25,14 @@ var forOwn = require('lodash/object/forOwn');
 // DEFINE PRIVATE HELPERS
 ////////////////////////////////////////////////////////////////////////////////
 
+/** @type {!Buffer} */
+var buff = vitals.retrieve('./make.js', null);
+
 /** @type {!Object} */
 var refs = {
-  arr:   [],
-  buff:  vitals.retrieve('./make.js', null),
-  dir:   './tests',
-  dirs:  [ './tests', './tests' ],
-  file:  './make.js',
-  files: [ './make.js', './make.js' ]
+  buff: [ buff, buff ],
+  dir:  [ './tests', './tests' ],
+  file: [ './make.js', './make.js' ]
 };
 
 /** @type {!Object<string, !Object>} */
@@ -47,18 +47,9 @@ var methods = {
     truthy: [ refs.dir ],
     falsy:  [ refs.file ]
   },
-  directories: {
-    shortcut: 'directorys|dirs',
-    truthy: [ refs.dirs, refs.arr ],
-    falsy:  [ refs.files ]
-  },
   file: {
     truthy: [ refs.file ],
     falsy:  [ refs.dir ]
-  },
-  files: {
-    truthy: [ refs.files, refs.arr ],
-    falsy:  [ refs.dirs ]
   }
 };
 
@@ -67,40 +58,52 @@ var methods = {
 // RUN THE TESTS
 ////////////////////////////////////////////////////////////////////////////////
 
-describe('node-is-methods', function() {
+describe('node-are-methods', function() {
   forOwn(methods, function(/** !Object */ method,/** string */ methodName) {
-    describe('is.' + methodName, function() {
+    describe('are.' + methodName, function() {
       describe('truthy', function() {
-        method.truthy.forEach(function(/** * */ val, /** number */ i) {
-          it(i, function() {
-            assert.strictEqual(true, is[methodName](val));
-          });
-        });
+        method.truthy.forEach(
+          function(/** !Array<*> */ vals, /** number */ i) {
+            it(i, function() {
+              assert.strictEqual(true, are[methodName](vals));
+              assert.strictEqual(true, are[methodName].apply(null, vals));
+            });
+          }
+        );
       });
       describe('falsy', function() {
-        method.falsy.forEach(function(/** * */ val, /** number */ i) {
-          it(i, function() {
-            assert.strictEqual(false, is[methodName](val));
-          });
-        });
+        method.falsy.forEach(
+          function(/** !Array<*> */ vals, /** number */ i) {
+            it(i, function() {
+              assert.strictEqual(false, are[methodName](vals));
+              assert.strictEqual(false, are[methodName].apply(null, vals));
+            });
+          }
+        );
       });
     });
     if (method.hasOwnProperty('shortcut') && method.shortcut) {
       method.shortcut.split('|').forEach(function(/** string */ shortname) {
-        describe('is.' + shortname, function() {
+        describe('are.' + shortname, function() {
           describe('truthy', function() {
-            method.truthy.forEach(function(/** * */ val, /** number */ i) {
-              it(i, function() {
-                assert.strictEqual(true, is[shortname](val));
-              });
-            });
+            method.truthy.forEach(
+              function(/** !Array<*> */ vals, /** number */ i) {
+                it(i, function() {
+                  assert.strictEqual(true, are[shortname](vals));
+                  assert.strictEqual(true, are[shortname].apply(null,vals));
+                });
+              }
+            );
           });
           describe('falsy', function() {
-            method.falsy.forEach(function(/** * */ val, /** number */ i) {
-              it(i, function() {
-                assert.strictEqual(false, is[shortname](val));
-              });
-            });
+            method.falsy.forEach(
+              function(/** !Array<*> */ vals, /** number */ i) {
+                it(i, function() {
+                  assert.strictEqual(false, are[shortname](vals));
+                  assert.strictEqual(false,are[shortname].apply(null,vals));
+                });
+              }
+            );
           });
         });
       });

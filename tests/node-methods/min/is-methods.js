@@ -12,9 +12,9 @@
  */
 
 /** @type {function} */
-var is = require('../../src/node-are.js').is;
+var is = require('../../../src/node-are.min.js').is;
 /** @type {!Function<string, function>} */
-var vitals = require('../../helpers/vitals');
+var vitals = require('../../../helpers/vitals');
 /** @type {!Object} */
 var assert = require('assert');
 /** @type {function} */
