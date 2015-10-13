@@ -40,8 +40,7 @@ methods.are = function() {
 
   contents = retrieve('parts/export.js')
                .replace(/\r\n?/g, '\n')
-               .replace(/^\/\*[\s\S]*?\*\//, '')
-               .replace(/  \/\/ INSERT node-methods.js\n\n/, '');
+               .replace(/^\/\*[\s\S]*?\*\//, '');
   inserts = (
     'main-func-helpers is-main-func are-main-func is-methods are-methods'
   ).split(' ');
@@ -82,7 +81,7 @@ methods.nodeAre = function() {
   /** @type {!RegExp} */
   var regex;
 
-  contents = retrieve('parts/export.js')
+  contents = retrieve('parts/node-export.js')
                .replace(/\r\n?/g, '\n')
                .replace(/^\/\*[\s\S]*?\*\//, '');
   inserts = (
