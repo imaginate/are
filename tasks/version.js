@@ -50,6 +50,7 @@ methods.all = function(version) {
     validDirs: 'parts|src',
     invalidFiles: 'make.js'
   }, true);
+  filepaths.push('tasks/minify.js')
 
   regex = /\b(v?)[0-9][0-9]?\.[0-9][0-9]?\.[0-9][0-9]?\b/g;
   each(filepaths, function(/** string */ filepath) {
