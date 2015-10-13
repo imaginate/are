@@ -47,10 +47,9 @@ methods.all = function(version) {
 
   filepaths = retrieve.files('.', {
     validExts: '.js',
-    validDirs: 'parts|tests',
+    validDirs: 'parts|src',
     invalidFiles: 'make.js'
   }, true);
-  filepaths.push('package.json');
 
   regex = /\b(v?)[0-9][0-9]?\.[0-9][0-9]?\.[0-9][0-9]?\b/g;
   each(filepaths, function(/** string */ filepath) {
@@ -58,6 +57,11 @@ methods.all = function(version) {
       .replace(regex, '$1' + version)
       .to(filepath);
   });
+
+  regex = /("version": ")[0-9][0-9]?\.[0-9][0-9]?\.[0-9][0-9]?/;
+  retrieve.file('package.json')
+    .replace(regex, '$1' + version)
+    .to('package.json');
 
   log.pass('Completed `version.all` Task');
 };
