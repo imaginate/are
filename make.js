@@ -83,7 +83,8 @@ shortcuts = {
   dev: 'compile minify'
 };
 
-tasks = process.argv.length > 2 ? process.argv.slice(2) : shortcuts.dev;
+tasks = process.argv.length > 2 ?
+  process.argv.slice(2) : shortcuts.dev.split(' ');
 tasks = tasks.map(function(/** string */ task) {
   task = task.replace(/^--/, '');
   return has(shortcuts, task) ? shortcuts[task] : task;
