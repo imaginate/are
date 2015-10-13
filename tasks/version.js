@@ -47,13 +47,10 @@ methods.all = function(version) {
 
   filepaths = retrieve.files('.', {
     validExts: '.js',
-    validDirs: 'parts|tests'
+    validDirs: 'parts|tests',
+    invalidFiles: 'make.js'
   }, true);
-
-  filepaths = retrieve.files('.', {
-    validExts: '.js',
-    validDirs: 'random'
-  }, true);
+  filepaths.push('package.json');
 
   regex = /\b(v?)[0-9][0-9]?\.[0-9][0-9]?\.[0-9][0-9]?\b/g;
   each(filepaths, function(/** string */ filepath) {
