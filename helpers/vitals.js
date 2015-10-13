@@ -3,11 +3,14 @@
  * VITALS LIBRARY
  * -----------------------------------------------------------------------------
  * @file Functional shortcuts and helpers.
+ *
  * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)
  * @copyright 2015 Adam A Smith <adam@imaginate.life> (https://github.com/imaginate)
+ *
  * Supporting Libraries:
  * @see [Lodash]{@link https://github.com/lodash/lodash}
  * @see [ShellJS]{@link https://github.com/shelljs/shelljs}
+ *
  * Annotations:
  * @see [JSDoc3]{@link http://usejsdoc.org/}
  * @see [Closure Compiler specific JSDoc]{@link https://developers.google.com/closure/compiler/docs/js-for-compiler}
@@ -196,7 +199,7 @@ Vitals.retrieve = function(filepath, encoding) {
 
   is.file(filepath) || log.error(
     'Invalid `Vitals.retrieve` Call',
-    'invalid `filepath` param (i.e. must be a valid filepath string)',
+    'invalid `filepath` param (i.e. must be a valid file)',
     { argMap: true, filepath: filepath }
   );
 
