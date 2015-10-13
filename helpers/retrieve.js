@@ -301,7 +301,7 @@ Retrieve.file = function(filepath, encoding) {
     { argMap: true, filepath: filepath }
   );
 
-  encoding = is(encoding, '?string') ? encoding : 'utf8';
+  encoding = is.str(encoding) || is.null(encoding) ? encoding : 'utf8';
   return encoding ?
     fs.readFileSync(filepath, encoding) : fs.readFileSync(filepath);
 };
