@@ -7,7 +7,7 @@
 <a name="overview"></a>
 
 ## Overview
-Lorem ipsum ... (overview coming soon)
+(overview coming soon)
 
 
 <a name="type-tests"></a>
