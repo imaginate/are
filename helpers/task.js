@@ -3,15 +3,19 @@
  * TASK LIBRARY
  * -----------------------------------------------------------------------------
  * @file A helper library for makefile tasks.
+ *
  * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)
  * @copyright 2015 Adam A Smith <adam@imaginate.life> (https://github.com/imaginate)
+ *
+ * Supporting Libraries:
+ * @see [Lodash]{@link https://github.com/lodash/lodash}
+ *
+ * Annotations:
  * @see [JSDoc3]{@link http://usejsdoc.org/}
  * @see [Closure Compiler specific JSDoc]{@link https://developers.google.com/closure/compiler/docs/js-for-compiler}
  */
 
 'use strict';
-
-require('./vitals')(); // appends helper methods and objects to global obj
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -19,53 +23,194 @@ require('./vitals')(); // appends helper methods and objects to global obj
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
- * @param {string} name
- * @param {(string|!Array<string>)} defaultMethods
+ * @param {string=} name
+ * @param {(string|!Array<string>)=} defaultMethods
  * @param {!Object<string, function>} methods
- * @return {!Object}
+ * @constructor
  */
-function makeTask(name, defaultMethods, methods) {
+function Task(name, defaultMethods, methods) {
 
-  defaultMethods = is.str(defaultMethods) ?
-    defaultMethods.split('-') : defaultMethods;
-
-  ( is.str(name) && is.arr(defaultMethods) && is.obj(methods) ) || log.error(
-    'Invalid `makeTask` Call',
+  validParams(name, defaultMethods, methods) || log.error(
+    'Invalid new `Task` Call',
     'invalid type for `name`, `defaultMethods`, or `methods` param',
-    { argMap: true, name: name, defaultMethods:defaultMethods, methods:methods }
+    { argMap: true, name: name, defaultMethods: defaultMethods,
+      methods: methods }
   );
 
-  /**
-   * @param {string} method
-   */
-  var run = function(method) {
-    
-    /** @type {(string|boolean)} */
-    var val;
+  if ( !isFuncMap(methods) ) {
 
-    val = /=/.test(method) && method.split('=');
-    method = val ? val[0] : method;
-    val = val && val[1];
+    if ( isFuncMap(defaultMethods) ) {
+      methods = defaultMethods;
+      defaultMethods = null;
+    }
+    else if ( isFuncMap(name) ) {
+      methods = name;
+      defaultMethods = null;
+      name = null;
+    }
+    else {
+      log.error(
+        'Invalid new `Task` Call',
+        'a valid object for the `methods` param was not found',
+        { argMap: true, name: name, defaultMethods: defaultMethods,
+          methods: methods }
+      );
+    }
+  }
 
-    has(methods, method) || log.error(
-      'Invalid `Task.run` Call',
-      'invalid method (i.e. method did not exist in the task\'s methods)',
-      { argMap: true, task: name, invalidMethod: method }
-    );
-    methods[method](val);
-  };
+  is.empty(methods) && log.error(
+    'Invalid new `Task` Call',
+    'invalid `methods` param (the given `methods` object was empty)',
+    { argMap: true, name: name, defaultMethods: defaultMethods,
+      methods: methods }
+  );
 
-  return {
-    run: run,
-    name: name,
-    methods: methods,
-    defaultMethods: defaultMethods
-  };
+  if ( !is.str(defaultMethods) && !is.arr(defaultMethods) ) {
+    defaultMethods = is.str(name) || is.arr(name) ? name : null;
+    name = null;
+  }
+
+  defaultMethods = is.str(defaultMethods) ?
+    defaultMethods.split('-') : is.arr(defaultMethods) ?
+      defaultMethods : [];
+
+  name = is.str(name) ? name : '';
+
+  this.name = name;
+  this.defaultMethods = defaultMethods;
+  this.methods = methods;
 }
+
+Task.prototype.constructor = Task;
+
+/**
+ * @private
+ * @param {string=} name
+ * @param {(string|!Array<string>)=} dMethods
+ * @param {!Object<string, function>} methods
+ * @return {boolean}
+ */
+function validParams(name, dMethods, methods) {
+  return (
+    ( is.str(name) || isStrArr(name) || isFuncMap(name) ) &&
+    ( is.str(dMethods)    || isStrArr(dMethods) ||
+      isFuncMap(dMethods) || is.undefined(dMethods) ) &&
+    ( isFuncMap(methods) || is.undefined(methods) )
+  );
+}
+
+/**
+ * @private
+ * @param {*} val
+ * @return {boolean}
+ */
+function isStrArr(arr) {
+
+  /** @type {number} */
+  var i;
+
+  if ( !is.arr(arr) ) {
+    return false;
+  }
+
+  i = arr.length;
+  while (i--) {
+    if ( !is.str( arr[i] ) ) {
+      return false;
+    }
+  }
+  return true;
+}
+
+/**
+ * @private
+ * @param {*} val
+ * @return {boolean}
+ */
+function isFuncMap(obj) {
+
+  /** @type {string} */
+  var prop;
+
+  if ( !is.obj(obj) ) {
+    return false;
+  }
+
+  for (prop in obj) {
+    if( has(obj, prop) && !is.func( obj[prop] ) ) {
+      return false;
+    }
+  }
+  return true;
+}
+
+
+////////////////////////////////////////////////////////////////////////////////
+// DEFINE PUBLIC METHODS
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @param {string} method
+ * @param {string=} val
+ */
+Task.run = function run(method, val) {
+
+  /** @type {string} */
+  var name;
+
+  name = this.name;
+  has(this.methods, method) || log.error(
+    'Invalid `make` Command',
+    'invalid task method (i.e. method did not exist in the task\'s methods)',
+    { argMap: true, task: name, invalidMethod: method }
+  );
+
+  this.methods[method](val);
+};
 
 
 ////////////////////////////////////////////////////////////////////////////////
 // EXPORT TASK CONSTRUCTOR
 ////////////////////////////////////////////////////////////////////////////////
 
-module.exports = makeTask;
+/**
+ * @param {string=} name
+ * @param {(string|!Array<string>)=} defaultMethods
+ * @param {!Object<string, function>} methods
+ * @return {!Task}
+ */
+module.exports = function makeTask(name, defaultMethods, methods) {
+
+  /** @type {!Task} */
+  var task;
+
+  task = new Task(name, defaultMethods, methods);
+  each(Task, function(/** function */ method, /** string */ key) {
+    task[key] = bindObj(method, task);
+  });
+  return task;
+};
+
+/**
+ * @private
+ * @param {(function|!Object)} obj
+ * @param {!Task} task
+ * @return {(function|!Object)}
+ */
+function bindObj(obj, task) {
+
+  /** @type {(function|!Object)} */
+  var boundObj;
+
+  is._obj(obj) || log.error(
+    'Failed new `Task` Call',
+    'error in private helper `bindObj` (invalid type for `obj` param)',
+    { argMap: true, obj: obj, task: task }
+  );
+
+  boundObj = is.func(obj) ? obj.bind(task) : {};
+  each(obj, function(/** (function|!Object) */ prop, /** string */ key) {
+    boundObj[key] = bindObj(prop, task);
+  });
+  return boundObj;
+}
