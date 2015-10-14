@@ -20,10 +20,54 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// DEFINE PRIVATE METHODS
+// DEFINE & EXPORT THE TASK
 ////////////////////////////////////////////////////////////////////////////////
 
-function minify(filepath, copyright) {
+/** @type {!Task} */
+module.exports = newTask('minify', 'are-nodeAre', {
+
+  are: function are() {
+
+    /** @type {string} */
+    var source;
+    /** @type {string} */
+    var dest;
+
+    source = 'src/are.js';
+    dest = 'src/are.min.js';
+
+    copy.file(source, dest);
+    minify(dest);
+
+    log.pass('Completed `minify.are` Task');
+  },
+
+  nodeAre: function nodeAre() {
+
+    /** @type {string} */
+    var source;
+    /** @type {string} */
+    var dest;
+
+    source = 'src/node-are.js';
+    dest = 'src/node-are.min.js';
+
+    copy.file(source, dest);
+    minify(dest);
+
+    log.pass('Completed `minify.nodeAre` Task');
+  }
+});
+
+
+////////////////////////////////////////////////////////////////////////////////
+// DEFINE PRIVATE HELPERS
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @param {string} filepath
+ */
+function minify(filepath) {
 
   /** @type {string} */
   var compiler;
@@ -40,70 +84,21 @@ function minify(filepath, copyright) {
   cmd = 'java -jar ' + compiler + ' --js ' + filepath + ' -W QUIET';
   exec(cmd, { silent: true }).output
     .replace(/\r\n?/g, '\n')
-    .replace(/^\/\*[\s\S]*?\*\//, copyright)
+    .replace(/^\/\*[\s\S]*?\*\//, getCopyright(filepath))
     .to(filepath);
 }
 
+/**
+ * @param {string} filepath
+ * @return {string}
+ */
+function getCopyright(filepath) {
 
-////////////////////////////////////////////////////////////////////////////////
-// DEFINE THE TASK METHODS
-////////////////////////////////////////////////////////////////////////////////
+  filepath = filepath.replace(/^(?:\.\/)?src\/([a-z-]+)\..*$/i, '$1.js');
 
-/** @type {!Object<string, function>} */
-var methods = {};
-
-/** @type {function} */
-methods.are = function() {
-
-  /** @type {string} */
-  var source;
-  /** @type {string} */
-  var dest;
-  /** @type {string} */
-  var copyright;
-
-  source = 'src/are.js';
-  dest = 'src/are.min.js';
-  copyright = (
-    '/* are.js v0.1.0 (https://github.com/imaginate/are)\n' +
-    ' * Copyright (c) 2015 Adam A Smith <adam@imaginate.life>\n' +
+  return (
+    '/* ' + filepath + ' v0.1.0 (https://github.com/imaginate/are)\n' +
+    ' * Copyright (c) 2015 Adam A Smith <adam@imaginate.life>\n'      +
     ' * The Apache License (github.com/imaginate/are/blob/master/LICENSE.md) */'
   );
-
-  copy.file(source, dest);
-  minify(dest, copyright);
-
-  log.pass('Completed `minify.are` Task');
-};
-
-/** @type {function} */
-methods.nodeAre = function() {
-
-  /** @type {string} */
-  var source;
-  /** @type {string} */
-  var dest;
-  /** @type {string} */
-  var copyright;
-
-  source = 'src/node-are.js';
-  dest = 'src/node-are.min.js';
-  copyright = (
-    '/* node-are.js v0.1.0 (https://github.com/imaginate/are)\n' +
-    ' * Copyright (c) 2015 Adam A Smith <adam@imaginate.life>\n' +
-    ' * The Apache License (github.com/imaginate/are/blob/master/LICENSE.md) */'
-  );
-
-  copy.file(source, dest);
-  minify(dest, copyright);
-
-  log.pass('Completed `minify.nodeAre` Task');
-};
-
-
-////////////////////////////////////////////////////////////////////////////////
-// EXPORT THE TASK
-////////////////////////////////////////////////////////////////////////////////
-
-/** @type {!Task} */
-module.exports = newTask('minify', 'are-nodeAre', methods);
+}
