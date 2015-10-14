@@ -99,4 +99,4 @@ methods.nodeAre = function() {
 ////////////////////////////////////////////////////////////////////////////////
 
 /** @type {!Task} */
-module.exports = makeTask('test', 'are-nodeAre', methods);
+module.exports = newTask('test', 'are-nodeAre', methods);

@@ -106,4 +106,4 @@ methods.nodeAre = function() {
 ////////////////////////////////////////////////////////////////////////////////
 
 /** @type {!Task} */
-module.exports = makeTask('minify', 'are-nodeAre', methods);
+module.exports = newTask('minify', 'are-nodeAre', methods);

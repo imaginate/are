@@ -114,4 +114,4 @@ methods.nodeAre = function() {
 ////////////////////////////////////////////////////////////////////////////////
 
 /** @type {!Task} */
-module.exports = makeTask('compile', 'are-nodeAre', methods);
+module.exports = newTask('compile', 'are-nodeAre', methods);
