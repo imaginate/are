@@ -55,12 +55,13 @@
  * -------------------------------------------
  *
  * Values
- * ------------------------------------------------------------------------
- * | Task    | Method | Acceptable Values | Example       | Default Value |
- * | :------ | :----- | :---------------- | :------------ | :------------ |
- * | minify  | src    | File Name         | node-are[.js] | are           |
- * | version | all    | Semantic Version  | 1.2.4         | (none)        |
- * ------------------------------------------------------------------------
+ * -----------------------------------------------------------------------------
+ * | Task    | Method | Acceptable Values | Example            | Default Value |
+ * | :------ | :----- | :---------------- | :----------------- | :------------ |
+ * | minify  | src    | File Name         | node-are[.js]      | are           |
+ * | test    | *      | Mocha Cmd Opts    | bail+reporter=spec | (none)        |
+ * | version | all    | Semantic Version  | 1.2.4              | (none)        |
+ * -----------------------------------------------------------------------------
  */
 
 'use strict';
