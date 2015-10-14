@@ -19,32 +19,34 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /** @type {!Task} */
-module.exports = newTask('test', 'are-nodeAre', {
+module.exports = newTask('test', 'main', {
 
   /**
    * @param {string=} options
    */
-  are: function are(options) {
+  main: function main(options) {
 
     /** @type {string} */
     var source;
     /** @type {string} */
     var tests;
 
-    tests = './tests/*.js';
     options = getOptions(options);
-    options += ' --require ';
 
     configLog();
 
     source = './src/are.js';
+    tests = './tests/*.js';
+
     logStart(source);
-    runTests(options + source, tests);
+    runTests(options + ' --require ' + source, tests);
     logFinish(source);
 
-    source = './src/are.min.js';
+    source = './src/node-are.js';
+    tests = './tests/node-methods/*.js';
+
     logStart(source);
-    runTests(options + source, tests);
+    runTests(options, tests);
     logFinish(source);
 
     resetLog();
@@ -53,7 +55,7 @@ module.exports = newTask('test', 'are-nodeAre', {
   /**
    * @param {string=} options
    */
-  nodeAre: function nodeAre(options) {
+  min: function min(options) {
 
     /** @type {string} */
     var source;
@@ -64,16 +66,11 @@ module.exports = newTask('test', 'are-nodeAre', {
 
     configLog();
 
-    tests = './tests/node-methods/*.js';
-    source = './src/node-are.js';
-    logStart(source);
-    runTests(options, tests);
-    logFinish(source);
+    source = './src/are.min.js';
+    tests = './tests/*.js';
 
-    tests = './tests/node-methods/min/*.js';
-    source = './src/node-are.min.js';
     logStart(source);
-    runTests(options, tests);
+    runTests(options + ' --require ' + source, tests);
     logFinish(source);
 
     resetLog();
@@ -168,4 +165,3 @@ function getName(str) {
 function getVal(str) {
   return str && str.replace(/^[a-z]+\=(.*)?$/i, '$1');
 }
-
