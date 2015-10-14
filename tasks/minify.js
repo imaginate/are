@@ -90,7 +90,7 @@ function minify(filepath) {
  */
 function getCopyright(filepath) {
 
-  filepath = filepath.replace(/^(?:.*)?([a-z-]+)\..*$/i, '$1.js');
+  filepath = filepath.replace(/^(?:.*\/)?([a-z-]+)\..*$/i, '$1.js');
 
   return (
     '/* ' + filepath + ' v0.1.0 (https://github.com/imaginate/are)\n' +
