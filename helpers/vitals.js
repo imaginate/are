@@ -2,7 +2,7 @@
  * -----------------------------------------------------------------------------
  * VITALS LIBRARY
  * -----------------------------------------------------------------------------
- * @file Functional shortcuts and helpers.
+ * @file Vitals libraries, functional shortcuts, and other helpers.
  *
  * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)
  * @copyright 2015 Adam A Smith <adam@imaginate.life> (https://github.com/imaginate)
@@ -20,10 +20,6 @@
 
 /** @type {!Object} */
 var fs = require('fs');
-/** @type {!Object<string, function>} */
-var is = require('./is');
-/** @type {!Function<string, function>} */
-var log = require('./log');
 /** @type {!Object} */
 var shell = require('shelljs');
 /** @type {function} */
@@ -31,21 +27,19 @@ var forOwn = require('lodash/object/forOwn');
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// DEFINE MAIN FUNCTION
+// APPEND FOUNDATION LIBRARIES
 ////////////////////////////////////////////////////////////////////////////////
 
-/** @type {!Function<string, function>} */
-function Vitals() {
-  forOwn(Vitals, function(/** function */ method, /** string */ key) {
-    global[key] = method;
-  });
-  global.is = is;
-  global.log = log;
-}
+/** @type {Function<string, function>} */
+global.log = require('./log');
+/** @type {Function<string, function>} */
+global.is = require('./is');
+/** @type {Function<string, function>} */
+global.are = require('./are');
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// DEFINE PUBLIC METHODS
+// APPEND SHORTCUT METHODS
 ////////////////////////////////////////////////////////////////////////////////
 
 /**
@@ -54,9 +48,9 @@ function Vitals() {
  * @param {function} action
  * @return {boolean}
  */
-Vitals.loop = function(cycles, action) {
+global.loop = function(cycles, action) {
 
-  is.num(cycles, true) || log.error(
+  is.num(cycles) || log.error(
     'Invalid `Vitals.loop` Call',
     'invalid type for `cycles` param',
     { argMap: true, cycles: cycles }
@@ -81,15 +75,14 @@ Vitals.loop = function(cycles, action) {
  * @param {*} prop
  * @return {boolean}
  */
-Vitals.has = function(obj, prop) {
+global.has = function(obj, prop) {
 
-  ( is.null(obj) || is.obj(obj) || is.func(obj) ) || log.error(
+  ( is.null(obj) || is._obj(obj) ) || log.error(
     'Invalid `Vitals.has` Call',
     'invalid type for `obj` param',
     { argMap: true, obj: obj, prop: prop }
   );
 
-  prop = is.str(prop) || is.num(prop) ? prop : String(prop);
   return !!obj && obj.hasOwnProperty(prop);
 };
 
@@ -101,7 +94,7 @@ Vitals.has = function(obj, prop) {
  * @param {Object=} thisArg
  * @return {!Object}
  */
-Vitals.merge = require('lodash/object/merge');
+global.merge = require('lodash/object/merge');
 
 /**
  * A shortcut for iterating over object maps and arrays.
@@ -110,9 +103,9 @@ Vitals.merge = require('lodash/object/merge');
  * @param {function} action
  * @param {Object=} thisArg
  */
-Vitals.each = function(obj, action, thisArg) {
+global.each = function(obj, action, thisArg) {
 
-  ( is.null(obj) || is.obj(obj) || is.func(obj) ) || log.error(
+  ( is.null(obj) || is._obj(obj) ) || log.error(
     'Invalid `Vitals.each` Call',
     'invalid type for `obj` param',
     { argMap: true, obj: obj }
@@ -124,7 +117,7 @@ Vitals.each = function(obj, action, thisArg) {
     { argMap: true, action: action }
   );
 
-  thisArg = is.obj(thisArg) || is.func(thisArg) ? thisArg : null;
+  thisArg = is._obj(thisArg) ? thisArg : null;
 
   if ( is.arr(obj) ) {
     obj.forEach(action, thisArg);
@@ -141,7 +134,7 @@ Vitals.each = function(obj, action, thisArg) {
  * @param {number=} end [default= arr.length]
  * @return {!Array}
  */
-Vitals.slice = require('lodash/array/slice');
+global.slice = require('lodash/array/slice');
 
 /**
  * @see https://lodash.com/docs#fill
@@ -151,7 +144,7 @@ Vitals.slice = require('lodash/array/slice');
  * @param {number=} end [default= arr.length]
  * @return {!Array}
  */
-Vitals.fill = require('lodash/array/fill');
+global.fill = require('lodash/array/fill');
 
 /**
  * @see https://github.com/shelljs/shelljs#execcommand--options--callback
@@ -161,57 +154,16 @@ Vitals.fill = require('lodash/array/fill');
  * @param {boolean=} options.silent [default= false]
  * @param {function=} callback
  */
-Vitals.exec = shell.exec;
-
-/**
- * @param {string} source
- * @param {string} dest
- * @param {boolean=} force [default= true]
- */
-Vitals.copy = function(source, dest, force) {
-
-  is.file(source) || log.error(
-    'Invalid `Vitals.copy` Call',
-    'invalid `source` param (i.e. must be a valid filepath string)',
-    { argMap: true, source: source }
-  );
-
-  is.str(dest) || log.error(
-    'Invalid `Vitals.copy` Call',
-    'invalid type for `dest` param',
-    { argMap: true, dest: dest }
-  );
-
-  if (force === false) {
-    shell.cp(source, dest)
-  }
-  else {
-    shell.cp('-f', source, dest);
-  }
-};
-
-/**
- * @param {string} filepath
- * @param {?string=} encoding [default= 'utf8']
- * @return {(string|Buffer)}
- */
-Vitals.retrieve = function(filepath, encoding) {
-
-  is.file(filepath) || log.error(
-    'Invalid `Vitals.retrieve` Call',
-    'invalid `filepath` param (i.e. must be a valid file)',
-    { argMap: true, filepath: filepath }
-  );
-
-  encoding = is.str(encoding) || is.null(encoding) ? encoding : 'utf8';
-  return ( encoding ?
-    fs.readFileSync(filepath, encoding) : fs.readFileSync(filepath)
-  );
-};
+global.exec = shell.exec;
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// EXPORT LIBRARY
+// APPEND REMAINING LIBRARIES
 ////////////////////////////////////////////////////////////////////////////////
 
-module.exports = Vitals;
+/** @type {Function<string, function>} */
+global.copy = require('./copy');
+/** @type {!Object<string, function>} */
+global.retrieve = require('./retrieve');
+/** @type {function} */
+global.makeTask = require('./task');
