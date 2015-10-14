@@ -15,19 +15,132 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
+// DEFINE & EXPORT THE TASK
+////////////////////////////////////////////////////////////////////////////////
+
+/** @type {!Task} */
+module.exports = newTask('test', 'are-nodeAre', {
+
+  /**
+   * @param {string=} options
+   */
+  are: function are(options) {
+
+    /** @type {string} */
+    var source;
+    /** @type {string} */
+    var tests;
+
+    tests = './tests/*.js';
+    options = getOptions(options);
+    options += ' --require ';
+
+    configLog();
+
+    source = './src/are.js';
+    logStart(source);
+    runTests(options + source, tests);
+    logFinish(source);
+
+    source = './src/are.min.js';
+    logStart(source);
+    runTests(options + source, tests);
+    logFinish(source);
+
+    resetLog();
+  },
+
+  /**
+   * @param {string=} options
+   */
+  nodeAre: function nodeAre(options) {
+
+    /** @type {string} */
+    var source;
+    /** @type {string} */
+    var tests;
+
+    options = getOptions(options);
+
+    configLog();
+
+    tests = './tests/node-methods/*.js';
+    source = './src/node-are.js';
+    logStart(source);
+    runTests(options, tests);
+    logFinish(source);
+
+    tests = './tests/node-methods/min/*.js';
+    source = './src/node-are.min.js';
+    logStart(source);
+    runTests(options, tests);
+    logFinish(source);
+
+    resetLog();
+  }
+});
+
+
+////////////////////////////////////////////////////////////////////////////////
 // DEFINE PRIVATE HELPERS
 ////////////////////////////////////////////////////////////////////////////////
 
-/** @type {string} */
-var mocha = (
-  'node ./node_modules/mocha/bin/mocha ' +
-  '--bail '           +
-  '--colors '         +
-  '--reporter dot '   +
-  '--slow 5 '         +
-  '--timeout 1000 '   +
-  '--globals is,are'
-);
+/**
+ * @param {string=} options
+ */
+function getOptions(options) {
+
+  /** @type {!Object} */
+  var defaults;
+  /** @type {string} */
+  var result;
+
+  options = is.str(options) ? options.split('+') : [];
+
+  defaults = {
+    reporter: 'dot',
+    slow: 5,
+    timeout: 1000
+  };
+  result = '--colors ';
+
+  each(options, function(/** string */ option) {
+    if ( /=/.test(option) ) {
+      defaults[option] = option.split('=', 1)[1];
+    }
+    else {
+      result += '--' + option + ' ';
+    }
+  });
+
+  each(defaults, function(/** * */ val, /** string */ option) {
+    result += '--' + option + ' ' + val + ' ';
+  });
+
+  return result + '--globals is,are';
+}
+
+/**
+ * @param {string} options
+ * @param {string} tests
+ */
+function runTests(options, tests) {
+  exec('node ./node_modules/mocha/bin/mocha ' + options + ' ' + tests);
+}
+
+/**
+ * @param {string} source
+ */
+function logStart(source) {
+  log.debug('Testing `' + source + '`');
+}
+
+/**
+ * @param {string} source
+ */
+function logFinish(source) {
+  log.pass('Finished testing `' + source + '`');
+}
 
 /** @type {function} */
 function configLog() {
@@ -36,67 +149,7 @@ function configLog() {
   log.setConfig('debug.spaceAfter', 0);
 }
 
-
-////////////////////////////////////////////////////////////////////////////////
-// DEFINE THE TASK METHODS
-////////////////////////////////////////////////////////////////////////////////
-
-/** @type {!Object<string, function>} */
-var methods = {};
-
 /** @type {function} */
-methods.are = function() {
-
-  /** @type {string} */
-  var source;
-  /** @type {string} */
-  var tests;
-
-  tests = './tests/*.js';
-
-  configLog();
-
-  source = './src/are.js';
-  log.debug('Testing `' + source + '`');
-  exec(mocha + ' --require ' + source + ' ' + tests);
-  log.pass('Finished testing `' + source + '`');
-
-  source = './src/are.min.js';
-  log.debug('Testing `' + source + '`');
-  exec(mocha + ' --require ' + source + ' ' + tests);
-  log.pass('Finished testing `' + source + '`');
-
+function resetLog() {
   log.resetConfig();
-};
-
-/** @type {function} */
-methods.nodeAre = function() {
-
-  /** @type {string} */
-  var source;
-  /** @type {string} */
-  var tests;
-
-  configLog();
-
-  tests = './tests/node-methods/*.js';
-  source = './src/node-are.js';
-  log.debug('Testing `' + source + '`');
-  exec(mocha + ' ' + tests);
-
-  tests = './tests/node-methods/min/*.js';
-  source = './src/node-are.min.js';
-  log.debug('Testing `' + source + '`');
-  exec(mocha + ' ' + tests);
-  log.pass('Finished testing `' + source + '`');
-
-  log.resetConfig();
-};
-
-
-////////////////////////////////////////////////////////////////////////////////
-// EXPORT THE TASK
-////////////////////////////////////////////////////////////////////////////////
-
-/** @type {!Task} */
-module.exports = newTask('test', 'are-nodeAre', methods);
+}
