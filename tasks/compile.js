@@ -15,103 +15,85 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// DEFINE THE TASK METHODS
-////////////////////////////////////////////////////////////////////////////////
-
-/** @type {!Object<string, function>} */
-var methods = {};
-
-/** @type {function} */
-methods.are = function() {
-
-  /** @type {string} */
-  var fileIntro;
-  /** @type {string} */
-  var contents;
-  /** @type {!Array<string>} */
-  var inserts;
-  /** @type {!RegExp} */
-  var regex;
-
-  contents = retrieve.file('parts/export.js')
-               .replace(/\r\n?/g, '\n')
-               .replace(/^\/\*[\s\S]*?\*\//, '');
-  inserts = (
-    'main-func-helpers is-main-func are-main-func is-methods are-methods'
-  ).split(' ');
-
-  regex = /  \/\/ INSERT ([a-z-]+\.js)\n/g;
-  each(inserts, function(/** string */ filename) {
-    filename += '.js';
-    contents = contents.replace(regex,
-      function(/** string */ match, /** string */ insertname) {
-        return ( insertname === filename ?
-          retrieve.file('parts/' + filename)
-            .replace(/\r\n?/g, '\n')
-            .replace(/^\/\*[\s\S]*?\*\/\n\n/, '')
-          : match
-        );
-      }
-    );
-  });
-
-  fileIntro = retrieve.file('src/are.js')
-    .replace(/\r\n?/g, '\n')
-    .replace(/^(\/\*[\s\S]*?\*\/\n)[\s\S]*$/, '$1');
-
-  (fileIntro + contents).to('src/are.js');
-
-  log.pass('Completed `compile.are` Task');
-};
-
-/** @type {function} */
-methods.nodeAre = function() {
-
-  /** @type {string} */
-  var fileIntro;
-  /** @type {string} */
-  var contents;
-  /** @type {!Array<string>} */
-  var inserts;
-  /** @type {!RegExp} */
-  var regex;
-
-  contents = retrieve.file('parts/node-export.js')
-               .replace(/\r\n?/g, '\n')
-               .replace(/^\/\*[\s\S]*?\*\//, '');
-  inserts = (
-    'main-func-helpers is-main-func are-main-func is-methods are-methods ' +
-    'node-methods'
-  ).split(' ');
-
-  regex = /  \/\/ INSERT ([a-z-]+\.js)\n/g;
-  each(inserts, function(/** string */ filename) {
-    filename += '.js';
-    contents = contents.replace(regex,
-      function(/** string */ match, /** string */ insertname) {
-        return ( insertname === filename ?
-          retrieve.file('parts/' + filename)
-            .replace(/\r\n?/g, '\n')
-            .replace(/^\/\*[\s\S]*?\*\/\n\n/, '')
-          : match
-        );
-      }
-    );
-  });
-
-  fileIntro = retrieve.file('src/node-are.js')
-    .replace(/\r\n?/g, '\n')
-    .replace(/^(\/\*[\s\S]*?\*\/\n)[\s\S]*$/, '$1');
-
-  (fileIntro + contents).to('src/node-are.js');
-
-  log.pass('Completed `compile.nodeAre` Task');
-};
-
-
-////////////////////////////////////////////////////////////////////////////////
-// EXPORT THE TASK
+// DEFINE & EXPORT THE TASK
 ////////////////////////////////////////////////////////////////////////////////
 
 /** @type {!Task} */
-module.exports = newTask('compile', 'are-nodeAre', methods);
+module.exports = newTask('compile', 'are-nodeAre', {
+
+  are: function are() {
+
+    /** @type {string} */
+    var contents;
+    /** @type {string} */
+    var parts;
+
+    contents = getFileIntro('src/are.js');
+    contents += getFile('parts/export.js');
+
+    parts = 'main-func-helpers is-main-func are-main-func ';
+    parts += 'is-methods are-methods';
+
+    each(parts.split(' '), insertFile);
+    contents.to('src/are.js');
+
+    log.pass('Completed `compile.are` Task');
+  },
+
+  nodeAre: function nodeAre() {
+
+    /** @type {string} */
+    var contents;
+    /** @type {string} */
+    var parts;
+
+    contents = getFileIntro('src/node-are.js');
+    contents += getFile('parts/node-export.js');
+
+    parts = 'main-func-helpers is-main-func are-main-func ';
+    parts += 'is-methods are-methods node-methods';
+
+    each(parts.split(' '), insertFile);
+    contents.to('src/node-are.js');
+
+    log.pass('Completed `compile.nodeAre` Task');
+  }
+});
+
+
+////////////////////////////////////////////////////////////////////////////////
+// DEFINE PRIVATE HELPERS
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @param {string} filepath
+ * @return {string}
+ */
+function getFile(filepath) {
+  return retrieve.file(file) // get file contents
+    .replace(/\r\n?/g, '\n') // normalize line breaks
+    .replace(/^\/\*[\s\S]*?\*\/\n\n/, ''); // strip intro
+}
+
+/**
+ * @param {string} contents
+ * @param {string} filename
+ * @return {string}
+ */
+function insertFile(contents, filename) {
+  filename = filename.replace(/\./g, '\\.') + '\\.js';
+  return contents.replace(
+    new RegExp('  \\/\\/ INSERT ' + filename + '\\n'),
+    getFile('parts/' + filename)
+  );
+}
+
+/**
+ * @param {string} filepath
+ * @return {string}
+ */
+function getFileIntro(filepath) {
+  return retrieve.file(file) // get file contents
+    .replace(/\r\n?/g, '\n') // normalize line breaks
+    .replace(/^(\/\*[\s\S]*?\*\/\n)[\s\S]*$/, '$1'); // get file intro
+}
