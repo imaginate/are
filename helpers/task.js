@@ -19,6 +19,21 @@
 
 
 ////////////////////////////////////////////////////////////////////////////////
+// EXPORT TASK FACTORY
+////////////////////////////////////////////////////////////////////////////////
+
+/**
+ * @param {string=} name
+ * @param {(string|!Array<string>)=} defaultMethods
+ * @param {!Object<string, function>} methods
+ * @return {!Task}
+ */
+module.exports = function newTask(name, defaultMethods, methods) {
+  return new Task(name, defaultMethods, methods);
+};
+
+
+////////////////////////////////////////////////////////////////////////////////
 // DEFINE TASK CONSTRUCTOR
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -30,49 +45,40 @@
  */
 function Task(name, defaultMethods, methods) {
 
-  validParams(name, defaultMethods, methods) || log.error(
-    'Invalid new `Task` Call',
-    'invalid type for `name`, `defaultMethods`, or `methods` param',
+  if (arguments.length === 2) {
+    methods = defaultMethods;
+    defaultMethods = name;
+    name = '';
+  }
+  else if (arguments.length === 1) {
+    methods = name;
+    defaultMethods = [];
+    name = '';
+  }
+
+  isFuncMap(methods) || log.error(
+    'Invalid `newTask` Call',
+    'invalid `methods` param (must be an object with "name => function" props)',
     { argMap: true, name: name, defaultMethods: defaultMethods,
       methods: methods }
   );
-
-  if ( !isFuncMap(methods) ) {
-
-    if ( isFuncMap(defaultMethods) ) {
-      methods = defaultMethods;
-      defaultMethods = null;
-    }
-    else if ( isFuncMap(name) ) {
-      methods = name;
-      defaultMethods = null;
-      name = null;
-    }
-    else {
-      log.error(
-        'Invalid new `Task` Call',
-        'a valid object for the `methods` param was not found',
-        { argMap: true, name: name, defaultMethods: defaultMethods,
-          methods: methods }
-      );
-    }
-  }
 
   is.empty(methods) && log.error(
-    'Invalid new `Task` Call',
-    'invalid `methods` param (the given `methods` object was empty)',
+    'Invalid `newTask` Call',
+    'empty `methods` param (must have at least one method defined)',
     { argMap: true, name: name, defaultMethods: defaultMethods,
       methods: methods }
   );
 
-  if ( !is.str(defaultMethods) && !is.arr(defaultMethods) ) {
-    defaultMethods = is.str(name) || is.arr(name) ? name : null;
-    name = null;
-  }
-
   defaultMethods = is.str(defaultMethods) ?
-    defaultMethods.split('-') : is.arr(defaultMethods) ?
-      defaultMethods : [];
+    defaultMethods.split('-') : defaultMethods;
+
+  isStrArr(defaultMethods) || log.error(
+    'Invalid `newTask` Call',
+    'invalid type for `defaultMethods` param',
+    { argMap: true, name: name, defaultMethods: defaultMethods,
+      methods: methods }
+  );
 
   name = is.str(name) ? name : '';
 
@@ -83,21 +89,34 @@ function Task(name, defaultMethods, methods) {
 
 Task.prototype.constructor = Task;
 
+
+////////////////////////////////////////////////////////////////////////////////
+// DEFINE PUBLIC METHODS
+////////////////////////////////////////////////////////////////////////////////
+
 /**
- * @private
- * @param {string=} name
- * @param {(string|!Array<string>)=} dMethods
- * @param {!Object<string, function>} methods
- * @return {boolean}
+ * @param {string} method
+ * @param {string=} val
  */
-function validParams(name, dMethods, methods) {
-  return (
-    ( is.str(name) || isStrArr(name) || isFuncMap(name) ) &&
-    ( is.str(dMethods)    || isStrArr(dMethods) ||
-      isFuncMap(dMethods) || is.undefined(dMethods) ) &&
-    ( isFuncMap(methods) || is.undefined(methods) )
+Task.prototype.run = function run(method, val) {
+
+  /** @type {string} */
+  var name;
+
+  name = this.name;
+  has(this.methods, method) || log.error(
+    'Invalid `make` Command',
+    'invalid task method (i.e. method did not exist in the task\'s methods)',
+    { argMap: true, task: name, invalidMethod: method }
   );
-}
+
+  this.methods[method](val);
+};
+
+
+////////////////////////////////////////////////////////////////////////////////
+// DEFINE PRIVATE HELPERS
+////////////////////////////////////////////////////////////////////////////////
 
 /**
  * @private
@@ -142,75 +161,4 @@ function isFuncMap(obj) {
     }
   }
   return true;
-}
-
-
-////////////////////////////////////////////////////////////////////////////////
-// DEFINE PUBLIC METHODS
-////////////////////////////////////////////////////////////////////////////////
-
-/**
- * @param {string} method
- * @param {string=} val
- */
-Task.run = function run(method, val) {
-
-  /** @type {string} */
-  var name;
-
-  name = this.name;
-  has(this.methods, method) || log.error(
-    'Invalid `make` Command',
-    'invalid task method (i.e. method did not exist in the task\'s methods)',
-    { argMap: true, task: name, invalidMethod: method }
-  );
-
-  this.methods[method](val);
-};
-
-
-////////////////////////////////////////////////////////////////////////////////
-// EXPORT TASK CONSTRUCTOR
-////////////////////////////////////////////////////////////////////////////////
-
-/**
- * @param {string=} name
- * @param {(string|!Array<string>)=} defaultMethods
- * @param {!Object<string, function>} methods
- * @return {!Task}
- */
-module.exports = function makeTask(name, defaultMethods, methods) {
-
-  /** @type {!Task} */
-  var task;
-
-  task = new Task(name, defaultMethods, methods);
-  each(Task, function(/** function */ method, /** string */ key) {
-    task[key] = bindObj(method, task);
-  });
-  return task;
-};
-
-/**
- * @private
- * @param {(function|!Object)} obj
- * @param {!Task} task
- * @return {(function|!Object)}
- */
-function bindObj(obj, task) {
-
-  /** @type {(function|!Object)} */
-  var boundObj;
-
-  is._obj(obj) || log.error(
-    'Failed new `Task` Call',
-    'error in private helper `bindObj` (invalid type for `obj` param)',
-    { argMap: true, obj: obj, task: task }
-  );
-
-  boundObj = is.func(obj) ? obj.bind(task) : {};
-  each(obj, function(/** (function|!Object) */ prop, /** string */ key) {
-    boundObj[key] = bindObj(prop, task);
-  });
-  return boundObj;
 }
