@@ -151,7 +151,7 @@ each(tasks, function(/** string */ taskStr) {
     var val;
 
     if ( /=/.test(method) ) {
-      val = method.split('=');
+      val = method.split('=', 1);
       method = val[0];
       val = val[1];
     }
