@@ -107,10 +107,10 @@ function getOptions(options) {
 
   each(options, function(/** string */ option) {
     if ( /=/.test(option) ) {
-      defaults[option] = option.split('=', 1)[1];
+      defaults[ getName(option) ] = getVal(option);
     }
     else {
-      result += '--' + option + ' ';
+      result += option && '--' + option + ' ';
     }
   });
 
@@ -154,3 +154,18 @@ function configLog() {
 function resetLog() {
   log.resetConfig();
 }
+
+/**
+ * @param {string} str
+ */
+function getName(str) {
+  return str && str.replace(/^([a-z]+)(?:[^a-z].*)?$/i, '$1');
+}
+
+/**
+ * @param {string} str
+ */
+function getVal(str) {
+  return str && str.replace(/^[a-z]+\=(.*)?$/i, '$1');
+}
+
