@@ -87,6 +87,7 @@ module.exports = newTask('test', 'are-nodeAre', {
 
 /**
  * @param {string=} options
+ * @return {string}
  */
 function getOptions(options) {
 
