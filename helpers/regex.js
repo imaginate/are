@@ -5,13 +5,15 @@
  * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)
  * @copyright 2015 Adam A Smith <adam@imaginate.life> (https://github.com/imaginate)
  *
+ * Supporting Libraries:
+ * @see [Lodash]{@link https://github.com/lodash/lodash}
+ *
+ * Annotations:
  * @see [JSDoc3]{@link http://usejsdoc.org/}
  * @see [Closure Compiler specific JSDoc]{@link https://developers.google.com/closure/compiler/docs/js-for-compiler}
  */
 
 'use strict';
-
-require('./vitals')(); // appends helper methods to global obj
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -20,9 +22,10 @@ require('./vitals')(); // appends helper methods to global obj
 
 /**
  * Creates the Regex object.
+ * @param {!RegExp=} escapeChars
  * @constructor
  */
-var Regex = function() {
+var Regex = function(escapeChars) {
 
   //////////////////////////////////////////////////////////////////////////
   // PROTECTED PROPERTIES
@@ -46,7 +49,7 @@ var Regex = function() {
    */
   var makeProp = function(val) {
     return {
-      org: val,
+      VAL: val,
       val: val
     };
   };
@@ -58,7 +61,7 @@ var Regex = function() {
    *   make:   ProtectedProps
    * }}
    */
-  var props = {
+  var methods = {
     escape: {
       chars: makeProp( /([\*\+\?\.\-\:\{\}\[\]\(\)\/\,\\\^\$\=\!\|])/g )
     },
@@ -77,13 +80,13 @@ var Regex = function() {
    */
   this._get = function(method, prop) {
 
-    ( has(props, method) && has(props[method], prop) ) || log.error(
+    ( has(methods, method) && has(methods[method], prop) ) || log.error(
       'Failed `Regex` Call',
       'error in private `_get` method',
       { argMap: true, method: method, prop: prop }
     );
 
-    return props[method][prop]['val'];
+    return methods[method][prop]['val'];
   };
 
   /**
@@ -93,13 +96,13 @@ var Regex = function() {
    */
   this._set = function(method, prop, val) {
 
-    ( has(props, method) && has(props[method], prop) ) || log.error(
+    ( has(methods, method) && has(methods[method], prop) ) || log.error(
       'Failed `Regex` Call',
       'error in private `_set` method',
       { argMap: true, method: method, prop: prop, val: val }
     );
 
-    props[method][prop]['val'] = val;
+    methods[method][prop]['val'] = val;
   };
 
   /**
@@ -108,26 +111,25 @@ var Regex = function() {
    */
   this._reset = function(method, prop) {
 
-    ( has(props, method) && has(props[method], prop) ) || log.error(
+    ( has(methods, method) && has(methods[method], prop) ) || log.error(
       'Failed `Regex` Call',
       'error in private `_reset` method',
       { argMap: true, method: method, prop: prop }
     );
 
-    props[method][prop]['val'] = props[method][prop]['org'];
+    methods[method][prop]['val'] = methods[method][prop]['VAL'];
   };
+
+
+  //////////////////////////////////////////////////////////////////////////
+  // CHECK FOR CUSTOM NEW INSTANCE CONFIG
+  //////////////////////////////////////////////////////////////////////
+
+  is.regex(escapeChars) && this._set('escape', 'chars', escapeChars);
 
 };
 
 Regex.prototype.constructor = Regex;
-
-
-////////////////////////////////////////////////////////////////////////////////
-// CREATE REGEX INSTANCE
-////////////////////////////////////////////////////////////////////////////////
-
-/** @type {!Regex} */
-var regex = new Regex();
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -138,7 +140,7 @@ var regex = new Regex();
  * @param {string} regex
  * @return {string}
  */
-Regex.prototype.escape = function(regex) {
+Regex.escape = function escape(regex) {
 
   is.str(regex) || log.error(
     'Invalid `Regex.escape` Call',
@@ -146,7 +148,7 @@ Regex.prototype.escape = function(regex) {
     { argMap: true, regex: regex }
   );
 
-  return regex.replace(this._get('escape', 'chars'), '\\$1');
+  return regex && regex.replace(this._get('escape', 'chars'), '\\$1');
 };
 
 /**
@@ -156,14 +158,13 @@ Regex.prototype.escape = function(regex) {
  *   reset: function
  * }}
  */
-Regex.prototype.escape.chars = {
+Regex.escape.chars = {
 
   get: function() {
     return this._get('escape', 'chars');
-  }.bind(regex),
+  },
 
   set: function(val) {
-
     is.regex(val) || log.error(
       'Invalid `Regex.escape.chars.set` Call',
       'invalid type for `val` param',
@@ -171,11 +172,11 @@ Regex.prototype.escape.chars = {
     );
 
     this._set('escape', 'chars', val);
-  }.bind(regex),
+  },
 
   reset: function() {
     this._reset('escape', 'chars');
-  }.bind(regex)
+  }
 };
 
 /**
@@ -183,15 +184,15 @@ Regex.prototype.escape.chars = {
  * @param {string=} flags - [default= '']
  * @return {!RegExp}
  */
-Regex.prototype.make = function(regex, flags) {
+Regex.make = function make(regex, flags) {
 
-  is.str(regex) || log.error(
+  is._str(regex) || log.error(
     'Invalid `Regex.make` Call',
     'invalid type for `regex` param',
     { argMap: true, regex: regex }
   );
 
-  flags = is.str(flags) && /^[gimy]+$/.test(flags) ? flags : '';
+  flags = is._str(flags) && /^[gimy]+$/.test(flags) ? flags : '';
   return new RegExp(regex, flags);
 };
 
@@ -200,4 +201,41 @@ Regex.prototype.make = function(regex, flags) {
 // EXPORT LIBRARY
 ////////////////////////////////////////////////////////////////////////////////
 
-module.exports = regex;
+/**
+ * @param {!RegExp=} escapeChars
+ * @return {!Regex}
+ */
+module.exports = function setupRegex(escapeChars) {
+
+  /** @type {!Regex} */
+  var regex;
+
+  regex = new Regex(escapeChars);
+  each(Regex, function(/** function */ method, /** string */ key) {
+    regex[key] = bindObj(method, regex);
+  });
+  return regex;
+};
+
+/**
+ * @param {(function|!Object)} obj
+ * @param {!Regex} regex
+ * @return {(function|!Object)}
+ */
+function bindObj(obj, regex) {
+
+  /** @type {(function|!Object)} */
+  var boundObj;
+
+  is._obj(obj) || log.error(
+    'Failed `Regex` Call',
+    'error in private helper `bindObj` (invalid type for `obj` param)',
+    { argMap: true, obj: obj, regex: regex }
+  );
+
+  boundObj = is.func(obj) ? obj.bind(regex) : {};
+  each(obj, function(/** (function|!Object) */ prop, /** string */ key) {
+    boundObj[key] = bindObj(prop, regex);
+  });
+  return boundObj;
+}
