@@ -13,12 +13,6 @@
 
 'use strict';
 
-require('../helpers/vitals')(); // appends helpers to global obj
-
-
-/** @type {function} */
-var makeTask = require('../helpers/task');
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // DEFINE PRIVATE HELPERS

@@ -13,13 +13,6 @@
 
 'use strict';
 
-require('../helpers/vitals')(); // appends helpers to global obj
-
-/** @type {!Object<string, function>} */
-var retrieve = require('../helpers/retrieve');
-/** @type {function} */
-var makeTask = require('../helpers/task');
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // DEFINE THE TASK METHODS
@@ -45,7 +38,7 @@ methods.all = function(version) {
     { argMap: true, version: version }
   );
 
-  filepaths = retrieve.files('.', {
+  filepaths = retrieve.filepaths('.', {
     validExts: '.js',
     validDirs: 'parts|src',
     invalidFiles: 'make.js'

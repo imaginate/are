@@ -13,11 +13,6 @@
 
 'use strict';
 
-require('../helpers/vitals')(); // appends helpers to global obj
-
-/** @type {function} */
-var makeTask = require('../helpers/task');
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // DEFINE THE TASK METHODS
@@ -38,7 +33,7 @@ methods.are = function() {
   /** @type {!RegExp} */
   var regex;
 
-  contents = retrieve('parts/export.js')
+  contents = retrieve.file('parts/export.js')
                .replace(/\r\n?/g, '\n')
                .replace(/^\/\*[\s\S]*?\*\//, '');
   inserts = (
@@ -51,7 +46,7 @@ methods.are = function() {
     contents = contents.replace(regex,
       function(/** string */ match, /** string */ insertname) {
         return ( insertname === filename ?
-          retrieve('parts/' + filename)
+          retrieve.file('parts/' + filename)
             .replace(/\r\n?/g, '\n')
             .replace(/^\/\*[\s\S]*?\*\/\n\n/, '')
           : match
@@ -60,7 +55,7 @@ methods.are = function() {
     );
   });
 
-  fileIntro = retrieve('src/are.js')
+  fileIntro = retrieve.file('src/are.js')
     .replace(/\r\n?/g, '\n')
     .replace(/^(\/\*[\s\S]*?\*\/\n)[\s\S]*$/, '$1');
 
@@ -81,7 +76,7 @@ methods.nodeAre = function() {
   /** @type {!RegExp} */
   var regex;
 
-  contents = retrieve('parts/node-export.js')
+  contents = retrieve.file('parts/node-export.js')
                .replace(/\r\n?/g, '\n')
                .replace(/^\/\*[\s\S]*?\*\//, '');
   inserts = (
@@ -95,7 +90,7 @@ methods.nodeAre = function() {
     contents = contents.replace(regex,
       function(/** string */ match, /** string */ insertname) {
         return ( insertname === filename ?
-          retrieve('parts/' + filename)
+          retrieve.file('parts/' + filename)
             .replace(/\r\n?/g, '\n')
             .replace(/^\/\*[\s\S]*?\*\/\n\n/, '')
           : match
@@ -104,7 +99,7 @@ methods.nodeAre = function() {
     );
   });
 
-  fileIntro = retrieve('src/node-are.js')
+  fileIntro = retrieve.file('src/node-are.js')
     .replace(/\r\n?/g, '\n')
     .replace(/^(\/\*[\s\S]*?\*\/\n)[\s\S]*$/, '$1');
 

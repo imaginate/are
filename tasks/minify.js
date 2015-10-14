@@ -18,11 +18,6 @@
 
 'use strict';
 
-require('../helpers/vitals')(); // appends helpers to global obj
-
-/** @type {function} */
-var makeTask = require('../helpers/task');
-
 
 ////////////////////////////////////////////////////////////////////////////////
 // DEFINE PRIVATE METHODS
@@ -75,7 +70,7 @@ methods.are = function() {
     ' * The Apache License (github.com/imaginate/are/blob/master/LICENSE.md) */'
   );
 
-  copy(source, dest);
+  copy.file(source, dest);
   minify(dest, copyright);
 
   log.pass('Completed `minify.are` Task');
@@ -99,7 +94,7 @@ methods.nodeAre = function() {
     ' * The Apache License (github.com/imaginate/are/blob/master/LICENSE.md) */'
   );
 
-  copy(source, dest);
+  copy.file(source, dest);
   minify(dest, copyright);
 
   log.pass('Completed `minify.nodeAre` Task');
