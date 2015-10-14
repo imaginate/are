@@ -36,8 +36,9 @@ module.exports = newTask('minify', 'src', {
     /** @type {string} */
     var dest;
 
+    filename = stripFileExt(filename);
+    filename = hyphenate(filename);
     filename = filename || 'are';
-    filename = filename.replace(/^(.*)(?:\.js)?$/, '$1');
 
     source = 'src/' + filename + '.js';
     dest = 'src/' + filename + '.min.js';
@@ -97,4 +98,20 @@ function getCopyright(filepath) {
     ' * Copyright (c) 2015 Adam A Smith <adam@imaginate.life>\n'      +
     ' * The Apache License (github.com/imaginate/are/blob/master/LICENSE.md) */'
   );
+}
+
+/**
+ * @param {string} filename
+ * @return {string}
+ */
+function stripFileExt(filename) {
+  return filename && filename.replace(/^(.*)(?:\.js)?$/, '$1');
+}
+
+/**
+ * @param {string} filename
+ * @return {string}
+ */
+function hyphenate(filename) {
+  return filename && filename.replace(/([A-Z])/g, '-$1').toLowerCase();
 }
