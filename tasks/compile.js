@@ -34,7 +34,9 @@ module.exports = newTask('compile', 'are-nodeAre', {
     parts = 'main-func-helpers is-main-func are-main-func ';
     parts += 'is-methods are-methods';
 
-    each(parts.split(' '), insertFile);
+    each(parts.split(' '), function(/** string */ filename) {
+      contents = insertFile(contents, filename);
+    });
     contents.to('src/are.js');
 
     log.pass('Completed `compile.are` Task');
@@ -53,7 +55,9 @@ module.exports = newTask('compile', 'are-nodeAre', {
     parts = 'main-func-helpers is-main-func are-main-func ';
     parts += 'is-methods are-methods node-methods';
 
-    each(parts.split(' '), insertFile);
+    each(parts.split(' '), function(/** string */ filename) {
+      contents = insertFile(contents, filename);
+    });
     contents.to('src/node-are.js');
 
     log.pass('Completed `compile.nodeAre` Task');
@@ -70,7 +74,7 @@ module.exports = newTask('compile', 'are-nodeAre', {
  * @return {string}
  */
 function getFile(filepath) {
-  return retrieve.file(file) // get file contents
+  return retrieve.file(filepath) // get file contents
     .replace(/\r\n?/g, '\n') // normalize line breaks
     .replace(/^\/\*[\s\S]*?\*\/\n\n/, ''); // strip intro
 }
@@ -81,9 +85,9 @@ function getFile(filepath) {
  * @return {string}
  */
 function insertFile(contents, filename) {
-  filename = filename.replace(/\./g, '\\.') + '\\.js';
+  filename += '.js';
   return contents.replace(
-    new RegExp('  \\/\\/ INSERT ' + filename + '\\n'),
+    new RegExp('  \\/\\/ INSERT ' + filename.replace(/\./g, '\\.') + '\\n'),
     getFile('parts/' + filename)
   );
 }
@@ -93,7 +97,7 @@ function insertFile(contents, filename) {
  * @return {string}
  */
 function getFileIntro(filepath) {
-  return retrieve.file(file) // get file contents
+  return retrieve.file(filepath) // get file contents
     .replace(/\r\n?/g, '\n') // normalize line breaks
     .replace(/^(\/\*[\s\S]*?\*\/\n)[\s\S]*$/, '$1'); // get file intro
 }
