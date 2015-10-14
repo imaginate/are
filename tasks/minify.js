@@ -24,38 +24,34 @@
 ////////////////////////////////////////////////////////////////////////////////
 
 /** @type {!Task} */
-module.exports = newTask('minify', 'are-nodeAre', {
+module.exports = newTask('minify', 'src', {
 
-  are: function are() {
-
-    /** @type {string} */
-    var source;
-    /** @type {string} */
-    var dest;
-
-    source = 'src/are.js';
-    dest = 'src/are.min.js';
-
-    copy.file(source, dest);
-    minify(dest);
-
-    log.pass('Completed `minify.are` Task');
-  },
-
-  nodeAre: function nodeAre() {
+  /**
+   * @param {string=} filename
+   */
+  src: function src(filename) {
 
     /** @type {string} */
     var source;
     /** @type {string} */
     var dest;
 
-    source = 'src/node-are.js';
-    dest = 'src/node-are.min.js';
+    filename = filename || 'are';
+    filename = filename.replace(/^(.*)(?:\.js)?$/, '$1');
+
+    source = 'src/' + filename + '.js';
+    dest = 'src/' + filename + '.min.js';
+
+    is.file(source) || log.error(
+      'Failed `minify.src` Task',
+      'invalid `filename` param (must be a valid file in the `src` dir)',
+      { argMap: true, filename: filename }
+    );
 
     copy.file(source, dest);
     minify(dest);
 
-    log.pass('Completed `minify.nodeAre` Task');
+    log.pass('Completed `minify.src` Task');
   }
 });
 
@@ -94,7 +90,7 @@ function minify(filepath) {
  */
 function getCopyright(filepath) {
 
-  filepath = filepath.replace(/^(?:\.\/)?src\/([a-z-]+)\..*$/i, '$1.js');
+  filepath = filepath.replace(/^(?:.*)?([a-z-]+)\..*$/i, '$1.js');
 
   return (
     '/* ' + filepath + ' v0.1.0 (https://github.com/imaginate/are)\n' +
