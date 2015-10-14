@@ -9,6 +9,11 @@
  * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)
  * @copyright 2015 Adam A Smith <adam@imaginate.life> (https://github.com/imaginate)
  *
+ * Supporting Libraries:
+ * @see [Lodash]{@link https://github.com/lodash/lodash}
+ * @see [ShellJS]{@link https://github.com/shelljs/shelljs}
+ *
+ * Annotations:
  * @see [JSDoc3]{@link http://usejsdoc.org/}
  * @see [Closure Compiler specific JSDoc]{@link https://developers.google.com/closure/compiler/docs/js-for-compiler}
  */
@@ -59,7 +64,7 @@
 
 'use strict';
 
-require('./helpers/vitals')(); // appends helpers to global obj
+require('./helpers/vitals'); // appends global helpers for all tasks
 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -92,15 +97,21 @@ tasks = tasks.map(function(/** string */ task) {
 
 
 ////////////////////////////////////////////////////////////////////////////////
-// RUN THE TASKS
+// PREP THE TASK DIRECTORY
 ////////////////////////////////////////////////////////////////////////////////
 
 taskDir = taskDir ? taskDir.replace(/([^\/])$/, '$1/') : './tasks/';
+
 is.dir(taskDir) || log.error(
   'Invalid `makefile` Config',
   'the tasks directory does not exist',
   { argMap: true, taskDir: taskDir }
 );
+
+
+////////////////////////////////////////////////////////////////////////////////
+// RUN THE TASKS
+////////////////////////////////////////////////////////////////////////////////
 
 each(tasks, function(/** string */ taskStr) {
 
@@ -122,6 +133,7 @@ each(tasks, function(/** string */ taskStr) {
   );
 
   task = require(taskDir + name);
+  task.name = name;
 
   methods = taskStr.split('-');
 
@@ -133,5 +145,17 @@ each(tasks, function(/** string */ taskStr) {
     return /=/.test(method) ? method : method + defaultVal;
   }) : methods;
 
-  each(methods, task.run);
+  each(methods, function(/** string */ method) {
+
+    /** @type {string} */
+    var val;
+
+    if ( /=/.test(method) ) {
+      val = method.split('=');
+      method = val[0];
+      val = val[1];
+    }
+
+    task.run(method, val);
+  });
 });
