@@ -2,11 +2,13 @@
  * -----------------------------------------------------------------------------
  * LOG LIBRARY
  * -----------------------------------------------------------------------------
- * @author Adam Smith adam@imaginate.life
- * @copyright 2015 Adam A Smith adam@imaginate.life
+ * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)
+ * @copyright 2015 Adam A Smith <adam@imaginate.life> (https://github.com/imaginate)
+ *
  * Supporting Libraries:
  * @see [Lodash]{@link https://github.com/lodash/lodash}
  * @see [Colors]{@link https://www.npmjs.com/package/colors}
+ *
  * Annotations:
  * @see [JSDoc3]{@link http://usejsdoc.org/}
  * @see [Closure Compiler specific JSDoc]{@link https://developers.google.com/closure/compiler/docs/js-for-compiler}
@@ -14,10 +16,12 @@
 
 'use strict';
 
-/** @type {!Object<string, function>} */
+/** @type {Function<string, function>} */
 var is = require('./is');
+/** @type {Function<string, function>} */
+var are = require('./are');
 /** @type {!Object} */
-var colors = require('colors');
+var colors = require('colors/safe');
 /** @type {function} */
 var fill = require('lodash/array/fill');
 /** @type {function} */
@@ -134,7 +138,7 @@ function Log() {
  */
 Log.pass = function(header) {
 
-  if ( !is.str(header) ) {
+  if ( !is._str(header) ) {
     Log.error(
       'Invalid `Log.pass` Call',
       'invalid type for `header` param',
@@ -158,7 +162,7 @@ Log.pass = function(header) {
  */
 Log.error = function(header, msg) {
 
-  if ( !is.str(header) || !is.str(msg) ) {
+  if ( !are._str(header, msg) ) {
     Log.error(
       'Invalid `Log.error` Call',
       'invalid type for `header` or `msg` param',
@@ -184,7 +188,7 @@ Log.error = function(header, msg) {
  */
 Log.warn = function(header, msg) {
 
-  if ( !is.str(header) || !is.str(msg) ) {
+  if ( !are._str(header, msg) ) {
     Log.error(
       'Invalid `Log.warn` Call',
       'invalid type for `header` or `msg` param',
@@ -208,7 +212,7 @@ Log.warn = function(header, msg) {
  */
 Log.debug = function(header) {
 
-  if ( !is.str(header) ) {
+  if ( !is._str(header) ) {
     Log.error(
       'Invalid `Log.debug` Call',
       'invalid type for `header` param',
@@ -231,7 +235,7 @@ Log.debug = function(header) {
  */
 Log.fail = function(msg) {
 
-  if ( !is.str(msg) ) {
+  if ( !is._str(msg) ) {
     Log.error(
       'Invalid `Log.fail` Call',
       'invalid type for `msg` param',
@@ -264,7 +268,7 @@ Log.setConfig = function(prop, val) {
   /** @type {string} */
   var method;
 
-  prop = is.str(prop) ? prop.split('.') : [];
+  prop = is._str(prop) ? prop.split('.') : [];
   method = prop.length === 2 ? prop.shift() : '';
   method = has(config, method) || method === 'all' ? method : '';
   prop = prop[0];
@@ -290,7 +294,7 @@ Log.setConfig = function(prop, val) {
  * @param {string=} method
  */
 Log.resetConfig = function(method) {
-  if ( is.str(method) && has(config, method) ) {
+  if ( is._str(method) && has(config, method) ) {
     config[method] = clone( CONFIG[method] );
   }
   else {
@@ -325,7 +329,7 @@ function helperError(func, arg, val) {
  * @return {string}
  */
 function makeStr(val) {
-  return ( is.str(val, true) ?
+  return ( is.str(val) ?
     val || '""' : is.func(val) ?
       'function() { ... } props => {' : is.arr(val) ?
         '[ '+ val.join(', ') +' ]' : is.regex(val) ?
@@ -339,7 +343,7 @@ function makeStr(val) {
  * @return {boolean}
  */
 function hasAccent(str) {
-  is.str(str) || helperError('hasAccent', 'str', str);
+  is._str(str) || helperError('hasAccent', 'str', str);
   return /`.+`/.test(str);
 }
 
@@ -349,19 +353,17 @@ function hasAccent(str) {
  * @return {boolean}
  */
 function has(obj, prop) {
-  if ( !obj || ( !is.obj(obj) && !is.func(obj) ) ) {
+  if ( !is._obj(obj) ) {
     return false;
   }
-  return obj.hasOwnProperty(
-    is.str(prop) || is.num(prop) ? prop : String(prop)
-  );
+  return obj.hasOwnProperty(prop);
 }
 
 /** @type {!Object<string, function(*): boolean>} */
 var configProps = {
-  spaceBefore: function(val) { return is.num(val, true); },
-  spaceAfter: function(val) { return is.num(val, true); },
-  style: function(val) { return is.str(val) && has(themes, val); },
+  spaceBefore: function(val) { return is.num(val); },
+  spaceAfter: function(val) { return is.num(val); },
+  style: function(val) { return is._str(val) && has(themes, val); },
   exit: is.bool
 };
 
@@ -371,7 +373,7 @@ var configProps = {
  * @return {boolean}
  */
 function checkConfigVal(prop, val) {
-  return is.str(prop) && has(configProps, prop) && configProps[prop](val);
+  return is._str(prop) && has(configProps, prop) && configProps[prop](val);
 }
 
 
@@ -384,19 +386,21 @@ function checkConfigVal(prop, val) {
  * @param {!Array} args
  */
 function log(style, args) {
-  is.str(style) || helperError('log', 'style', style);
+
+  is._str(style) || helperError('log', 'style', style);
   has(themes, style) || helperError('log', 'style', style);
   is.arr(args) || helperError('log', 'args', args);
+
   args.forEach(function(/** * */ val) {
     if ( is.func(val) || ( is.obj(val) && !is.regex(val) && !is.arr(val) ) ) {
       val.argMap ? logArgs(val) : logObj(val, style);
     }
     else {
-      console.log(is.str(val) && hasAccent(val) ?
+      console.log(is._str(val) && hasAccent(val) ?
         val.split('`').map(function(/** string */ part, /** number */ i) {
-          return part[ (i % 2 ? 'a' : '') + style ];
+          return colors[ (i % 2 ? 'a' : '') + style ](part);
         }).join('')
-        : makeStr(val)[style]
+        : colors[style]( makeStr(val) )
       );
     }
   });
@@ -407,7 +411,9 @@ function log(style, args) {
  * @return {boolean}
  */
 function logSpace(spaces) {
-  is.num(spaces, true) || helperError('logSpace', 'spaces', spaces);
+
+  is.num(spaces) || helperError('logSpace', 'spaces', spaces);
+
   while (spaces--) {
     console.log('');
   }
@@ -419,15 +425,17 @@ function logSpace(spaces) {
  * @param {string} msg
  */
 function logHeader(style, msg) {
-  is.str(style) || helperError('logHeader', 'style', style);
+
+  is._str(style) || helperError('logHeader', 'style', style);
   has(themes, style) || helperError('logHeader', 'style', style);
-  is.str(msg) || helperError('logHeader', 'msg', msg);
+  is._str(msg) || helperError('logHeader', 'msg', msg);
+
   msg = hasAccent(msg) ? msg.split('`').map(
     function(/** string */ part, /** number */ i) {
-      return part[ (i % 2 ? 'a' : '') + style ];
+      return colors[ (i % 2 ? 'a' : '') + style ](part);
     }
-  ).join('') : msg[style];
-  console.log(' '[style] + msg + '        '[style]);
+  ).join('') : colors[style](msg);
+  console.log( colors[style](' ') + msg + colors[style]('        ') );
 }
 
 /**
@@ -435,32 +443,34 @@ function logHeader(style, msg) {
  * @param {string} msg
  */
 function logDetails(style, msg) {
-  is.str(style) || helperError('logDetails', 'style', style);
+
+  is._str(style) || helperError('logDetails', 'style', style);
   has(themes, style) || helperError('logDetails', 'style', style);
-  is.str(msg) || helperError('logDetails', 'msg', msg);
+  is._str(msg) || helperError('logDetails', 'msg', msg);
+
   msg = hasAccent(msg) ? msg.split('`').map(
     function(/** string */ part, /** number */ i) {
-      return part[ (i % 2 ? 'a' : '') + style ];
+      return colors[ (i % 2 ? 'a' : '') + style ](part);
     }
-  ).join('') : msg[style];
-  console.log('  - '[style] + msg);
+  ).join('') : colors[style](msg);
+  console.log( colors[style]('  - ') + msg );
 }
 
 /**
  * @param {!Object} obj
  */
 function logArgs(obj) {
-  ( is.obj(obj) || is.func(obj) ) || helperError('logArgs', 'obj', obj);
+
+  /** @type {string} */
+  var str;
+
+  is._obj(obj) || helperError('logArgs', 'obj', obj);
 
   forOwn(obj, function(/** * */ val, /** string */ key) {
-
-    /** @type {string} */
-    var str;
-
     if (key !== 'argMap') {
       str = makeStr(val);
-      console.log(key.plain + ': '.plain + str.view);
-      if (is.func(val) || str === '{') {
+      console.log( colors.plain(key + ': ') + colors.view(str) );
+      if ( is.func(val) || str === '{' ) {
         logObj(val, 'view', -1);
       }
     }
@@ -476,34 +486,34 @@ function logObj(obj, style, indent) {
 
   /** @type {string} */
   var spaces;
+  /** @type {string} */
+  var str;
 
-  ( is.obj(obj) || is.func(obj) ) || helperError('logObj', 'obj', obj);
+  is._obj(obj) || helperError('logObj', 'obj', obj);
 
-  style = is.str(style) && has(themes, style) ? style : 'view';
+  style = is._str(style) && has(themes, style) ? style : 'view';
 
-  indent = is.num(indent) ? indent : 0;
+  indent = is._num(indent) ? indent : 0;
   indent || console.log(
-    (is.func(obj) ? 'function() { ... } props => {' : '{')[style]
+    colors[style]( is.func(obj) ? 'function() { ... } props => {' : '{' )
   );
   indent = indent < 0 ? 0 : indent;
 
   spaces = indent ? fill(Array(indent), '  ').join('') : '';
 
   forOwn(obj, function(/** * */ val, /** string */ key) {
-
-    /** @type {string} */
-    var str = makeStr(val);
-
-    
-    if (is.func(val) || str === '{') {
-      console.log( ('  ' + spaces + key + ': ' + str)[style] );
+    str = makeStr(val);
+    if ( is.func(val) || str === '{' ) {
+      console.log( colors[style]('  ' + spaces + key + ': ' + str) );
       logObj(val, style, (indent + 1));
     }
     else {
-      console.log( ('  ' + spaces + key + ': ' + str + ',')[style] );
+      console.log( colors[style]('  ' + spaces + key + ': ' + str + ',') );
     }
   });
-  console.log( (spaces + '}' + (indent ? ',' : ''))[style] );
+  console.log(
+    colors[style]( spaces + '}' + (indent ? ',' : '') )
+  );
 }
 
 
