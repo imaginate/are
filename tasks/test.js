@@ -55,6 +55,30 @@ module.exports = newTask('test', 'main', {
   /**
    * @param {string=} options
    */
+  node: function node(options) {
+
+    /** @type {string} */
+    var source;
+    /** @type {string} */
+    var tests;
+
+    options = getOptions(options);
+
+    configLog();
+
+    source = './src/node-are.js';
+    tests = './tests/*.js';
+
+    logStart(source);
+    runTests(options, tests);
+    logFinish(source);
+
+    resetLog();
+  },
+
+  /**
+   * @param {string=} options
+   */
   min: function min(options) {
 
     /** @type {string} */
@@ -107,12 +131,12 @@ function getOptions(options) {
       defaults[ getName(option) ] = getVal(option);
     }
     else {
-      result += option && '--' + option + ' ';
+      result += option && '--' + hyphenate(option) + ' ';
     }
   });
 
   each(defaults, function(/** * */ val, /** string */ option) {
-    result += '--' + option + ' ' + val + ' ';
+    result += '--' + hyphenate(option) + ' ' + val + ' ';
   });
 
   return result + '--globals is,are';
@@ -163,4 +187,12 @@ function getName(str) {
  */
 function getVal(str) {
   return str && str.replace(/^[a-z]+\=(.*)?$/i, '$1');
+}
+
+/**
+ * @param {string} str
+ * @return {string}
+ */
+function hyphenate(str) {
+  return str && str.replace(/([A-Z])/g, '-$1').toLowerCase();
 }
