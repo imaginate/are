@@ -13,8 +13,8 @@
 
 /** @type {function} */
 var are = require('../../src/node-are.js').are;
-/** @type {!Function<string, function>} */
-var vitals = require('../../helpers/vitals');
+/** @type {function} */
+var getBuffer = require('../../helpers/get-buffer.js');
 /** @type {!Object} */
 var assert = require('assert');
 /** @type {function} */
@@ -26,7 +26,7 @@ var forOwn = require('lodash/object/forOwn');
 ////////////////////////////////////////////////////////////////////////////////
 
 /** @type {!Buffer} */
-var buff = vitals.retrieve('./make.js', null);
+var buff = getBuffer('./make.js', null);
 
 /** @type {!Object} */
 var refs = {
