@@ -142,8 +142,7 @@ function logFinish(source) {
 
 /** @type {function} */
 function configLog() {
-  log.setConfig('pass.spaceAfter', 3);
-  log.setConfig('debug.spaceBefore', 0);
+  log.setConfig('pass.spaceAfter', 2);
   log.setConfig('debug.spaceAfter', 0);
 }
 
