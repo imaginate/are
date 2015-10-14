@@ -21,6 +21,9 @@
 /** @type {!Task} */
 module.exports = newTask('compile', 'are-nodeAre', {
 
+  /**
+   * @type {function}
+   */
   are: function are() {
 
     /** @type {string} */
@@ -42,6 +45,9 @@ module.exports = newTask('compile', 'are-nodeAre', {
     log.pass('Completed `compile.are` Task');
   },
 
+  /**
+   * @type {function}
+   */
   nodeAre: function nodeAre() {
 
     /** @type {string} */
