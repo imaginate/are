@@ -41,6 +41,7 @@ var refs = {
     bool:  [ true, false ],
     str:   [ 'str', 'str', '' ],
     num:   [ 0, 1, 5, -5, 1.5 ],
+    nan:   [ NaN, NaN ],
     obj:   [ {}, {} ],
     arr:   [ [], [] ],
     regex: [ /1/, /t/g ],
@@ -54,6 +55,7 @@ var refs = {
     bool:  { a: true, b: false },
     str:   { a: 'str', b: 'str', c: '' },
     num:   { a: 0, b: 1, c: 5, d: -5, e: 1.5 },
+    nan:   { a: NaN, b: NaN },
     obj:   { a: {}, b: {} },
     arr:   { a: [], b: [] },
     regex: { a: /1/, b: /t/g },
@@ -89,6 +91,10 @@ var methods = {
       shortcut: 'num',
       truthy: [ refs.num, -5, 1.5 ],
       falsy:  [ refs.bool, refs.obj, refs.str, refs.nil ]
+    },
+    nan: {
+      truthy: [ NaN ],
+      falsy:  [ refs.obj, refs.bool, refs.str, refs.nil ]
     }
   },
   js_objects: {
@@ -151,6 +157,10 @@ var methods = {
       truthy: [ refs.arrays.num, refs.arr, refs.nil ],
       falsy:  [ refs.arrays.bool, refs.arrays.obj, refs.arrays.str ]
     },
+    nans: {
+      truthy: [ refs.arrays.nan, refs.arr, refs.nil ],
+      falsy:  [ refs.arrays.num, refs.arrays.bool, refs.arrays.obj ]
+    },
     objects: {
       shortcut: 'objs',
       truthy: [ refs.arrays.obj, refs.arrays.regex, refs.arr, refs.nil ],
@@ -202,6 +212,10 @@ var methods = {
       shortcut: 'numMap',
       truthy: [ refs.maps.num, refs.obj, refs.nil ],
       falsy:  [ refs.maps.bool, refs.maps.obj, refs.maps.str ]
+    },
+    nanMap: {
+      truthy: [ refs.maps.nan, refs.obj, refs.nil ],
+      falsy:  [ refs.maps.num, refs.maps.bool, refs.maps.obj ]
     },
     objectMap: {
       shortcut: 'objMap',

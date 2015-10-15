@@ -33,6 +33,7 @@ var refs = {
   _str:  [ 'str', '', 'str' ],
   num:   [ 1, 5, -5, 1.5 ],
   _num:  [ 1, 5, 0, -5, 1.5 ],
+  nan:   [ NaN, NaN ],
   obj:   [ {}, {} ],
   arr:   [ [], [] ],
   regex: [ /1/, /t/g ],
@@ -78,6 +79,10 @@ var methods = {
       shortcut: '_num',
       truthy: [ refs.num ],
       falsy:  [ refs._num, refs._str, refs.bool, refs.obj, refs.str ]
+    },
+    nan: {
+      truthy: [ refs.nan ],
+      falsy:  [ refs.obj, refs.bool, refs.str, refs.nil ]
     }
   },
   js_objects: {

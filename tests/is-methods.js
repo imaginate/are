@@ -76,6 +76,10 @@ var methods = {
       shortcut: '_num',
       truthy: [ refs.num, -5, 1.5 ],
       falsy:  [ refs._num, refs._str, refs.bool, refs.obj, refs.str ]
+    },
+    nan: {
+      truthy: [ NaN ],
+      falsy:  [ refs.obj, refs.bool, refs.str, refs.nil ]
     }
   },
   js_objects: {

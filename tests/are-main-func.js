@@ -31,6 +31,7 @@ var refs = {
   bool:  [ true, false ],
   str:   [ 'str', '', 'str' ],
   num:   [ 1, 5, 0, -5, 1.5 ],
+  nan:   [ NaN, NaN ],
   obj:   [ {}, {} ],
   arr:   [ [], [] ],
   regex: [ /1/, /t/g ],
@@ -44,6 +45,7 @@ var refs = {
     bool:  [ [ true, false ], [ true, false ] ],
     str:   [ [ 'str', '', 'str' ], [ 'str', '', 'str' ] ],
     num:   [ [ 1, 5, 0, -5, 1.5 ], [ 1, 5, 0, -5, 1.5 ] ],
+    nan:   [ [ NaN, NaN ], [ NaN, NaN ] ],
     obj:   [ [ {}, {} ], [ {}, {} ] ],
     arr:   [ [ [], [] ], [ [], [] ] ],
     regex: [ [ /1/, /t/g ], [ /1/, /t/g ] ],
@@ -57,6 +59,7 @@ var refs = {
     bool:  [ { a: true, b: false }, { a: true, b: false } ],
     str:   [ { a: 'str', b: '', c: 'str' }, { a: 'str', b: '', c: 'str' } ],
     num:   [ { a: 0, b: 1, c: 1.5, d: -5 }, { a: 0, b: 1, c: 1.5, d: -5 } ],
+    nan:   [ { a: NaN, b: NaN }, { a: NaN, b: NaN } ],
     obj:   [ { a: {}, b: {} }, { a: {}, b: {} } ],
     arr:   [ { a: [], b: [] }, { a: [], b: [] } ],
     regex: [ { a: /1/, b: /t/g }, { a: /1/, b: /t/g } ],
@@ -92,6 +95,10 @@ var methods = {
       shortcut: 'num',
       truthy: [ refs.num ],
       falsy:  [ refs.bool, refs.obj, refs.str, refs.nil ]
+    },
+    nan: {
+      truthy: [ refs.nan ],
+      falsy:  [ refs.obj, refs.bool, refs.str, refs.nil ]
     }
   },
   js_objects: {
@@ -154,6 +161,10 @@ var methods = {
       truthy: [ refs.arrays.num, refs.arr, refs.nil ],
       falsy:  [ refs.arrays.bool, refs.arrays.obj, refs.arrays.str ]
     },
+    nans: {
+      truthy: [ refs.arrays.nan, refs.arr, refs.nil ],
+      falsy:  [ refs.arrays.num, refs.arrays.bool, refs.arrays.obj ]
+    },
     objects: {
       shortcut: 'objs',
       truthy: [ refs.arrays.obj, refs.arrays.arr, refs.arr, refs.nil ],
@@ -205,6 +216,10 @@ var methods = {
       shortcut: 'numMap',
       truthy: [ refs.maps.num, refs.obj, refs.nil ],
       falsy:  [ refs.maps.bool, refs.maps.obj, refs.maps.str ]
+    },
+    nanMap: {
+      truthy: [ refs.maps.nan, refs.obj, refs.nil ],
+      falsy:  [ refs.maps.num, refs.maps.bool, refs.maps.obj ]
     },
     objectMap: {
       shortcut: 'objMap',
