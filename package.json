@@ -1,6 +1,6 @@
 {
   "name": "node-are",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Simple & Powerful JavaScript Type Checking",
   "main": "src/node-are.js",
   "repository": {

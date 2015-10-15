@@ -2,7 +2,7 @@
  * -----------------------------------------------------------------------------
  * ARE MAIN FUNCTION
  * -----------------------------------------------------------------------------
- * @version 0.1.0
+ * @version 0.1.1
  * @see [are]{@link https://github.com/imaginate/are/blob/master/parts/are-main-func.js}
  *
  * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)
