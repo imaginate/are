@@ -98,6 +98,14 @@ is._number = function(val) {
 };
 is._num = is._number;
 
+/**
+ * @param {*} val
+ * @return {boolean}
+ */
+is.nan = function(val) {
+  return val !== val;
+};
+
 
 //////////////////////////////////////////////////////////////////////////////
 // IS METHODS - JS OBJECTS

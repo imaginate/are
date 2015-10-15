@@ -138,6 +138,7 @@ makeTypes('primitives', {
   'number':    is.num
 }, false);
 makeType('primitives', 'null', is.nil);
+makeType('primitives', 'nan', is.nan);
 
 makeTypes('js_objects', {
   'object': is.obj,
@@ -159,6 +160,7 @@ makeTypes('arrays', {
   'booleans':  is.bool,
   'strings':   is.str,
   'numbers':   is.num,
+  'nans':      is.nan,
   'objects':   is.obj,
   'functions': is.func,
   'regexps':   is.regex,
@@ -172,6 +174,7 @@ makeTypes('maps', {
   'booleanmap':  is.bool,
   'stringmap':   is.str,
   'numbermap':   is.num,
+  'nanmap':      is.nan,
   'objectmap':   is.obj,
   'functionmap': is.func,
   'regexpmap':   is.regex,

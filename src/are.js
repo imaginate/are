@@ -195,6 +195,14 @@ is._number = function(val) {
 };
 is._num = is._number;
 
+/**
+ * @param {*} val
+ * @return {boolean}
+ */
+is.nan = function(val) {
+  return val !== val;
+};
+
 
 //////////////////////////////////////////////////////////////////////////////
 // IS METHODS - JS OBJECTS
@@ -457,6 +465,14 @@ are._number = function() {
   return checkAreMethod('_number', arguments);
 };
 are._num = are._number;
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.nan = function() {
+  return checkAreMethod('nan', arguments);
+};
 
 
 ////////////////////////////////////////////////////////////////////////////
@@ -742,6 +758,7 @@ makeTypes('primitives', {
   'number':    is.num
 }, false);
 makeType('primitives', 'null', is.nil);
+makeType('primitives', 'nan', is.nan);
 
 makeTypes('js_objects', {
   'object': is.obj,
@@ -763,6 +780,7 @@ makeTypes('arrays', {
   'booleans':  is.bool,
   'strings':   is.str,
   'numbers':   is.num,
+  'nans':      is.nan,
   'objects':   is.obj,
   'functions': is.func,
   'regexps':   is.regex,
@@ -776,6 +794,7 @@ makeTypes('maps', {
   'booleanmap':  is.bool,
   'stringmap':   is.str,
   'numbermap':   is.num,
+  'nanmap':      is.nan,
   'objectmap':   is.obj,
   'functionmap': is.func,
   'regexpmap':   is.regex,

@@ -103,6 +103,14 @@ are._number = function() {
 };
 are._num = are._number;
 
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
+are.nan = function() {
+  return checkAreMethod('nan', arguments);
+};
+
 
 ////////////////////////////////////////////////////////////////////////////
 // ARE METHODS - JS OBJECTS
