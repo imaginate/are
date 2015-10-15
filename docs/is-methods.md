@@ -30,6 +30,7 @@
 | is._string   | is._str | Operates the same as ``` is.string ``` except it returns ``` false ``` for empty strings. |
 | is.number    | is.num  | 2nd optional param: set to ``` false ``` to return ``` false ``` for zeros. |
 | is._number   | is._num | Operates the same as ``` is.number ``` except it returns ``` false ``` for zero. |
+| is.nan       |         |             |
 
 <a name="methods-js-objects"></a>
 ### JS Objects

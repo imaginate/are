@@ -30,6 +30,7 @@
 | are._string   | are._str | Operates the same as ``` are.string ``` except it returns ``` false ``` for empty strings. |
 | are.number    | are.num  |             |
 | are._number   | are._num | Operates the same as ``` are.number ``` except it returns ``` false ``` for zero. |
+| are.nan       |          |             |
 
 <a name="methods-js-objects"></a>
 ### JS Objects

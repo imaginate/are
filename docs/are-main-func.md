@@ -27,6 +27,7 @@
 | boolean    | regexp     |             |        |
 | string     | array      |             |        |
 | number     | arguments  |             |        |
+| nan        |            |             |        |
 
 <a name="type-arrays"></a>
 ### Arrays
@@ -37,6 +38,7 @@
 | booleans   | functions  | documents   |
 | strings    | regexps    |             |
 | numbers    | arrays     |             |
+| nans       |            |             |
 
 <a name="type-maps"></a>
 ### Hash Maps
@@ -47,6 +49,7 @@
 | booleanMap | functionMap | documentMap |
 | stringMap  | regexpMap   |             |
 | numberMap  | arrayMap    |             |
+| nanMap     |             |             |
 
 
 <a name="special-chars"></a>
