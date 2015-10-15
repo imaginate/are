@@ -755,10 +755,10 @@ makeTypes('primitives', {
   'undefined': is.undefined,
   'boolean':   is.bool,
   'string':    is.str,
-  'number':    is.num
+  'number':    is.num,
+  'nan':       is.nan
 }, false);
 makeType('primitives', 'null', is.nil);
-makeType('primitives', 'nan', is.nan);
 
 makeTypes('js_objects', {
   'object': is.obj,
