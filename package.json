@@ -1,7 +1,7 @@
 {
   "name": "node-are",
-  "version": "0.1.1",
-  "description": "Simple & Powerful JavaScript Type Checking",
+  "version": "0.1.2",
+  "description": "Elegant JS Type Tests",
   "main": "src/node-are.js",
   "repository": {
     "type": "git",
@@ -14,32 +14,34 @@
   },
   "homepage": "https://github.com/imaginate/are",
   "devDependencies": {
-    "mocha": "^2.3.3",
-    "lodash": "^3.10.1",
-    "colors": "^1.1.2",
-    "shelljs": "^0.5.1"
+    "mocha": "2.x",
+    "lodash": "3.x",
+    "colors": "1.x",
+    "shelljs": "0.x"
   },
   "scripts": {
     "test": "node make test"
   },
   "keywords": [
-    "are",
-    "arejs",
-    "are-js",
-    "are js",
-    "is",
-    "isjs",
-    "is-js",
-    "is js",
-    "are javascript",
-    "is javascript",
-    "javascript type",
-    "js type",
-    "javascript type check",
-    "js type check",
+    "imaginate",
     "javascript type checking",
     "js type checking",
-    "javascript",
-    "imaginate"
+    "type checking",
+    "javascript type check",
+    "js type check",
+    "type check",
+    "javascript type",
+    "js type",
+    "type",
+    "are javascript",
+    "are-js",
+    "are js",
+    "arejs",
+    "are",
+    "is javascript",
+    "is-js",
+    "is js",
+    "isjs",
+    "is"
   ]
 }
