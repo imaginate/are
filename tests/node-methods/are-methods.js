@@ -58,7 +58,7 @@ var methods = {
 // RUN THE TESTS
 ////////////////////////////////////////////////////////////////////////////////
 
-describe('node-are-methods', function() {
+describe('are-methods (node-only)', function() {
   forOwn(methods, function(/** !Object */ method,/** string */ methodName) {
     describe('are.' + methodName, function() {
       describe('truthy', function() {

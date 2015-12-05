@@ -67,7 +67,7 @@ var methods = {
 // RUN THE TESTS
 ////////////////////////////////////////////////////////////////////////////////
 
-describe('node-is-methods', function() {
+describe('is-methods (node-only)', function() {
   forOwn(methods, function(/** !Object */ method,/** string */ methodName) {
     describe('is.' + methodName, function() {
       describe('truthy', function() {
