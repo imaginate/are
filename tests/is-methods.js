@@ -11,6 +11,8 @@
  * @see [Closure Compiler specific JSDoc]{@link https://developers.google.com/closure/compiler/docs/js-for-compiler}
  */
 
+/** @type {function} */
+var is = global.is || require('../src/node-are.js').is;
 /** @type {!Object} */
 var assert = require('assert');
 /** @type {function} */
