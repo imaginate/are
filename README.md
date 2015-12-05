@@ -1,4 +1,4 @@
-# are
+# are [![npm version](https://badge.fury.io/js/node-are.svg)](https://badge.fury.io/js/node-are)
 ### Elegant JS Type Checking
 **_are_** will make your JavaScript development better! It contains two libraries, **_is_** and **_are_**, that will cover all of your type testing needs. Their **simple** and **intuitive** API will make your projects easier to read and maintain while sustaining high performance and giving you the freedom to choose from different coding styles. Take a look at some examples below.
 - **_is_**
