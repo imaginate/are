@@ -1,5 +1,6 @@
-### Simple & Powerful JavaScript Type Checking
-You get two awesome libraries, **_is_**  and  **_are_**, that will make your JavaScript development more **elegant** and **intuitive**. Both are built to offer you the freedom to **choose** your coding style preferences (e.g. main vs sub functions / long vs short names). Take a look at some examples below.
+# are
+### Elegant JS Type Checking
+**_are_** will make your JavaScript development better! It contains two libraries, **_is_** and **_are_**, that will cover all of your type testing needs. Their **simple** and **intuitive** API will make your projects easier to read and maintain while sustaining high performance and giving you the freedom to choose from different coding styles. Take a look at some examples below.
 - **_is_**
 ```javascript
 // example string checks
@@ -12,7 +13,7 @@ is.str(exVar);
 is('string|number', exVar);
 is('!arrays|regexps', exVar);
 is.document(exVar);
-is.directory(exVar); // node-are specific
+is.directory(exVar); // node.js specific
 ```
 - **_are_**
 ```javascript
@@ -26,26 +27,24 @@ are.str(exVar1, exVar2, exVar3);
 are('num=', [ exVar1, exVar2, exVar3 ]);
 are('!doc|elem', exVar1, exVar2, exVar3);
 are.element(exVar1, exVar2, exVar3);
-are.file([ exVar1, exVar2, exVar3 ]); // node-are specific
+are.file([ exVar1, exVar2, exVar3 ]); // node.js specific
 ```
 
-## Getting Started
-For a stand-alone browser environment:
-- Download [are.min.js](https://github.com/imaginate/are/blob/master/src/are.min.js)
-- Save it to your app's main folder
-- Add ``` <script src="are.min.js"></script> ``` to your ``` <head> ``` or ``` <body> ``` before any scripts that use it
-- Use ``` is ``` and ``` are ``` as you please (i.e. attached to the global ``` window ``` object)
+## Install & Use
+#### node.js
+- ``` npm install node-are ```
+- ``` require('node-are')() && global.is(...) && global.are(...) ``` (appended to [global](https://nodejs.org/api/globals.html#globals_global))
+- ``` require('node-are').is(...) && require('node-are').are(...) ```
 
-For an AMD browser environment:
-- Download [are.min.js](https://github.com/imaginate/are/blob/master/src/are.min.js)
-- Add it to your app's library folder
-- Use ``` require(['are'], function(null) { ... }); ```
-- Use ``` is ``` and ``` are ``` as you please (i.e. attached to the global ``` window ``` object)
+#### browser
+- download [are.min.js](https://github.com/imaginate/are/blob/master/src/are.min.js)
+- ``` <script src="are.min.js"></script> ``` ([add to html](http://javascript.info/tutorial/adding-script-html#external-scripts))
+- ``` window.is(...) && window.are(...) ``` (appended to [window](https://developer.mozilla.org/en-US/docs/Web/API/Window))
 
-For a Node.js environment:
-- Run ``` $ npm install node-are ```
-- Use ``` require('node-are')() ``` to attach ``` is ``` and ``` are ``` to the global object or
-- Use ``` var areObj = require('node-are'); var is = areObj.is; var are = areObj.are; ```
+#### amd
+- download [are.min.js](https://github.com/imaginate/are/blob/master/src/are.min.js)
+- ``` require([ 'are' ], function(null) { ... }) ```
+- ``` window.is(...) && window.are(...) ``` (appended to [window](https://developer.mozilla.org/en-US/docs/Web/API/Window))
 
 
 ## API Documentation
@@ -55,11 +54,12 @@ For a Node.js environment:
 - [**_are_** methods](https://github.com/imaginate/are/blob/master/docs/are-methods.md)
 
 
-## Contact Us
-- [Open an issue](https://github.com/imaginate/are/issues) on this GitHub repository
-- Send an email to [learn@algorithmiv.com](mailto:learn@algorithmiv.com)
+## Other Details
+**contributing:** [see contributing guideline](https://github.com/imaginate/are/blob/master/CONTRIBUTING.md)<br>
+**bugs/improvements:** [open an issue](https://github.com/imaginate/are/issues)<br>
+**questions:** learn@algorithmiv.com
 
-<br />
+
 --
 **Happy Developing,**
 
