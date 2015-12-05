@@ -2,7 +2,7 @@
  * -----------------------------------------------------------------------------
  * IS MAIN FUNCTION
  * -----------------------------------------------------------------------------
- * @version 0.1.1
+ * @version 0.1.2
  * @see [is]{@link https://github.com/imaginate/are/blob/master/parts/is-main-func.js}
  *
  * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)
