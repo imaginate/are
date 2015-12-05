@@ -2,7 +2,7 @@
  * -----------------------------------------------------------------------------
  * IS METHODS
  * -----------------------------------------------------------------------------
- * @version 0.1.1
+ * @version 0.1.2
  * @see [is]{@link https://github.com/imaginate/are/blob/master/parts/is-methods.js}
  *
  * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)
@@ -84,7 +84,7 @@ is._str = is._string;
  * @return {boolean}
  */
 is.number = function(val, zero) {
-  return (zero !== false || !!val) && typeof val === 'number';
+  return (zero !== false || !!val) && typeof val === 'number' && val === val;
 };
 is.num = is.number;
 
