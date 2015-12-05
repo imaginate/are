@@ -1,4 +1,4 @@
-## License for the [**_are_** js libraries](http://www.algorithmiv.com/are)
+## License for [are.js libraries](http://www.algorithmiv.com/are)
 
 **Copyright 2015 Adam A Smith [github.com/imaginate](https://github.com/imaginate)**
 
