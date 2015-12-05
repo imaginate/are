@@ -39,7 +39,7 @@ module.exports = newTask('test', 'main', {
     tests = './tests/*.js';
 
     logStart(source);
-    runTests(options + ' --require ' + source, tests);
+    runTests(options + '--require ' + source, tests);
     logFinish(source);
 
     source = './src/node-are.js';
@@ -94,7 +94,7 @@ module.exports = newTask('test', 'main', {
     tests = './tests/*.js';
 
     logStart(source);
-    runTests(options + ' --require ' + source, tests);
+    runTests(options + '--require ' + source, tests);
     logFinish(source);
 
     resetLog();
@@ -139,7 +139,7 @@ function getOptions(options) {
     result += '--' + hyphenate(option) + ' ' + val + ' ';
   });
 
-  return result + '--globals is,are';
+  return result + '--globals is,are ';
 }
 
 /**
@@ -147,7 +147,8 @@ function getOptions(options) {
  * @param {string} tests
  */
 function runTests(options, tests) {
-  exec('node ./node_modules/mocha/bin/mocha ' + options + ' ' + tests);
+  options = options.replace(/([^ ])$/, '$1 ');
+  exec('node ./node_modules/mocha/bin/mocha ' + options + tests);
 }
 
 /**
