@@ -2,7 +2,7 @@
  * -----------------------------------------------------------------------------
  * EXPORT ARE LIBRARIES
  * -----------------------------------------------------------------------------
- * @version 0.1.2
+ * @version 0.1.3
  * @see [are]{@link https://github.com/imaginate/are}
  *
  * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)
@@ -101,9 +101,11 @@
   /** @type {function} */
   var sliceArr = Array.prototype.slice;
   /** @type {function} */
-  var has = function(obj, prop) {
-    return obj.hasOwnProperty(prop);
-  };
+  var has = (function(hasOwn) {
+    return function has(obj, prop) {
+      return hasOwn.call(obj, prop);
+    };
+  })(Object.prototype.hasOwnProperty);
   /** @type {function} */
   var logSupportMsg = function(lib, avoid, use) {
     _log && console.log(
