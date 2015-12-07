@@ -2,7 +2,7 @@
  * -----------------------------------------------------------------------------
  * IS METHODS
  * -----------------------------------------------------------------------------
- * @version 0.1.2
+ * @version 0.1.3
  * @see [is]{@link https://github.com/imaginate/are/blob/master/parts/is-methods.js}
  *
  * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)
