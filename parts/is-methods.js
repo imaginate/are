@@ -360,7 +360,7 @@ is._even = function(val) {
  * @return {string}
  */
 function notNumErrorMsg(method) {
-  return 'The val for is.' + method + ' calls must be a number.';
+  return 'The val for is/are.' + method + ' calls must be a number.';
 }
 
 /**
@@ -369,5 +369,5 @@ function notNumErrorMsg(method) {
  * @return {string}
  */
 function notWholeErrorMsg(method) {
-  return 'The val for is.' + method + ' calls must be a whole number.';
+  return 'The val for is/are.' + method + ' calls must be a whole number.';
 }
