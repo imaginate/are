@@ -78,15 +78,11 @@ makeType.arrays = function(eachCheck) {
     /** @type {number} */
     var i;
 
-    if ( !is.arr(arr) ) {
-      return false;
-    }
+    if ( !is.arr(arr) ) return false;
 
     i = arr.length;
     while (i--) {
-      if ( !eachCheck( arr[i] ) ) {
-        return false;
-      }
+      if ( !eachCheck(arr[i]) ) return false;
     }
     return true;
   };
@@ -107,14 +103,10 @@ makeType.maps = function(eachCheck) {
     /** @type {string} */
     var prop;
 
-    if ( !is.obj(obj) ) {
-      return false;
-    }
+    if ( !is.obj(obj) ) return false;
 
     for (prop in obj) {
-      if( has(obj, prop) && !eachCheck( obj[prop] ) ) {
-        return false;
-      }
+      if( has(obj, prop) && !eachCheck( obj[prop] ) ) return false;
     }
     return true;
   };
@@ -268,9 +260,7 @@ function checkVal(types, val, nullable) {
 
   i = types.length;
   while (i--) {
-    if ( allTypes[ types[i] ](val, nullable) ) {
-      return true;
-    }
+    if ( allTypes[ types[i] ](val, nullable) ) return true;
   }
   return false;
 }
@@ -289,9 +279,7 @@ function checkVals(types, vals, nullable) {
 
   i = vals.length;
   while (i--) {
-    if ( !checkVal(types, vals[i], nullable) ) {
-      return false;
-    }
+    if ( !checkVal(types, vals[i], nullable) ) return false;
   }
   return true;
 }
@@ -318,9 +306,7 @@ function getValidTypes(typeStr) {
   while (i--) {
     type = '_' + types[i];
     type = has(typeShortcuts, type) ? '_' + typeShortcuts[type] : type;
-    if ( !has(allTypes, type) ) {
-      return type;
-    }
+    if ( !has(allTypes, type) ) return type;
     types[i] = type;
   }
 
@@ -360,8 +346,10 @@ function getNullable(typeStr) {
   /** @type {boolean} */
   var override;
 
-  override = hasSpecialChar('?', typeStr) ?
-    !hasSpecialChar('!', typeStr) : hasSpecialChar('!', typeStr);
-  return !override ?
-    undefined : !hasSpecialChar('!', typeStr) && hasSpecialChar('?', typeStr);
+  override = hasSpecialChar('?', typeStr)
+    ? !hasSpecialChar('!', typeStr)
+    : hasSpecialChar('!', typeStr);
+  return !override
+    ? undefined
+    : !hasSpecialChar('!', typeStr) && hasSpecialChar('?', typeStr);
 }
