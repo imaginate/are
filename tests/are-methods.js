@@ -149,6 +149,35 @@ var methods = {
         [ function(){}, function(a){}, function(){} ]
       ]
     }
+  },
+  number_states: {
+    whole: {
+      truthy: [
+        [ -5, 0, 5 ]
+      ],
+      falsy:  [
+        [ 3, -5.5, 1 ],
+        [ 1.2, 2 ]
+      ]
+    },
+    odd: {
+      truthy: [
+        [ -1, 1 ]
+      ],
+      falsy:  [
+        [ -2, 1 ],
+        [ 2, -5 ]
+      ]
+    },
+    even: {
+      truthy: [
+        [ -2, 0, 2 ]
+      ],
+      falsy:  [
+        [ -1, 2 ],
+        [ -2, 1 ]
+      ]
+    }
   }
 };
 
