@@ -277,3 +277,43 @@ is.empty = function(val) {
     }
     return true;
 };
+
+
+//////////////////////////////////////////////////////////////////////////////
+// IS METHODS - NUMBER STATES
+//////////////////////////////////////////////////////////////////////////
+
+/**
+ * @param {number} val
+ * @return {boolean}
+ */
+is.whole = function(val) {
+  if ( !is.num(val) ) throw new TypeError(is.whole.errorMsg.notNum);
+  return !(val % 1);
+};
+/** @type {!Object<string, string>} */
+is.whole.errorMsg = {
+  notNum: notNumErrorMsg('whole')
+};
+
+/**
+ * @param {number} val
+ * @return {boolean}
+ */
+is._whole = function(val) {
+  return !(val % 1);
+};
+
+
+////////////////////////////////////////////////////////////////////////////
+// IS HELPERS
+////////////////////////////////////////////////////////////////////////
+
+/**
+ * @private
+ * @param {string} method
+ * @return {string}
+ */
+function notNumErrorMsg(method) {
+  return 'The val for is.' + method + ' calls must be a number.';
+}
