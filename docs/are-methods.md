@@ -21,29 +21,29 @@
 <a name="methods-primitives"></a>
 ### Primitives
 
-| Method        | Alias    | Notes       |
-| :------------ | :------- | :---------- |
-| are.null      | are.nil  |             |
-| are.undefined |          |             |
-| are.boolean   | are.bool |             |
-| are.string    | are.str  |             |
+| Method        | Alias    | Notes                                                                                      |
+| :------------ | :------- | :----------------------------------------------------------------------------------------- |
+| are.null      | are.nil  |                                                                                            |
+| are.undefined |          |                                                                                            |
+| are.boolean   | are.bool |                                                                                            |
+| are.string    | are.str  |                                                                                            |
 | are._string   | are._str | Operates the same as ``` are.string ``` except it returns ``` false ``` for empty strings. |
-| are.number    | are.num  |             |
-| are._number   | are._num | Operates the same as ``` are.number ``` except it returns ``` false ``` for zero. |
-| are.nan       |          |             |
+| are.number    | are.num  |                                                                                            |
+| are._number   | are._num | Operates the same as ``` are.number ``` except it returns ``` false ``` for zero.          |
+| are.nan       |          |                                                                                            |
 
 <a name="methods-js-objects"></a>
 ### JS Objects
 
-| Method       | Alias     | Notes         |
-| :----------- | :-------- | :------------ |
-| are.object   | are.obj   |               |
-| are._object  | are._obj  | Operates the same as ``` are.object ``` except it returns ``` true ``` for functions. |
-| are.function | are.fn &#124; are.func |  |
-| are.regexp   | are.regex |               |
-| are.array    | are.arr   |               |
-| are._array   | are._arr  | Operates the same as ``` are.array ``` except it returns ``` true ``` for arguments. |
-| are.args     | are.arguments |           |
+| Method       | Alias                  | Notes                                                                                 |
+| :----------- | :--------------------- | :------------------------------------------------------------------------------------ |
+| are.object   | are.obj                |                                                                                       |
+| are._object  | are._obj               | Operates the same as ``` are.object ``` except it returns ``` true ``` for functions. |
+| are.function | are.fn &#124; are.func |                                                                                       |
+| are.regexp   | are.regex              |                                                                                       |
+| are.array    | are.arr                |                                                                                       |
+| are._array   | are._arr               | Operates the same as ``` are.array ``` except it returns ``` true ``` for arguments.  |
+| are.args     | are.arguments          |                                                                                       |
 
 <a name="methods-dom-objects"></a>
 ### DOM Objects
@@ -56,8 +56,8 @@
 <a name="methods-special"></a>
 ### Special Checks
 
-| Method    | Notes   |
-| :-------- | :------ |
+| Method    | Notes                                                                                                                                    |
+| :-------- | :--------------------------------------------------------------------------------------------------------------------------------------- |
 | are.empty | Returns ``` false ``` for ``` 0, "", {}, [], null, undefined, false, NaN, function(){...} // empty functions have no defined params ```. |
 
 <a name="methods-node"></a>
