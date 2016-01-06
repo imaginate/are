@@ -153,26 +153,13 @@ catch(e) {
  * @return {boolean}
  */
 is.array = function(val, args) {
-  val = is.obj(val) && toStr.call(val);
-  return val && (
-    val === '[object Array]' || (
-      args === true && (val === '[object Arguments]' || 'callee' in val)
-    )
+  if ( !is.obj(val) ) return false;
+  val = toStr.call(val);
+  return val === '[object Array]' || (
+    args === true && val === '[object Arguments]'
   );
 };
-is.arr = function(val, args) {
-  val = is.obj(val) && toStr.call(val);
-  return val && (
-    val === '[object Array]' || (args === true && val === '[object Arguments]')
-  );
-};
-try {
-  is.array({}, true);
-  is.arr = is.array;
-}
-catch (e) {
-  is.array = is.arr;
-}
+is.arr = is.array;
 
 /**
  * Arguments return true in this method.
@@ -206,6 +193,20 @@ is.args = function(val) {
   if ( is.args(arguments) ) return;
 
   /**
+   * The fallback is.array method.
+   * @param {*} val
+   * @param {boolean=} args - the return value for arguments [default= false]
+   * @return {boolean}
+   */
+  is.array = function(val) {
+    if ( !is.obj(val) ) return false;
+    return toStr.call(val) === '[object Array]' || (
+      args === true && 'callee' in val
+    );
+  };
+  is.arr = is.array;
+
+  /**
    * The fallback is.args method.
    * @param {*} val
    * @return {boolean}
@@ -218,6 +219,10 @@ is.args = function(val) {
     is.args({});
   }
   catch (e) {
+    is.array = function(val) {
+      return is.obj(val) && toStr.call(val) === '[object Array]';
+    };
+    is.arr = is.array;
     is.args = is.obj;
     _log && console.log(
       'Your JS engine does not support checking for Arguments objects. ' +
@@ -225,6 +230,7 @@ is.args = function(val) {
     );
   }
 })();
+
 try {
   is.arguments = is.args;
 }
