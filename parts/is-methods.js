@@ -304,6 +304,29 @@ is._whole = function(val) {
   return !(val % 1);
 };
 
+/**
+ * @param {number} val
+ * @return {boolean}
+ */
+is.odd = function(val) {
+  if ( !is.num(val) ) throw new TypeError(is.odd.errorMsg.notNum);
+  if ( !is._whole(val) ) throw new RangeError(is.odd.errorMsg.whole);
+  return !!(val % 2);
+};
+/** @type {!Object<string, string>} */
+is.odd.errorMsg = {
+  notNum: notNumErrorMsg('odd'),
+  whole:  notWholeErrorMsg('odd')
+};
+
+/**
+ * @param {number} val
+ * @return {boolean}
+ */
+is._odd = function(val) {
+  return !!(val % 2);
+};
+
 
 ////////////////////////////////////////////////////////////////////////////
 // IS HELPERS
@@ -316,4 +339,13 @@ is._whole = function(val) {
  */
 function notNumErrorMsg(method) {
   return 'The val for is.' + method + ' calls must be a number.';
+}
+
+/**
+ * @private
+ * @param {string} method
+ * @return {string}
+ */
+function notWholeErrorMsg(method) {
+  return 'The val for is.' + method + ' calls must be a whole number.';
 }
