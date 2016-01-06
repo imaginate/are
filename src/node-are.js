@@ -323,6 +323,100 @@ is.empty = function(val) {
 };
 
 
+//////////////////////////////////////////////////////////////////////////////
+// IS METHODS - NUMBER STATES
+//////////////////////////////////////////////////////////////////////////
+
+/**
+ * @param {number} val
+ * @return {boolean}
+ */
+is.whole = function(val) {
+  if ( !is.num(val) ) throw new TypeError(is.whole.errorMsg.notNum);
+  return !(val % 1);
+};
+/** @type {!Object<string, string>} */
+is.whole.errorMsg = {
+  notNum: notNumErrorMsg('whole')
+};
+
+/**
+ * @param {number} val
+ * @return {boolean}
+ */
+is._whole = function(val) {
+  return !(val % 1);
+};
+
+/**
+ * @param {number} val
+ * @return {boolean}
+ */
+is.odd = function(val) {
+  if ( !is.num(val) ) throw new TypeError(is.odd.errorMsg.notNum);
+  if ( !is._whole(val) ) throw new RangeError(is.odd.errorMsg.whole);
+  return !!(val % 2);
+};
+/** @type {!Object<string, string>} */
+is.odd.errorMsg = {
+  notNum: notNumErrorMsg('odd'),
+  whole:  notWholeErrorMsg('odd')
+};
+
+/**
+ * @param {number} val
+ * @return {boolean}
+ */
+is._odd = function(val) {
+  return !!(val % 2);
+};
+
+/**
+ * @param {number} val
+ * @return {boolean}
+ */
+is.even = function(val) {
+  if ( !is.num(val) ) throw new TypeError(is.even.errorMsg.notNum);
+  if ( !is._whole(val) ) throw new RangeError(is.even.errorMsg.whole);
+  return !(val % 2);
+};
+is.even.errorMsg = {
+  notNum: notNumErrorMsg('even'),
+  whole:  notWholeErrorMsg('even')
+};
+
+/**
+ * @param {number} val
+ * @return {boolean}
+ */
+is._even = function(val) {
+  return !(val % 2);
+};
+
+
+////////////////////////////////////////////////////////////////////////////
+// IS HELPERS
+////////////////////////////////////////////////////////////////////////
+
+/**
+ * @private
+ * @param {string} method
+ * @return {string}
+ */
+function notNumErrorMsg(method) {
+  return 'The val for is/are.' + method + ' calls must be a number.';
+}
+
+/**
+ * @private
+ * @param {string} method
+ * @return {string}
+ */
+function notWholeErrorMsg(method) {
+  return 'The val for is/are.' + method + ' calls must be a whole number.';
+}
+
+
 // *****************************************************************************
 // SECTION: ARE METHODS
 // *****************************************************************************
@@ -540,6 +634,59 @@ are.elem = are.element;
  */
 are.empty = function() {
   return checkAreMethod('empty', arguments);
+};
+
+
+//////////////////////////////////////////////////////////////////////////////
+// ARE METHODS - NUMBER STATES
+//////////////////////////////////////////////////////////////////////////
+
+/**
+ * @param {number...} vals
+ * @return {boolean}
+ */
+are.whole = function() {
+  return checkAreMethod('whole', arguments);
+};
+
+/**
+ * @param {number...} vals
+ * @return {boolean}
+ */
+are._whole = function() {
+  return checkAreMethod('_whole', arguments);
+};
+
+/**
+ * @param {number...} vals
+ * @return {boolean}
+ */
+are.odd = function() {
+  return checkAreMethod('odd', arguments);
+};
+
+/**
+ * @param {number...} vals
+ * @return {boolean}
+ */
+are._odd = function() {
+  return checkAreMethod('_odd', arguments);
+};
+
+/**
+ * @param {number...} vals
+ * @return {boolean}
+ */
+are.even = function() {
+  return checkAreMethod('even', arguments);
+};
+
+/**
+ * @param {number...} vals
+ * @return {boolean}
+ */
+are._even = function() {
+  return checkAreMethod('_even', arguments);
 };
 
 
