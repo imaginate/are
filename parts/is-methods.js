@@ -327,6 +327,28 @@ is._odd = function(val) {
   return !!(val % 2);
 };
 
+/**
+ * @param {number} val
+ * @return {boolean}
+ */
+is.even = function(val) {
+  if ( !is.num(val) ) throw new TypeError(is.even.errorMsg.notNum);
+  if ( !is._whole(val) ) throw new RangeError(is.even.errorMsg.whole);
+  return !(val % 2);
+};
+is.even.errorMsg = {
+  notNum: notNumErrorMsg('even'),
+  whole:  notWholeErrorMsg('even')
+};
+
+/**
+ * @param {number} val
+ * @return {boolean}
+ */
+is._even = function(val) {
+  return !(val % 2);
+};
+
 
 ////////////////////////////////////////////////////////////////////////////
 // IS HELPERS
