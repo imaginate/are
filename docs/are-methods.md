@@ -59,6 +59,9 @@
 | Method    | Notes                                                                                                                                    |
 | :-------- | :--------------------------------------------------------------------------------------------------------------------------------------- |
 | are.empty | Returns ``` false ``` for ``` 0, "", {}, [], null, undefined, false, NaN, function(){...} // empty functions have no defined params ```. |
+| are.whole | Returns ``` false ``` if a number has any decimal places.                                                                                |
+| are.odd   | Returns ``` false ``` if a number is not whole and odd.                                                                                  |
+| are.even  | Returns ``` false ``` if a number is not whole and even.                                                                                 |
 
 <a name="methods-node"></a>
 ### Node.js Only
