@@ -233,6 +233,59 @@ are.empty = function() {
 };
 
 
+//////////////////////////////////////////////////////////////////////////////
+// ARE METHODS - NUMBER STATES
+//////////////////////////////////////////////////////////////////////////
+
+/**
+ * @param {number...} vals
+ * @return {boolean}
+ */
+are.whole = function() {
+  return checkAreMethod('whole', arguments);
+};
+
+/**
+ * @param {number...} vals
+ * @return {boolean}
+ */
+are._whole = function() {
+  return checkAreMethod('_whole', arguments);
+};
+
+/**
+ * @param {number...} vals
+ * @return {boolean}
+ */
+are.odd = function() {
+  return checkAreMethod('odd', arguments);
+};
+
+/**
+ * @param {number...} vals
+ * @return {boolean}
+ */
+are._odd = function() {
+  return checkAreMethod('_odd', arguments);
+};
+
+/**
+ * @param {number...} vals
+ * @return {boolean}
+ */
+are.even = function() {
+  return checkAreMethod('even', arguments);
+};
+
+/**
+ * @param {number...} vals
+ * @return {boolean}
+ */
+are._even = function() {
+  return checkAreMethod('_even', arguments);
+};
+
+
 ////////////////////////////////////////////////////////////////////////////
 // ARE HELPERS
 ////////////////////////////////////////////////////////////////////////
