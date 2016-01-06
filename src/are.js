@@ -252,26 +252,13 @@ catch(e) {
  * @return {boolean}
  */
 is.array = function(val, args) {
-  val = is.obj(val) && toStr.call(val);
-  return val && (
-    val === '[object Array]' || (
-      args === true && (val === '[object Arguments]' || 'callee' in val)
-    )
+  if ( !is.obj(val) ) return false;
+  val = toStr.call(val);
+  return val === '[object Array]' || (
+    args === true && val === '[object Arguments]'
   );
 };
-is.arr = function(val, args) {
-  val = is.obj(val) && toStr.call(val);
-  return val && (
-    val === '[object Array]' || (args === true && val === '[object Arguments]')
-  );
-};
-try {
-  is.array({}, true);
-  is.arr = is.array;
-}
-catch (e) {
-  is.array = is.arr;
-}
+is.arr = is.array;
 
 /**
  * Arguments return true in this method.
@@ -297,19 +284,52 @@ is.regex = is.regexp;
  * @return {boolean}
  */
 is.args = function(val) {
-  return is.obj(val) && (
-    toStr.call(val) === '[object Arguments]' || 'callee' in val
-  );
-};
-is._args = function(val) {
   return is.obj(val) && toStr.call(val) === '[object Arguments]';
 };
-try {
-  is.args({});
-}
-catch (e) {
-  is.args = is._args;
-}
+
+(function() {
+  // check JS engine for accuracy
+  if ( is.args(arguments) ) return;
+
+  /**
+   * The fallback is.array method.
+   * @param {*} val
+   * @param {boolean=} args - the return value for arguments [default= false]
+   * @return {boolean}
+   */
+  is.array = function(val) {
+    if ( !is.obj(val) ) return false;
+    return toStr.call(val) === '[object Array]' || (
+      args === true && 'callee' in val
+    );
+  };
+  is.arr = is.array;
+
+  /**
+   * The fallback is.args method.
+   * @param {*} val
+   * @return {boolean}
+   */
+  is.args = function(val) {
+    return is.obj(val) && 'callee' in val;
+  };
+
+  try {
+    is.args({});
+  }
+  catch (e) {
+    is.array = function(val) {
+      return is.obj(val) && toStr.call(val) === '[object Array]';
+    };
+    is.arr = is.array;
+    is.args = is.obj;
+    _log && console.log(
+      'Your JS engine does not support checking for Arguments objects. ' +
+      'Arguments checks will only check if val is an object.'
+    );
+  }
+})();
+
 try {
   is.arguments = is.args;
 }
@@ -847,15 +867,11 @@ makeType.arrays = function(eachCheck) {
     /** @type {number} */
     var i;
 
-    if ( !is.arr(arr) ) {
-      return false;
-    }
+    if ( !is.arr(arr) ) return false;
 
     i = arr.length;
     while (i--) {
-      if ( !eachCheck( arr[i] ) ) {
-        return false;
-      }
+      if ( !eachCheck(arr[i]) ) return false;
     }
     return true;
   };
@@ -876,14 +892,10 @@ makeType.maps = function(eachCheck) {
     /** @type {string} */
     var prop;
 
-    if ( !is.obj(obj) ) {
-      return false;
-    }
+    if ( !is.obj(obj) ) return false;
 
     for (prop in obj) {
-      if( has(obj, prop) && !eachCheck( obj[prop] ) ) {
-        return false;
-      }
+      if( has(obj, prop) && !eachCheck( obj[prop] ) ) return false;
     }
     return true;
   };
@@ -1037,9 +1049,7 @@ function checkVal(types, val, nullable) {
 
   i = types.length;
   while (i--) {
-    if ( allTypes[ types[i] ](val, nullable) ) {
-      return true;
-    }
+    if ( allTypes[ types[i] ](val, nullable) ) return true;
   }
   return false;
 }
@@ -1058,9 +1068,7 @@ function checkVals(types, vals, nullable) {
 
   i = vals.length;
   while (i--) {
-    if ( !checkVal(types, vals[i], nullable) ) {
-      return false;
-    }
+    if ( !checkVal(types, vals[i], nullable) ) return false;
   }
   return true;
 }
@@ -1087,9 +1095,7 @@ function getValidTypes(typeStr) {
   while (i--) {
     type = '_' + types[i];
     type = has(typeShortcuts, type) ? '_' + typeShortcuts[type] : type;
-    if ( !has(allTypes, type) ) {
-      return type;
-    }
+    if ( !has(allTypes, type) ) return type;
     types[i] = type;
   }
 
@@ -1129,10 +1135,12 @@ function getNullable(typeStr) {
   /** @type {boolean} */
   var override;
 
-  override = hasSpecialChar('?', typeStr) ?
-    !hasSpecialChar('!', typeStr) : hasSpecialChar('!', typeStr);
-  return !override ?
-    undefined : !hasSpecialChar('!', typeStr) && hasSpecialChar('?', typeStr);
+  override = hasSpecialChar('?', typeStr)
+    ? !hasSpecialChar('!', typeStr)
+    : hasSpecialChar('!', typeStr);
+  return !override
+    ? undefined
+    : !hasSpecialChar('!', typeStr) && hasSpecialChar('?', typeStr);
 }
 
 
