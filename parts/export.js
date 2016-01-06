@@ -2,7 +2,7 @@
  * -----------------------------------------------------------------------------
  * EXPORT ARE LIBRARIES
  * -----------------------------------------------------------------------------
- * @version 0.1.3
+ * @version 0.2.0
  * @see [are]{@link https://github.com/imaginate/are}
  *
  * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)

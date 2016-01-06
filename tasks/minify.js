@@ -94,7 +94,7 @@ function getCopyright(filepath) {
   filepath = filepath.replace(/^(?:.*\/)?([a-z-]+)\..*$/i, '$1.js');
 
   return (
-    '/* ' + filepath + ' v0.1.3 (https://github.com/imaginate/are)\n' +
+    '/* ' + filepath + ' v0.2.0 (https://github.com/imaginate/are)\n' +
     ' * Copyright (c) 2015 Adam A Smith <adam@imaginate.life>\n'      +
     ' * The Apache License (github.com/imaginate/are/blob/master/LICENSE.md) */'
   );

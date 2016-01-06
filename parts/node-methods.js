@@ -2,7 +2,7 @@
  * -----------------------------------------------------------------------------
  * NODE.JS ONLY - IS & ARE METHODS
  * -----------------------------------------------------------------------------
- * @version 0.1.3
+ * @version 0.2.0
  * @see [node methods]{@link https://github.com/imaginate/are/blob/master/parts/node-methods.js}
  *
  * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)
