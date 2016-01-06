@@ -198,19 +198,33 @@ is.regex = is.regexp;
  * @return {boolean}
  */
 is.args = function(val) {
-  return is.obj(val) && (
-    toStr.call(val) === '[object Arguments]' || 'callee' in val
-  );
-};
-is._args = function(val) {
   return is.obj(val) && toStr.call(val) === '[object Arguments]';
 };
-try {
-  is.args({});
-}
-catch (e) {
-  is.args = is._args;
-}
+
+(function() {
+  // check JS engine for accuracy
+  if ( is.args(arguments) ) return;
+
+  /**
+   * The fallback is.args method.
+   * @param {*} val
+   * @return {boolean}
+   */
+  is.args = function(val) {
+    return is.obj(val) && 'callee' in val;
+  };
+
+  try {
+    is.args({});
+  }
+  catch (e) {
+    is.args = is.obj;
+    _log && console.log(
+      'Your JS engine does not support checking for Arguments objects. ' +
+      'Arguments checks will only check if val is an object.'
+    );
+  }
+})();
 try {
   is.arguments = is.args;
 }
