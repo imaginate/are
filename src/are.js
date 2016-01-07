@@ -970,7 +970,12 @@ makeTypes('dom_objects', {
   'document': is.doc
 });
 
-makeType('others', 'empty', is.empty);
+makeTypes('others', {
+  'empty': is.empty,
+  'whole': is.whole,
+  'odd':   is.odd,
+  'even':  is.even
+});
 
 makeTypes('arrays', {
   'nulls':     is.nil,
