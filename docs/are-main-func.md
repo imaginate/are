@@ -23,9 +23,9 @@
 | Primitives | JS Objects | DOM Objects | Others |
 | :--------- | :--------- | :---------- | :----- |
 | null       | object     | element     | empty  |
-| undefined  | function   | document    |        |
-| boolean    | regexp     |             |        |
-| string     | array      |             |        |
+| undefined  | function   | document    | whole  |
+| boolean    | regexp     |             | odd    |
+| string     | array      |             | even   |
 | number     | date       |             |        |
 | nan        | error      |             |        |
 |            | arguments  |             |        |
