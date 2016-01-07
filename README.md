@@ -1,40 +1,44 @@
 # are [![npm version](https://badge.fury.io/js/node-are.svg)](https://badge.fury.io/js/node-are)
 ### Elegant JS Type Checking
-**_are_** will make your JavaScript development better! It contains two libraries, **_is_** and **_are_**, that will cover all of your type testing needs. Their **simple** and **intuitive** API will make your projects easier to read and maintain while sustaining high performance and giving you the freedom to choose from different coding styles. Take a look at some examples below.
+**_are_** will make your JavaScript development better! It contains two libraries, **_is_** and **_are_**, that will cover all of your data, object, and state type check needs. Their **simple** and **intuitive** APIs will make your projects easier to read and maintain while sustaining high performance. Take a look at some examples below.
+
+## Examples
 - **_is_**
 ```javascript
 // example string checks
-is('string', exVar);
-is('str', exVar);
-is.string(exVar);
-is.str(exVar);
+var val = 'a string';
+is('string', val);
+is('str', val);
+is.string(val);
+is.str(val);
 
-// some other cool examples
-is('string|number', exVar);
-is('!arrays|regexps', exVar);
-is.document(exVar);
-is.directory(exVar); // node.js specific
+// other examples
+is('string|number', val); // is val a primitive string or number
+is('!arrays|regexps', val); // is val a non-null array of arrays or regexps
+is.document(val); // is val a DOM document instance
+is.directory(val); // is val a valid directory path (for node.js only)
 ```
 - **_are_**
 ```javascript
 // example string checks
-are('string', exVar1, exVar2, exVar3);
-are('str', [ exVar1, exVar2, exVar3 ]);
-are.string([ exVar1, exVar2, exVar3 ]);
-are.str(exVar1, exVar2, exVar3);
+var val1, val2, val3;
+are('string', val1, val2, val3);
+are('str', [ val1, val2, val3 ]);
+are.string([ val1, val2, val3 ]);
+are.str(val1, val2, val3);
 
-// some other cool examples
-are('num=', [ exVar1, exVar2, exVar3 ]);
-are('!doc|elem', exVar1, exVar2, exVar3);
-are.element(exVar1, exVar2, exVar3);
-are.file([ exVar1, exVar2, exVar3 ]); // node.js specific
+// other examples
+are('elem=', [ val1, val2, val3 ]); // is each val undefined, null, or a DOM element
+are('?bool', val1, val2, val3); // is each val a boolean or null
+are.empty(val1, val2, val3); // is each val empty (see docs for more info)
+are.file([ val1, val2, val3 ]); // is each val a valid file path (for node.js only)
 ```
 
 ## Install & Use
 #### node.js
 - ``` npm install node-are ```
-- ``` require('node-are')() && global.is(...) && global.are(...) ``` (appended to [global](https://nodejs.org/api/globals.html#globals_global))
-- ``` require('node-are').is(...) && require('node-are').are(...) ```
+- ``` require('node-are')(); // global.are and global.is now available ``` **or**
+- ``` var are = require('node-are').are; var is = require('node-are').is; ```
 
 #### browser
 - download [are.min.js](https://github.com/imaginate/are/blob/master/src/are.min.js)
