@@ -35,6 +35,8 @@ var refs = {
   _num:  0,
   obj:   {},
   arr:   [],
+  date:  new Date(),
+  err:   new Error('test'),
   regex: /1/,
   func:  function(){},
   args:  (function(){ return arguments; })(),
@@ -113,6 +115,15 @@ var methods = {
     regexp: {
       shortcut: 'regex',
       truthy: [ refs.regex ],
+      falsy:  [ refs.obj, refs._bool, refs.bool, refs.nil, refs.arr ]
+    },
+    date: {
+      truthy: [ refs.date ],
+      falsy:  [ refs.obj, refs._bool, refs.bool, refs.nil, refs.arr ]
+    },
+    error: {
+      shortcut: 'err',
+      truthy: [ refs.err ],
       falsy:  [ refs.obj, refs._bool, refs.bool, refs.nil, refs.arr ]
     },
     args: {

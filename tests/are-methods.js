@@ -38,6 +38,8 @@ var refs = {
   nan:   [ NaN, NaN ],
   obj:   [ {}, {} ],
   arr:   [ [], [] ],
+  date:  [ new Date(), new Date() ],
+  err:   [ new Error('test'), new Error('test') ],
   regex: [ /1/, /t/g ],
   func:  [ function(){}, function(){} ],
   args:  [ args, args ],
@@ -116,6 +118,15 @@ var methods = {
     regexp: {
       shortcut: 'regex',
       truthy: [ refs.regex ],
+      falsy:  [ refs.obj, refs.bool, refs.nil, refs.arr ]
+    },
+    date: {
+      truthy: [ refs.date ],
+      falsy:  [ refs.obj, refs.bool, refs.nil, refs.arr ]
+    },
+    error: {
+      shortcut: 'err',
+      truthy: [ refs.err ],
       falsy:  [ refs.obj, refs.bool, refs.nil, refs.arr ]
     },
     args: {
