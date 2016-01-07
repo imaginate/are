@@ -43,6 +43,8 @@
 | are.regexp   | are.regex              |                                                                                       |
 | are.array    | are.arr                |                                                                                       |
 | are._array   | are._arr               | Operates the same as ``` are.array ``` except it returns ``` true ``` for arguments.  |
+| are.date     |                        |                                                                                       |
+| are.error    | are.err                |                                                                                       |
 | are.args     | are.arguments          |                                                                                       |
 
 <a name="methods-dom-objects"></a>

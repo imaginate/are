@@ -43,6 +43,8 @@
 | is.regexp   | is.regex             |                                                                                      |
 | is.array    | is.arr               | 2nd optional param: set to ``` true ``` to return ``` true ``` for arguments.        |
 | is._array   | is._arr              | Operates the same as ``` is.array ``` except it returns ``` true ``` for arguments.  |
+| is.date     |                      |                                                                                      |
+| is.error    | is.err               |                                                                                      |
 | is.args     | is.arguments         |                                                                                      |
 
 <a name="methods-dom-objects"></a>
