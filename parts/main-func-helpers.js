@@ -135,7 +135,9 @@ makeType('primitives', 'null', is.nil);
 makeTypes('js_objects', {
   'object': is.obj,
   'regexp': is.regex,
-  'array':  is.arr
+  'array':  is.arr,
+  'date':   is.date,
+  'error':  is.err
 });
 makeType('js_objects', 'arguments', is.args);
 makeType('js_objects', 'function', is.func, false);
@@ -157,6 +159,8 @@ makeTypes('arrays', {
   'functions': is.func,
   'regexps':   is.regex,
   'arrays':    is.arr,
+  'dates':     is.date,
+  'errors':    is.err,
   'elements':  is.elem,
   'documents': is.doc
 });
@@ -171,6 +175,8 @@ makeTypes('maps', {
   'functionmap': is.func,
   'regexpmap':   is.regex,
   'arraymap':    is.arr,
+  'datemap':     is.date,
+  'errormap':    is.err,
   'elementmap':  is.elem,
   'documentmap': is.doc
 });
@@ -193,6 +199,7 @@ var typeShortcuts = {
   _fn:    'function',
   _regex: 'regexp',
   _arr:   'array',
+  _err:   'error',
   _args:  'arguments',
 
   // dom objects
@@ -209,6 +216,7 @@ var typeShortcuts = {
   _fns:    'functions',
   _regexs: 'regexps',
   _arrs:   'arrays',
+  _errs:   'errors',
   _elems:  'elements',
   _docs:   'documents',
 
@@ -222,6 +230,7 @@ var typeShortcuts = {
   _fnmap:    'functionmap',
   _regexmap: 'regexpmap',
   _arrmap:   'arraymap',
+  _errmap:   'errormap',
   _elemmap:  'elementmap',
   _docmap:   'documentmap'
 };
