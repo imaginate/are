@@ -37,6 +37,8 @@ var refs = {
   obj:   [ {}, {} ],
   arr:   [ [], [] ],
   regex: [ /1/, /t/g ],
+  date:  [ new Date(), new Date() ],
+  err:   [ new Error(), new Error() ],
   func:  [ function(){}, function(a){} ],
   args:  [ args, args ],
   doc:   [ { nodeType: 9 }, { nodeType: 9 } ],
@@ -51,6 +53,8 @@ var refs = {
     obj:   [ [ {}, {} ], [ {}, {} ] ],
     arr:   [ [ [], [] ], [ [], [] ] ],
     regex: [ [ /1/, /t/g ], [ /1/, /t/g ] ],
+    date:  [ [ new Date(), new Date() ], [ new Date(), new Date() ] ],
+    err:   [ [ new Error(), new Error() ], [ new Error(), new Error() ] ],
     func:  [ [ function(){}, function(a){} ], [ function(){}, function(a){} ] ],
     doc:   [ [ {nodeType: 9},{nodeType: 9} ], [ {nodeType: 9},{nodeType: 9} ] ],
     elem:  [ [ {nodeType: 1},{nodeType: 1} ], [ {nodeType: 1},{nodeType: 1} ] ]
@@ -65,6 +69,8 @@ var refs = {
     obj:   [ { a: {}, b: {} }, { a: {}, b: {} } ],
     arr:   [ { a: [], b: [] }, { a: [], b: [] } ],
     regex: [ { a: /1/, b: /t/g }, { a: /1/, b: /t/g } ],
+    date:  [ { a:new Date(),b:new Date() }, { a:new Date(),b:new Date() } ],
+    err:   [ { a:new Error(),b:new Error() }, { a:new Error(),b:new Error() } ],
     func:  [ {a:function(){},b:function(){}}, {a:function(){},b:function(){}} ],
     doc:   [ {a:{nodeType:9},b:{nodeType:9}}, {a:{nodeType:9},b:{nodeType:9}} ],
     elem:  [ {a:{nodeType:1},b:{nodeType:1}}, {a:{nodeType:1},b:{nodeType:1}} ]
@@ -122,6 +128,15 @@ var methods = {
     regexp: {
       shortcut: 'regex',
       truthy: [ refs.regex, refs.nil ],
+      falsy:  [ refs.obj, refs.bool, refs.arr ]
+    },
+    date: {
+      truthy: [ refs.date, refs.nil ],
+      falsy:  [ refs.obj, refs.bool, refs.arr ]
+    },
+    error: {
+      shortcut: 'err',
+      truthy: [ refs.err, refs.nil ],
       falsy:  [ refs.obj, refs.bool, refs.arr ]
     },
     args: {
@@ -187,6 +202,15 @@ var methods = {
       truthy: [ refs.arrays.regex, refs.arr, refs.nil ],
       falsy:  [ refs.arrays.obj, refs.arrays.bool, refs.arrays.num ]
     },
+    dates: {
+      truthy: [ refs.arrays.date, refs.arr, refs.nil ],
+      falsy:  [ refs.arrays.obj, refs.arrays.bool ]
+    },
+    errors: {
+      shortcut: 'errs',
+      truthy: [ refs.arrays.err, refs.arr, refs.nil ],
+      falsy:  [ refs.arrays.obj, refs.arrays.bool ]
+    },
     documents: {
       shortcut: 'docs',
       truthy: [ refs.arrays.doc, refs.arr, refs.nil ],
@@ -242,6 +266,15 @@ var methods = {
       shortcut: 'regexMap',
       truthy: [ refs.maps.regex, refs.obj, refs.nil ],
       falsy:  [ refs.maps.obj, refs.maps.bool, refs.maps.num ]
+    },
+    dateMap: {
+      truthy: [ refs.maps.date, refs.obj, refs.nil ],
+      falsy:  [ refs.maps.obj, refs.maps.bool, refs.maps.arr ]
+    },
+    errorMap: {
+      shortcut: 'errMap',
+      truthy: [ refs.maps.err, refs.obj, refs.nil ],
+      falsy:  [ refs.maps.obj, refs.maps.bool, refs.maps.arr ]
     },
     documentMap: {
       shortcut: 'docMap',
