@@ -26,8 +26,9 @@
 | undefined  | function   | document    |        |
 | boolean    | regexp     |             |        |
 | string     | array      |             |        |
-| number     | arguments  |             |        |
-| nan        |            |             |        |
+| number     | date       |             |        |
+| nan        | error      |             |        |
+|            | arguments  |             |        |
 
 <a name="type-arrays"></a>
 ### Arrays
@@ -38,7 +39,8 @@
 | booleans   | functions  | documents   |
 | strings    | regexps    |             |
 | numbers    | arrays     |             |
-| nans       |            |             |
+| nans       | dates      |             |
+|            | errors     |             |
 
 <a name="type-maps"></a>
 ### Hash Maps
@@ -49,7 +51,8 @@
 | booleanMap | functionMap | documentMap |
 | stringMap  | regexpMap   |             |
 | numberMap  | arrayMap    |             |
-| nanMap     |             |             |
+| nanMap     | dateMap     |             |
+|            | errorMap    |             |
 
 
 <a name="special-chars"></a>
@@ -86,6 +89,7 @@
 | func  | =>      | function  |
 | regex | =>      | regexp    |
 | arr   | =>      | array     |
+| err   | =>      | error     |
 | args  | =>      | arguments |
 | elem  | =>      | element   |
 | doc   | =>      | document  |
@@ -105,6 +109,7 @@
 | funcs  | =>      | functions |
 | regexs | =>      | regexps   |
 | arrs   | =>      | arrays    |
+| errs   | =>      | errors    |
 | elems  | =>      | elements  |
 | docs   | =>      | documents |
 
@@ -122,6 +127,7 @@
 | funcMap  | =>      | functionMap |
 | regexMap | =>      | regexpMap   |
 | arrMap   | =>      | arrayMap    |
+| errMap   | =>      | errorMap    |
 | elemMap  | =>      | elementMap  |
 | docMap   | =>      | documentMap |
 
