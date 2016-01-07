@@ -184,6 +184,14 @@ is.regex = is.regexp;
  * @param {*} val
  * @return {boolean}
  */
+is.date = function(val) {
+  return is.obj(val) && toStr.call(val) === '[object Date]';
+};
+
+/**
+ * @param {*} val
+ * @return {boolean}
+ */
 is.args = function(val) {
   return is.obj(val) && toStr.call(val) === '[object Arguments]';
 };

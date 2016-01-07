@@ -182,6 +182,14 @@ are.regex = are.regexp;
  * @param {*...} vals
  * @return {boolean}
  */
+are.date = function() {
+  return checkAreMethod('date', arguments);
+};
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
 are.args = function() {
   return checkAreMethod('args', arguments);
 };
