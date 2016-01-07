@@ -192,6 +192,15 @@ is.date = function(val) {
  * @param {*} val
  * @return {boolean}
  */
+is.error = function(val) {
+  return is.obj(val) && toStr.call(val) === '[object Error]';
+};
+is.err = is.error;
+
+/**
+ * @param {*} val
+ * @return {boolean}
+ */
 is.args = function(val) {
   return is.obj(val) && toStr.call(val) === '[object Arguments]';
 };

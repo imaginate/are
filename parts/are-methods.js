@@ -190,6 +190,15 @@ are.date = function() {
  * @param {*...} vals
  * @return {boolean}
  */
+are.error = function() {
+  return checkAreMethod('error', arguments);
+};
+are.err = are.error;
+
+/**
+ * @param {*...} vals
+ * @return {boolean}
+ */
 are.args = function() {
   return checkAreMethod('args', arguments);
 };
