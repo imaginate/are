@@ -315,6 +315,27 @@ is.empty = function(val) {
     return true;
 };
 
+/**
+ * Checks if two values are strictly equal.
+ * @param {*} val1
+ * @param {*} val2
+ * @return {boolean}
+ */
+is.same = function(val1, val2) {
+  return val1 === val2;
+};
+
+/**
+ * Checks if two values are loosely equal.
+ * @param {*} val1
+ * @param {*} val2
+ * @return {boolean}
+ */
+is.similar = function(val1, val2) {
+  return val1 == val2;
+};
+is.sim = is.similar;
+
 
 //////////////////////////////////////////////////////////////////////////////
 // IS METHODS - NUMBER STATES
