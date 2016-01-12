@@ -2,7 +2,7 @@
  * -----------------------------------------------------------------------------
  * ARE JS LIBRARIES
  * -----------------------------------------------------------------------------
- * @version 0.2.0
+ * @version 0.3.0
  * @see [are]{@link https://github.com/imaginate/are}
  * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)
  * @copyright 2015 Adam A Smith <adam@imaginate.life> (https://github.com/imaginate)
@@ -413,6 +413,27 @@ is.empty = function(val) {
     }
     return true;
 };
+
+/**
+ * Checks if two values are strictly equal.
+ * @param {*} val1
+ * @param {*} val2
+ * @return {boolean}
+ */
+is.same = function(val1, val2) {
+  return val1 === val2;
+};
+
+/**
+ * Checks if two values are loosely equal.
+ * @param {*} val1
+ * @param {*} val2
+ * @return {boolean}
+ */
+is.similar = function(val1, val2) {
+  return val1 == val2;
+};
+is.sim = is.similar;
 
 
 //////////////////////////////////////////////////////////////////////////////
