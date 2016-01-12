@@ -213,4 +213,18 @@ describe('is-methods', function() {
       });
     });
   });
+  describe('is.same/similar', function() {
+    it('truthy', function() {
+      var result = is.same('str', 'str');
+      assert.strictEqual(true, result);
+      result = is.sim(null, undefined);
+      assert.strictEqual(true, result);
+    });
+    it('falsy', function() {
+      var result = is.same(null, undefined);
+      assert.strictEqual(false, result);
+      result = is.sim(null, 'str');
+      assert.strictEqual(false, result);
+    });
+  });
 });
