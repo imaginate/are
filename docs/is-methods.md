@@ -63,6 +63,7 @@
 | is.empty   |        | Returns ``` false ``` for ``` 0, "", {}, [], null, undefined, false, NaN, function(){...} // empty functions have no defined params ```. |
 | is.same    |        | Returns ``` true ``` if two values are strictly equal.                                                                                   |
 | is.similar | is.sim | Returns ``` true ``` if two values are loosely equal.                                                                                    |
+| is.frozen  |        | Shortcut for ``` Object.isFrozen ```.                                                                                                    |
 | is.whole   |        | Returns ``` false ``` if a number has any decimal places.                                                                                |
 | is.odd     |        | Returns ``` false ``` if a number is not whole and odd.                                                                                  |
 | is.even    |        | Returns ``` false ``` if a number is not whole and even.                                                                                 |
