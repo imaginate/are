@@ -249,6 +249,14 @@ are.empty = function() {
   return checkAreMethod('empty', arguments);
 };
 
+/**
+ * @param {?(Object|function)...} vals
+ * @return {boolean}
+ */
+are.frozen = function() {
+  return checkAreMethod('frozen', arguments);
+};
+
 
 //////////////////////////////////////////////////////////////////////////////
 // ARE METHODS - NUMBER STATES
