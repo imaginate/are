@@ -435,6 +435,42 @@ is.similar = function(val1, val2) {
 };
 is.sim = is.similar;
 
+/**
+ * @param {?(Object|function)} obj
+ * @return {boolean}
+ */
+is.frozen = function(obj) {
+  if ( is.nil(obj) ) return false;
+  if ( !is._obj(obj) ) throw new TypeError(is.frozen.errorMsg.notObj);
+  return ObjectIsFrozen(obj);
+};
+/** @type {!Object<string, string>} */
+is.frozen.errorMsg = {
+  notObj: 'The val for is/are.frozen calls must be an object, function, or null.'
+};
+
+/** @type {function} */
+var ObjectIsFrozen = (function() {
+
+  /** @type {function} */
+  var isFrozen;
+
+  if (!Object.isFrozen) return function ObjIsFrozen(obj) { return false; };
+
+  isFrozen = Object.isFrozen;
+
+  try {
+    isFrozen( function(){} );
+  }
+  catch (e) {
+    return function ObjIsFrozen(obj) {
+      return is.func(obj) ? false : isFrozen(obj);
+    };
+  }
+
+  return isFrozen;
+})();
+
 
 //////////////////////////////////////////////////////////////////////////////
 // IS METHODS - NUMBER STATES
@@ -764,6 +800,14 @@ are.elem = are.element;
  */
 are.empty = function() {
   return checkAreMethod('empty', arguments);
+};
+
+/**
+ * @param {?(Object|function)...} vals
+ * @return {boolean}
+ */
+are.frozen = function() {
+  return checkAreMethod('frozen', arguments);
 };
 
 
