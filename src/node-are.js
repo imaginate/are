@@ -2,7 +2,7 @@
  * -----------------------------------------------------------------------------
  * NODE-ARE JS LIBRARIES
  * -----------------------------------------------------------------------------
- * @version 0.3.1
+ * @version 0.3.2
  * @see [are]{@link https://github.com/imaginate/are}
  * @author Adam Smith <adam@imaginate.life> (https://github.com/imaginate)
  * @copyright 2015 Adam A Smith <adam@imaginate.life> (https://github.com/imaginate)
