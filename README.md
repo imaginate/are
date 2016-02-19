@@ -1,5 +1,9 @@
-# are [![npm version](https://badge.fury.io/js/node-are.svg)](https://badge.fury.io/js/node-are)
-### Elegant JS Type Checking
+# Project Moved!
+**_[are](https://github.com/imaginate/are)_ has been merged into _[vitals](https://github.com/imaginate/vitals)_. Development will no longer occur on this repository. The old readme has been left below for historical reasons. Please direct all questions, issues, etc. to _[vitals](https://github.com/imaginate/vitals)_.**
+<br><br>
+
+# are [![npm version](https://img.shields.io/badge/npm-0.3.2-brightgreen.svg?style=flat)](https://www.npmjs.com/package/node-are)
+### Simple JS Type Checks
 **_are_** will make your JavaScript development better! It contains two libraries, **_is_** and **_are_**, that will cover all of your data, object, and state type check needs. Their **simple** and **intuitive** APIs will make your projects easier to read and maintain while sustaining high performance. Take a look at some examples below.
 
 ## Examples
